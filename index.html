@@ -30,7 +30,6 @@
       min-height: 100vh;
     }
 
-    /* ── TOPBAR ── */
     .topbar {
       display: flex;
       align-items: center;
@@ -43,13 +42,7 @@
       z-index: 100;
     }
 
-    .logo {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: #fff;
-    }
-
+    .logo { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
     .logo span { color: var(--accent); }
 
     .user-pill {
@@ -72,13 +65,8 @@
       font-size: 11px; font-weight: 700; color: #fff;
     }
 
-    /* ── MAIN LAYOUT ── */
-    .layout {
-      display: flex;
-      min-height: calc(100vh - 57px);
-    }
+    .layout { display: flex; min-height: calc(100vh - 57px); }
 
-    /* ── SIDEBAR / TABS ── */
     .sidebar {
       width: 200px;
       flex-shrink: 0;
@@ -108,33 +96,15 @@
 
     .nav-btn:hover { background: var(--surface2); color: var(--text); }
     .nav-btn.active { background: var(--accent); color: #fff; font-weight: 500; }
-
     .nav-icon { font-size: 16px; width: 20px; text-align: center; }
 
-    /* ── CONTENT ── */
-    .content {
-      flex: 1;
-      padding: 28px 32px;
-      overflow-y: auto;
-    }
-
+    .content { flex: 1; padding: 28px 32px; overflow-y: auto; }
     .page { display: none; }
     .page.active { display: block; }
 
-    .page-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 4px;
-    }
+    .page-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .page-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
 
-    .page-sub {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-
-    /* ── CARDS ── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -152,7 +122,6 @@
       margin-bottom: 16px;
     }
 
-    /* ── STATS GRID ── */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -168,31 +137,14 @@
     }
 
     .stat-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-
-    .stat-value {
-      font-size: 26px;
-      font-weight: 700;
-      color: #fff;
-      font-variant-numeric: tabular-nums;
-    }
-
+    .stat-value { font-size: 26px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
     .stat-icon { font-size: 20px; margin-bottom: 10px; }
 
-    /* ── FORM GRID ── */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .form-grid.single { grid-template-columns: 1fr; }
     .span2 { grid-column: span 2; }
 
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
 
     label {
       font-size: 12px;
@@ -208,6 +160,7 @@
     input[type="time"],
     input[type="number"],
     input[type="tel"],
+    input[type="email"],
     select, textarea {
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -221,61 +174,10 @@
       width: 100%;
     }
 
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent);
-    }
-
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
     select option { background: var(--surface2); }
     textarea { resize: vertical; min-height: 80px; }
 
-    /* ── TOGGLE ── */
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .toggle-row:last-child { border-bottom: none; }
-
-    .toggle-label { font-size: 14px; color: var(--text); }
-    .toggle-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-    .toggle {
-      width: 44px; height: 24px;
-      background: var(--border);
-      border-radius: 12px;
-      position: relative;
-      cursor: pointer;
-      transition: background 0.2s;
-      flex-shrink: 0;
-    }
-
-    .toggle.on { background: var(--accent); }
-
-    .toggle::after {
-      content: '';
-      position: absolute;
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: #fff;
-      top: 3px; left: 3px;
-      transition: transform 0.2s;
-    }
-
-    .toggle.on::after { transform: translateX(20px); }
-
-    /* ── FIELD SECTION ── */
-    .field-section {
-      background: rgba(108,99,255,0.06);
-      border: 1px solid rgba(108,99,255,0.2);
-      border-radius: 10px;
-      padding: 16px;
-      margin-top: 10px;
-    }
-
-    /* ── BUTTONS ── */
     .btn {
       padding: 10px 20px;
       border-radius: 8px;
@@ -295,10 +197,10 @@
     .btn-danger:hover { opacity: 0.88; }
     .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
 
     .btn-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
 
-    /* ── STATUS BADGE ── */
     .badge {
       display: inline-flex;
       align-items: center;
@@ -315,14 +217,16 @@
     .badge-absent  { background: rgba(255,107,107,0.15); color: var(--accent2); }
     .badge-half    { background: rgba(120,120,160,0.15); color: var(--muted); }
 
-    /* ── TABLE ── */
+    /* Lead status badges */
+    .badge-new        { background: rgba(108,99,255,0.15); color: var(--accent); }
+    .badge-contacted  { background: rgba(249,168,37,0.15); color: var(--amber); }
+    .badge-followup   { background: rgba(46,204,154,0.15); color: var(--green); }
+    .badge-converted  { background: rgba(46,204,154,0.3); color: #1aff9c; }
+    .badge-lost       { background: rgba(255,107,107,0.15); color: var(--accent2); }
+
     .table-wrap { overflow-x: auto; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
 
     thead th {
       text-align: left;
@@ -344,12 +248,8 @@
     tbody tr:last-child td { border-bottom: none; }
     tbody tr:hover { background: rgba(255,255,255,0.02); }
 
-    .time-mono {
-      font-family: var(--mono);
-      font-size: 13px;
-    }
+    .time-mono { font-family: var(--mono); font-size: 13px; }
 
-    /* ── TOAST ── */
     #toast {
       position: fixed;
       bottom: 28px; right: 28px;
@@ -369,7 +269,6 @@
     #toast.error { background: var(--accent2); color: #fff; }
     #toast.info { background: var(--accent); color: #fff; }
 
-    /* ── LOGIN PAGE ── */
     .login-wrap {
       display: flex;
       align-items: center;
@@ -386,20 +285,9 @@
       width: 380px;
     }
 
-    .login-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 6px;
-    }
+    .login-title { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
 
-    .login-sub {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
-
-    /* ── FILTER BAR ── */
     .filter-bar {
       display: flex;
       gap: 10px;
@@ -408,29 +296,53 @@
       flex-wrap: wrap;
     }
 
-    .filter-bar input, .filter-bar select {
-      width: auto;
-      min-width: 130px;
+    .filter-bar input, .filter-bar select { width: auto; min-width: 130px; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+
+    .empty-state { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      display: none;
     }
 
-    /* ── DIVIDER ── */
-    .divider {
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      width: 560px;
+      max-width: 95vw;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-close {
+      background: none;
       border: none;
-      border-top: 1px solid var(--border);
-      margin: 18px 0;
-    }
-
-    /* ── PROGRESS BAR ── */
-    .progress-wrap { margin-top: 8px; }
-    .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-    .progress-bar { background: var(--border); border-radius: 4px; height: 6px; overflow: hidden; }
-    .progress-fill { height: 100%; border-radius: 4px; background: var(--green); transition: width 0.4s; }
-
-    .empty-state {
-      text-align: center;
-      padding: 40px;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 20px;
+      cursor: pointer;
     }
 
     @media (max-width: 700px) {
@@ -443,7 +355,7 @@
 </head>
 <body>
 
-<!-- ════════ LOGIN ════════ -->
+<!-- LOGIN -->
 <div class="login-wrap" id="loginPage">
   <div class="login-box">
     <div class="logo" style="font-size:22px;margin-bottom:24px;">Sales<span>Track</span></div>
@@ -462,7 +374,7 @@
   </div>
 </div>
 
-<!-- ════════ APP SHELL ════════ -->
+<!-- APP SHELL -->
 <div id="appShell" style="display:none;">
 
   <div class="topbar">
@@ -476,15 +388,11 @@
   </div>
 
   <div class="layout">
-    <!-- SIDEBAR -->
-    <nav class="sidebar" id="sidebar">
-      <!-- Rendered dynamically based on role after login -->
-    </nav>
+    <nav class="sidebar" id="sidebar"></nav>
 
-    <!-- MAIN CONTENT -->
     <main class="content">
 
-      <!-- ── CHECK IN ─────────────────────────────────── -->
+      <!-- CHECK IN -->
       <div class="page active" id="checkInPage">
         <p class="page-title">Check In</p>
         <p class="page-sub">Record your attendance and field details</p>
@@ -525,13 +433,12 @@
           </div>
         </div>
 
-        <!-- FIELD DETAILS (shown when on_field) -->
         <div class="card" id="fieldSection" style="display:none;">
           <div class="card-title">🚗 Field Visit Details</div>
           <div class="form-grid">
             <div class="field span2">
               <label>Field Location / Area</label>
-              <input type="text" id="ci_location" placeholder="e.g. Sector 14, Faridabad or Client office address">
+              <input type="text" id="ci_location" placeholder="e.g. Sector 14, Faridabad">
             </div>
             <div class="field">
               <label>Visit Type</label>
@@ -566,7 +473,7 @@
         </div>
       </div>
 
-      <!-- ── CHECK OUT ─────────────────────────────────── -->
+      <!-- CHECK OUT -->
       <div class="page" id="checkOutPage">
         <p class="page-title">Check Out</p>
         <p class="page-sub">Wrap up your day and submit your report</p>
@@ -600,11 +507,11 @@
             </div>
             <div class="field span2">
               <label>Work Done Today</label>
-              <textarea id="co_work" placeholder="Describe what was accomplished, meetings done, etc..."></textarea>
+              <textarea id="co_work" placeholder="Describe what was accomplished..."></textarea>
             </div>
             <div class="field span2">
               <label>Remarks / Issues</label>
-              <textarea id="co_remarks" placeholder="Any issues, follow-ups needed, etc..."></textarea>
+              <textarea id="co_remarks" placeholder="Any issues, follow-ups needed..."></textarea>
             </div>
           </div>
         </div>
@@ -615,12 +522,12 @@
         </div>
       </div>
 
-      <!-- ── MY DASHBOARD ─────────────────────────────── -->
+      <!-- MY DASHBOARD -->
       <div class="page" id="dashboardPage">
         <p class="page-title">My Dashboard</p>
         <p class="page-sub">Your attendance & performance overview</p>
 
-        <div class="stats-grid" id="myStats">
+        <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-icon">📅</div>
             <div class="stat-label">Days Present</div>
@@ -649,13 +556,8 @@
             <table>
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>In</th>
-                  <th>Out</th>
-                  <th>Location</th>
-                  <th>Client</th>
-                  <th>Achieved (₹)</th>
+                  <th>Date</th><th>Status</th><th>In</th><th>Out</th>
+                  <th>Location</th><th>Client</th><th>Achieved (₹)</th>
                 </tr>
               </thead>
               <tbody id="myTable"><tr><td colspan="7" class="empty-state">Loading...</td></tr></tbody>
@@ -664,12 +566,12 @@
         </div>
       </div>
 
-      <!-- ── ADMIN ─────────────────────────────────────── -->
+      <!-- ADMIN -->
       <div class="page" id="adminPage">
         <p class="page-title">Admin Dashboard</p>
         <p class="page-sub">Full team overview and management</p>
 
-        <div class="stats-grid" id="adminStats">
+        <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-icon">👥</div>
             <div class="stat-label">Total Records</div>
@@ -715,21 +617,93 @@
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>ID</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>In</th>
-                  <th>Out</th>
-                  <th>Location</th>
-                  <th>Client</th>
-                  <th>Target (₹)</th>
-                  <th>Achieved (₹)</th>
-                  <th>KM</th>
-                  <th>Work</th>
+                  <th>Name</th><th>ID</th><th>Date</th><th>Status</th>
+                  <th>In</th><th>Out</th><th>Location</th><th>Client</th>
+                  <th>Target (₹)</th><th>Achieved (₹)</th><th>KM</th><th>Work</th>
                 </tr>
               </thead>
               <tbody id="adminTable"><tr><td colspan="12" class="empty-state">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── LEADS PAGE ── -->
+      <div class="page" id="leadsPage">
+        <p class="page-title">Leads</p>
+        <p class="page-sub">Manage your sales leads and pipeline</p>
+
+        <!-- Lead Stats -->
+        <div class="stats-grid" id="leadStats">
+          <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-label">Total Leads</div>
+            <div class="stat-value" id="ldTotal">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🆕</div>
+            <div class="stat-label">New</div>
+            <div class="stat-value" id="ldNew">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📞</div>
+            <div class="stat-label">Follow Up</div>
+            <div class="stat-value" id="ldFollowup">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-label">Converted</div>
+            <div class="stat-value" id="ldConverted">—</div>
+          </div>
+        </div>
+
+        <!-- Filter + Add Button -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+            <div class="filter-bar" style="margin-bottom:0;">
+              <input type="text" id="ld_search" placeholder="Search name / phone..." oninput="filterLeads()">
+              <select id="ld_status_filter" onchange="filterLeads()">
+                <option value="">All Status</option>
+                <option value="new">New</option>
+                <option value="contacted">Contacted</option>
+                <option value="follow_up">Follow Up</option>
+                <option value="converted">Converted</option>
+                <option value="lost">Lost</option>
+              </select>
+              <select id="ld_source_filter" onchange="filterLeads()">
+                <option value="">All Sources</option>
+                <option value="cold_call">Cold Call</option>
+                <option value="referral">Referral</option>
+                <option value="walk_in">Walk In</option>
+                <option value="online">Online</option>
+                <option value="social_media">Social Media</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="openAddLead()">+ Add Lead</button>
+          </div>
+        </div>
+
+        <!-- Leads Table -->
+        <div class="card">
+          <div class="card-title">All Leads</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Source</th>
+                  <th>Status</th>
+                  <th>Product</th>
+                  <th>Assigned To</th>
+                  <th>Notes</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTable"><tr><td colspan="10" class="empty-state">Loading...</td></tr></tbody>
             </table>
           </div>
         </div>
@@ -739,13 +713,81 @@
   </div>
 </div>
 
-<!-- TOAST -->
+<!-- ADD / EDIT LEAD MODAL -->
+<div class="modal-overlay" id="leadModal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="modalTitle">Add New Lead</span>
+      <button class="modal-close" onclick="closeLeadModal()">✕</button>
+    </div>
+    <div class="form-grid">
+      <input type="hidden" id="lead_id">
+      <div class="field">
+        <label>Lead Name *</label>
+        <input type="text" id="lead_name" placeholder="Full name">
+      </div>
+      <div class="field">
+        <label>Phone</label>
+        <input type="tel" id="lead_phone" placeholder="+91 98765 00000">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="lead_email" placeholder="email@example.com">
+      </div>
+      <div class="field">
+        <label>Source</label>
+        <select id="lead_source">
+          <option value="">Select source</option>
+          <option value="cold_call">Cold Call</option>
+          <option value="referral">Referral</option>
+          <option value="walk_in">Walk In</option>
+          <option value="online">Online</option>
+          <option value="social_media">Social Media</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="lead_status">
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="follow_up">Follow Up</option>
+          <option value="converted">Converted</option>
+          <option value="lost">Lost</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Product Interested In</label>
+        <input type="text" id="lead_product" placeholder="e.g. Term Insurance">
+      </div>
+      <div class="field">
+        <label>Assigned To</label>
+        <select id="lead_assigned">
+          <option value="">Select salesperson</option>
+          <option value="u002" data-name="Rahul Sharma">Rahul Sharma</option>
+          <option value="u003" data-name="Priya Singh">Priya Singh</option>
+          <option value="u004" data-name="Amit Verma">Amit Verma</option>
+        </select>
+      </div>
+      <div class="field span2">
+        <label>Notes</label>
+        <textarea id="lead_notes" placeholder="Any additional notes about this lead..."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="saveLeadBtn" onclick="saveLead()">💾 Save Lead</button>
+      <button class="btn btn-ghost" onclick="closeLeadModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
 const API = "https://sales-tracker-q8ij.onrender.com";
 let currentUser = null;
 let sessionToken = null;
+let allLeads = [];
 
 function authHeaders() {
   return {
@@ -754,7 +796,6 @@ function authHeaders() {
   };
 }
 
-// ─── TOAST ──────────────────────────────────────────────────────────────────
 function toast(msg, type = "info") {
   const el = document.getElementById("toast");
   el.textContent = msg;
@@ -763,7 +804,6 @@ function toast(msg, type = "info") {
   el._t = setTimeout(() => el.className = "", 3000);
 }
 
-// ─── AUTH ────────────────────────────────────────────────────────────────────
 async function login() {
   const username = document.getElementById("loginUser").value.trim();
   const password = document.getElementById("loginPass").value;
@@ -799,7 +839,6 @@ function setupRoleUI(role) {
   const sidebar = document.getElementById("sidebar");
 
   if (role === "admin") {
-    // Admin: Admin Dashboard + can also check in/out
     sidebar.innerHTML = `
       <button class="nav-btn active" onclick="goTo('adminPage', this); loadAdmin()">
         <span class="nav-icon">🛡️</span> Admin
@@ -810,16 +849,16 @@ function setupRoleUI(role) {
       <button class="nav-btn" onclick="goTo('checkOutPage', this); autoFillCO()">
         <span class="nav-icon">🔴</span> Check Out
       </button>
+      <button class="nav-btn" onclick="goTo('leadsPage', this); loadLeads()">
+        <span class="nav-icon">🎯</span> Leads
+      </button>
     `;
-    // Show admin page, hide all others
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById("adminPage").classList.add("active");
     loadAdmin();
-
   } else {
-    // Sales: Check In, Check Out, My Dashboard — NO admin
     sidebar.innerHTML = `
-      <button class="nav-btn active" id="navCheckIn" onclick="goTo('checkInPage', this)">
+      <button class="nav-btn active" onclick="goTo('checkInPage', this)">
         <span class="nav-icon">🟢</span> Check In
       </button>
       <button class="nav-btn" onclick="goTo('checkOutPage', this); autoFillCO()">
@@ -828,15 +867,16 @@ function setupRoleUI(role) {
       <button class="nav-btn" onclick="goTo('dashboardPage', this); loadDashboard()">
         <span class="nav-icon">📊</span> Dashboard
       </button>
+      <button class="nav-btn" onclick="goTo('leadsPage', this); loadLeads()">
+        <span class="nav-icon">🎯</span> Leads
+      </button>
     `;
-    // Show check-in page by default
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById("checkInPage").classList.add("active");
     autoFill();
   }
 }
 
-// Block direct access to admin page for non-admins
 function goTo(pageId, btn) {
   if (pageId === "adminPage" && currentUser?.role !== "admin") {
     toast("Access denied", "error");
@@ -857,7 +897,6 @@ function logout() {
   document.getElementById("loginPass").value = "";
 }
 
-// ─── AUTO FILL ───────────────────────────────────────────────────────────────
 function autoFill() {
   if (!currentUser) return;
   const today = new Date().toISOString().split("T")[0];
@@ -877,13 +916,11 @@ function autoFillCO() {
   document.getElementById("co_checkout").value = now;
 }
 
-// ─── STATUS TOGGLE ──────────────────────────────────────────────────────────
 function onStatusChange() {
   const status = document.getElementById("ci_status").value;
   const sec = document.getElementById("fieldSection");
   const isField = status === "on_field";
   sec.style.display = isField ? "block" : "none";
-  // Clear field inputs when hiding to avoid stale data being submitted
   if (!isField) {
     ["ci_location","ci_client","ci_contact","ci_work"].forEach(id => {
       document.getElementById(id).value = "";
@@ -892,7 +929,6 @@ function onStatusChange() {
   }
 }
 
-// ─── CHECK IN ────────────────────────────────────────────────────────────────
 async function checkIn() {
   const btn = document.getElementById("btnCheckIn");
   const payload = {
@@ -914,8 +950,7 @@ async function checkIn() {
     return toast("User ID, Date and Check-In time are required", "error");
   }
 
-  btn.disabled = true;
-  btn.textContent = "Submitting…";
+  btn.disabled = true; btn.textContent = "Submitting…";
   try {
     const res = await fetch(`${API}/attendance/checkin`, {
       method: "POST",
@@ -928,15 +963,12 @@ async function checkIn() {
   } catch {
     toast("Cannot connect to server", "error");
   } finally {
-    btn.disabled = false;
-    btn.textContent = "✅ Mark Check In";
+    btn.disabled = false; btn.textContent = "✅ Mark Check In";
   }
 }
 
-// ─── CHECK OUT ───────────────────────────────────────────────────────────────
 async function checkOut() {
   if (!confirm("Confirm check out for today?")) return;
-
   const btn = document.getElementById("btnCheckOut");
   const payload = {
     user_id:     document.getElementById("co_user_id").value.trim(),
@@ -953,8 +985,7 @@ async function checkOut() {
     return toast("User ID, Date and Check-Out time are required", "error");
   }
 
-  btn.disabled = true;
-  btn.textContent = "Submitting…";
+  btn.disabled = true; btn.textContent = "Submitting…";
   try {
     const res = await fetch(`${API}/attendance/checkout`, {
       method: "PUT",
@@ -967,18 +998,14 @@ async function checkOut() {
   } catch {
     toast("Cannot connect to server", "error");
   } finally {
-    btn.disabled = false;
-    btn.textContent = "🔴 Mark Check Out";
+    btn.disabled = false; btn.textContent = "🔴 Mark Check Out";
   }
 }
 
-// ─── DASHBOARD ───────────────────────────────────────────────────────────────
 async function loadDashboard() {
   if (!currentUser) return;
   try {
-    const res = await fetch(`${API}/attendance/${currentUser.id}`, {
-      headers: authHeaders()
-    });
+    const res = await fetch(`${API}/attendance/${currentUser.id}`, { headers: authHeaders() });
     const data = await res.json();
 
     const present = data.filter(d => d.status !== "absent").length;
@@ -1013,7 +1040,6 @@ async function loadDashboard() {
   }
 }
 
-// ─── ADMIN ────────────────────────────────────────────────────────────────────
 async function loadAdmin() {
   const params = new URLSearchParams();
   const date = document.getElementById("f_date")?.value;
@@ -1071,7 +1097,165 @@ function clearFilters() {
   loadAdmin();
 }
 
+// ─── LEADS ───────────────────────────────────────────────────────────────────
+
+async function loadLeads() {
+  try {
+    const res = await fetch(`${API}/leads`, { headers: authHeaders() });
+    allLeads = await res.json();
+    renderLeads(allLeads);
+    updateLeadStats(allLeads);
+  } catch {
+    toast("Failed to load leads", "error");
+  }
+}
+
+function updateLeadStats(leads) {
+  document.getElementById("ldTotal").textContent = leads.length;
+  document.getElementById("ldNew").textContent = leads.filter(l => l.status === "new").length;
+  document.getElementById("ldFollowup").textContent = leads.filter(l => l.status === "follow_up").length;
+  document.getElementById("ldConverted").textContent = leads.filter(l => l.status === "converted").length;
+}
+
+function filterLeads() {
+  const search = document.getElementById("ld_search").value.toLowerCase();
+  const status = document.getElementById("ld_status_filter").value;
+  const source = document.getElementById("ld_source_filter").value;
+
+  const filtered = allLeads.filter(l => {
+    const matchSearch = !search || 
+      (l.name && l.name.toLowerCase().includes(search)) ||
+      (l.phone && l.phone.includes(search));
+    const matchStatus = !status || l.status === status;
+    const matchSource = !source || l.source === source;
+    return matchSearch && matchStatus && matchSource;
+  });
+
+  renderLeads(filtered);
+}
+
+function renderLeads(leads) {
+  const tbody = document.getElementById("leadsTable");
+  if (!leads.length) {
+    tbody.innerHTML = `<tr><td colspan="10" class="empty-state">No leads found</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = leads.map(l => `
+    <tr>
+      <td style="font-weight:500;">${l.name}</td>
+      <td style="font-family:var(--mono);font-size:12px;">${l.phone || "—"}</td>
+      <td style="font-size:12px;color:var(--muted);">${l.email || "—"}</td>
+      <td>${sourceBadge(l.source)}</td>
+      <td>${leadStatusBadge(l.status)}</td>
+      <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.product_interested || "—"}</td>
+      <td style="font-size:12px;">${l.assigned_to || "—"}</td>
+      <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:12px;">${l.notes || "—"}</td>
+      <td style="font-size:12px;color:var(--muted);">${l.created_at ? new Date(l.created_at).toLocaleDateString("en-IN") : "—"}</td>
+      <td>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-ghost btn-sm" onclick="openEditLead(${l.id})">✏️</button>
+          ${currentUser?.role === "admin" ? `<button class="btn btn-danger btn-sm" onclick="deleteLead(${l.id})">🗑️</button>` : ""}
+        </div>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function openAddLead() {
+  document.getElementById("modalTitle").textContent = "Add New Lead";
+  document.getElementById("lead_id").value = "";
+  document.getElementById("lead_name").value = "";
+  document.getElementById("lead_phone").value = "";
+  document.getElementById("lead_email").value = "";
+  document.getElementById("lead_source").value = "";
+  document.getElementById("lead_status").value = "new";
+  document.getElementById("lead_product").value = "";
+  document.getElementById("lead_assigned").value = "";
+  document.getElementById("lead_notes").value = "";
+  document.getElementById("leadModal").classList.add("open");
+}
+
+function openEditLead(id) {
+  const lead = allLeads.find(l => l.id === id);
+  if (!lead) return;
+
+  document.getElementById("modalTitle").textContent = "Edit Lead";
+  document.getElementById("lead_id").value = lead.id;
+  document.getElementById("lead_name").value = lead.name || "";
+  document.getElementById("lead_phone").value = lead.phone || "";
+  document.getElementById("lead_email").value = lead.email || "";
+  document.getElementById("lead_source").value = lead.source || "";
+  document.getElementById("lead_status").value = lead.status || "new";
+  document.getElementById("lead_product").value = lead.product_interested || "";
+  document.getElementById("lead_assigned").value = lead.assigned_to_id || "";
+  document.getElementById("lead_notes").value = lead.notes || "";
+  document.getElementById("leadModal").classList.add("open");
+}
+
+function closeLeadModal() {
+  document.getElementById("leadModal").classList.remove("open");
+}
+
+async function saveLead() {
+  const id = document.getElementById("lead_id").value;
+  const assignedSelect = document.getElementById("lead_assigned");
+  const assignedOption = assignedSelect.options[assignedSelect.selectedIndex];
+
+  const payload = {
+    name:               document.getElementById("lead_name").value.trim(),
+    phone:              document.getElementById("lead_phone").value.trim(),
+    email:              document.getElementById("lead_email").value.trim(),
+    source:             document.getElementById("lead_source").value,
+    status:             document.getElementById("lead_status").value,
+    product_interested: document.getElementById("lead_product").value.trim(),
+    assigned_to:        assignedOption.text !== "Select salesperson" ? assignedOption.text : "",
+    assigned_to_id:     assignedSelect.value,
+    notes:              document.getElementById("lead_notes").value.trim(),
+  };
+
+  if (!payload.name) return toast("Lead name is required", "error");
+
+  const btn = document.getElementById("saveLeadBtn");
+  btn.disabled = true; btn.textContent = "Saving…";
+
+  try {
+    const url = id ? `${API}/leads/${id}` : `${API}/leads`;
+    const method = id ? "PUT" : "POST";
+    const res = await fetch(url, {
+      method,
+      headers: authHeaders(),
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) return toast(data.error || "Error", "error");
+    toast(data.message, "success");
+    closeLeadModal();
+    loadLeads();
+  } catch {
+    toast("Cannot connect to server", "error");
+  } finally {
+    btn.disabled = false; btn.textContent = "💾 Save Lead";
+  }
+}
+
+async function deleteLead(id) {
+  if (!confirm("Delete this lead?")) return;
+  try {
+    const res = await fetch(`${API}/leads/${id}`, {
+      method: "DELETE",
+      headers: authHeaders()
+    });
+    const data = await res.json();
+    toast(data.message, "success");
+    loadLeads();
+  } catch {
+    toast("Failed to delete", "error");
+  }
+}
+
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
+
 function statusBadge(status) {
   const map = {
     on_field:  ["badge-field",  "🚗 On Field"],
@@ -1082,6 +1266,30 @@ function statusBadge(status) {
   };
   const [cls, label] = map[status] || ["badge-half", status || "—"];
   return `<span class="badge ${cls}">${label}</span>`;
+}
+
+function leadStatusBadge(status) {
+  const map = {
+    new:       ["badge-new",       "🆕 New"],
+    contacted: ["badge-contacted", "📞 Contacted"],
+    follow_up: ["badge-followup",  "🔄 Follow Up"],
+    converted: ["badge-converted", "✅ Converted"],
+    lost:      ["badge-lost",      "❌ Lost"],
+  };
+  const [cls, label] = map[status] || ["badge-half", status || "—"];
+  return `<span class="badge ${cls}">${label}</span>`;
+}
+
+function sourceBadge(source) {
+  const map = {
+    cold_call:    "📞 Cold Call",
+    referral:     "🤝 Referral",
+    walk_in:      "🚶 Walk In",
+    online:       "🌐 Online",
+    social_media: "📱 Social",
+    other:        "📋 Other",
+  };
+  return `<span style="font-size:12px;color:var(--muted);">${map[source] || source || "—"}</span>`;
 }
 </script>
 
