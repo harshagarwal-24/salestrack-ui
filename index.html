@@ -502,11 +502,11 @@
             </div>
             <div class="field">
               <label>Date</label>
-              <input type="date" id="ci_date">
+              <input type="date" id="ci_date" readonly style="pointer-events:none;opacity:0.6;">
             </div>
             <div class="field">
               <label>Check-In Time</label>
-              <input type="time" id="ci_checkin">
+              <input type="time" id="ci_checkin" readonly style="pointer-events:none;opacity:0.6;">
             </div>
             <div class="field">
               <label>Status</label>
@@ -580,11 +580,11 @@
             </div>
             <div class="field">
               <label>Date</label>
-              <input type="date" id="co_date">
+              <input type="date" id="co_date" readonly style="pointer-events:none;opacity:0.6;">
             </div>
             <div class="field">
               <label>Check-Out Time</label>
-              <input type="time" id="co_checkout">
+              <input type="time" id="co_checkout" readonly style="pointer-events:none;opacity:0.6;">
             </div>
             <div class="field">
               <label>Sales Achieved (₹)</label>
@@ -743,7 +743,7 @@
 <div id="toast"></div>
 
 <script>
-const API = "https://sales-tracker-q8ij.onrender.com";
+const API = "https://sales-tracker-q8ij.onrender.com/";
 let currentUser = null;
 let sessionToken = null;
 
