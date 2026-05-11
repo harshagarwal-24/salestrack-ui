@@ -247,11 +247,11 @@
             <div class="field">
               <label>Status</label>
               <select id="ci_status" onchange="onStatusChange()">
-                <option value="in_office">🏢 In Office</option>
-                <option value="on_field">🚗 On Field</option>
-                <option value="wfh">🏠 Work From Home</option>
-                <option value="half_day">⏱️ Half Day</option>
-                <option value="absent">❌ Absent</option>
+                <option value="in_office"> In Office</option>
+                <option value="on_field"> On Field</option>
+                <option value="wfh"> Work From Home</option>
+                <option value="half_day"> Half Day</option>
+                <option value="absent"> Absent</option>
               </select>
             </div>
             <div class="field"><label>Sales Target Today (₹)</label><input type="number" id="ci_target" placeholder="e.g. 50000"></div>
@@ -282,7 +282,7 @@
         </div>
 
         <div class="card field-section" id="fieldSection" style="display:none;">
-          <div class="card-title">🚗 Field Visit Details</div>
+          <div class="card-title"> Field Visit Details</div>
           <div class="form-grid">
             <div class="field span2"><label>Field Location / Area</label><input type="text" id="ci_location" placeholder="e.g. Sector 14, Faridabad"></div>
             <div class="field">
@@ -364,10 +364,10 @@
           <div><div class="page-title">My Dashboard</div><div class="page-sub">Your attendance & performance overview</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-label">Days Present</div><div class="stat-value" id="myPresent">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">Days on Field</div><div class="stat-value" id="myField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="mySales">—</div></div>
-          <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Orders Closed</div><div class="stat-value" id="myOrders">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Days Present</div><div class="stat-value" id="myPresent">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Days on Field</div><div class="stat-value" id="myField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="mySales">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Orders Closed</div><div class="stat-value" id="myOrders">—</div></div>
         </div>
         <div class="card">
           <div class="card-title">Attendance Log</div>
@@ -387,10 +387,10 @@
           <div><div class="page-title">Admin Dashboard</div><div class="page-sub">Full team overview and management</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total Records</div><div class="stat-value" id="adTotal">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">On Field</div><div class="stat-value" id="adField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-label">In Office</div><div class="stat-value" id="adOffice">—</div></div>
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="adSales">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Records</div><div class="stat-value" id="adTotal">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">On Field</div><div class="stat-value" id="adField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">In Office</div><div class="stat-value" id="adOffice">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="adSales">—</div></div>
         </div>
         <div class="card">
           <div class="card-title">Filters & Export</div>
@@ -407,8 +407,8 @@
             </select>
             <input type="month" id="f_month" onchange="loadAdmin()" title="Filter by month">
             <button class="btn btn-ghost btn-sm" onclick="clearFilters()">Clear</button>
-            <button class="btn btn-teal btn-sm" onclick="exportToExcel()">📥 Export Excel</button>
-            <button class="btn btn-ghost btn-sm" onclick="goTo('monthlyPage',this);loadMonthly()">📊 Monthly Report</button>
+            <button class="btn btn-teal btn-sm" onclick="exportToExcel()"> Export Excel</button>
+            <button class="btn btn-ghost btn-sm" onclick="goTo('monthlyPage',this);loadMonthly()"> Monthly Report</button>
           </div>
         </div>
         <div class="card">
@@ -425,14 +425,14 @@
       <!-- LEADS -->
       <div class="page" id="leadsPage">
         <div class="page-header">
-          <div class="page-header-icon">🎯</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Leads</div><div class="page-sub">Manage your sales leads and pipeline</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-label">Total Leads</div><div class="stat-value" id="ldTotal">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🆕</div><div class="stat-label">New</div><div class="stat-value" id="ldNew">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">Follow Up</div><div class="stat-value" id="ldFollowup">—</div></div>
-          <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Converted</div><div class="stat-value" id="ldConverted">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Leads</div><div class="stat-value" id="ldTotal">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">New</div><div class="stat-value" id="ldNew">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Follow Up</div><div class="stat-value" id="ldFollowup">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Converted</div><div class="stat-value" id="ldConverted">—</div></div>
         </div>
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
@@ -486,10 +486,10 @@
 
         <!-- Summary Stats -->
         <div class="stats-grid" id="mrStats">
-          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total Present</div><div class="stat-value" id="mrPresent">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">Field Visits</div><div class="stat-value" id="mrField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales</div><div class="stat-value" id="mrSales">—</div></div>
-          <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Total Orders</div><div class="stat-value" id="mrOrders">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Present</div><div class="stat-value" id="mrPresent">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Field Visits</div><div class="stat-value" id="mrField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales</div><div class="stat-value" id="mrSales">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Orders</div><div class="stat-value" id="mrOrders">—</div></div>
         </div>
 
         <!-- Per Employee Summary -->
@@ -584,7 +584,7 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-primary" id="saveLeadBtn" onclick="saveLead()">💾 Save Lead</button>
+      <button class="btn btn-primary" id="saveLeadBtn" onclick="saveLead()"> Save Lead</button>
       <button class="btn btn-ghost" onclick="closeLeadModal()">Cancel</button>
     </div>
   </div>
