@@ -234,7 +234,7 @@
       <!-- CHECK IN -->
       <div class="page active" id="checkInPage">
         <div class="page-header">
-          <div class="page-header-icon">🟢</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Check In</div><div class="page-sub">Record your attendance and field details</div></div>
         </div>
         <div class="card">
@@ -312,7 +312,7 @@
       <!-- CHECK OUT -->
       <div class="page" id="checkOutPage">
         <div class="page-header">
-          <div class="page-header-icon">🔴</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Check Out</div><div class="page-sub">Wrap up your day and submit your report</div></div>
         </div>
         <div class="card">
@@ -352,15 +352,15 @@
           </div>
         </div>
         <div class="btn-row">
-          <button class="btn btn-danger" id="btnCheckOut" onclick="checkOut()">🔴 Mark Check Out</button>
-          <button class="btn btn-ghost" onclick="autoFillCO()">⚡ Auto Fill</button>
+          <button class="btn btn-danger" id="btnCheckOut" onclick="checkOut()"> Mark Check Out</button>
+          <button class="btn btn-ghost" onclick="autoFillCO()"> Auto Fill</button>
         </div>
       </div>
 
       <!-- MY DASHBOARD -->
       <div class="page" id="dashboardPage">
         <div class="page-header">
-          <div class="page-header-icon">📊</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">My Dashboard</div><div class="page-sub">Your attendance & performance overview</div></div>
         </div>
         <div class="stats-grid">
@@ -383,7 +383,7 @@
       <!-- ADMIN -->
       <div class="page" id="adminPage">
         <div class="page-header">
-          <div class="page-header-icon">🛡️</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Admin Dashboard</div><div class="page-sub">Full team overview and management</div></div>
         </div>
         <div class="stats-grid">
@@ -473,13 +473,13 @@
       <!-- MONTHLY REPORT -->
       <div class="page" id="monthlyPage">
         <div class="page-header">
-          <div class="page-header-icon">📊</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Monthly Report</div><div class="page-sub">Team performance summary by month</div></div>
         </div>
         <div class="card">
           <div class="filter-bar" style="margin-bottom:0;">
             <input type="month" id="mr_month" onchange="loadMonthly()">
-            <button class="btn btn-teal btn-sm" onclick="exportMonthlyExcel()">📥 Export Excel</button>
+            <button class="btn btn-teal btn-sm" onclick="exportMonthlyExcel()"> Export Excel</button>
             <button class="btn btn-ghost btn-sm" onclick="goTo('adminPage', document.querySelector('.nav-btn.active')); loadAdmin()">← Back</button>
           </div>
         </div>
@@ -518,21 +518,21 @@
       <!-- FOLLOW-UP REMINDERS -->
       <div class="page" id="remindersPage">
         <div class="page-header">
-          <div class="page-header-icon">🔔</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Follow-up Reminders</div><div class="page-sub">Leads that need follow-up today or are overdue</div></div>
         </div>
 
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">🔴</div><div class="stat-label">Overdue</div><div class="stat-value" id="rdOverdue">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🟡</div><div class="stat-label">Due Today</div><div class="stat-value" id="rdToday">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🟢</div><div class="stat-label">Due This Week</div><div class="stat-value" id="rdWeek">—</div></div>
-          <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-label">All Follow-ups</div><div class="stat-value" id="rdAll">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Overdue</div><div class="stat-value" id="rdOverdue">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Due Today</div><div class="stat-value" id="rdToday">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Due This Week</div><div class="stat-value" id="rdWeek">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">All Follow-ups</div><div class="stat-value" id="rdAll">—</div></div>
         </div>
 
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0;">
             <div class="card-title" style="margin-bottom:0;">Follow-up Leads</div>
-            <button class="btn btn-ghost btn-sm" onclick="loadReminders()">🔄 Refresh</button>
+            <button class="btn btn-ghost btn-sm" onclick="loadReminders()"> Refresh</button>
           </div>
         </div>
 
@@ -775,14 +775,14 @@ function setupRoleUI(role) {
   if (role === "admin") {
     sidebar.innerHTML = `
       <div class="sidebar-section">Overview</div>
-      <button class="nav-btn active" onclick="goTo('adminPage',this);loadAdmin()"><span class="nav-icon">🛡️</span> Dashboard</button>
-      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly()"><span class="nav-icon">📊</span> Monthly Report</button>
+      <button class="nav-btn active" onclick="goTo('adminPage',this);loadAdmin()"><span class="nav-icon"></span> Dashboard</button>
+      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly()"><span class="nav-icon"></span> Monthly Report</button>
       <div class="sidebar-section">Attendance</div>
-      <button class="nav-btn" onclick="goTo('checkInPage',this);autoFill()"><span class="nav-icon">🟢</span> Check In</button>
-      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO()"><span class="nav-icon">🔴</span> Check Out</button>
+      <button class="nav-btn" onclick="goTo('checkInPage',this);autoFill()"><span class="nav-icon"></span> Check In</button>
+      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO()"><span class="nav-icon"></span> Check Out</button>
       <div class="sidebar-section">Sales</div>
-      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads()"><span class="nav-icon">🎯</span> Leads</button>
-      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders()"><span class="nav-icon">🔔</span> Reminders</button>
+      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads()"><span class="nav-icon"></span> Leads</button>
+      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders()"><span class="nav-icon"></span> Reminders</button>
     `;
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById("adminPage").classList.add("active");
@@ -790,12 +790,12 @@ function setupRoleUI(role) {
   } else {
     sidebar.innerHTML = `
       <div class="sidebar-section">Attendance</div>
-      <button class="nav-btn active" onclick="goTo('checkInPage',this)"><span class="nav-icon">🟢</span> Check In</button>
-      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO()"><span class="nav-icon">🔴</span> Check Out</button>
-      <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard()"><span class="nav-icon">📊</span> My Dashboard</button>
+      <button class="nav-btn active" onclick="goTo('checkInPage',this)"><span class="nav-icon"></span> Check In</button>
+      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO()"><span class="nav-icon"></span> Check Out</button>
+      <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard()"><span class="nav-icon"></span> My Dashboard</button>
       <div class="sidebar-section">Sales</div>
-      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads()"><span class="nav-icon">🎯</span> Leads</button>
-      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders()"><span class="nav-icon">🔔</span> Reminders</button>
+      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads()"><span class="nav-icon"></span> Leads</button>
+      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders()"><span class="nav-icon"></span> Reminders</button>
     `;
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById("checkInPage").classList.add("active");
@@ -925,7 +925,7 @@ async function checkOut() {
   } catch(err) {
     toast(err.message || "Cannot connect to server", "error");
   } finally {
-    btn.disabled = false; btn.textContent = "🔴 Mark Check Out";
+    btn.disabled = false; btn.textContent = " Mark Check Out";
   }
 }
 
@@ -1285,7 +1285,7 @@ async function loadReminders() {
     const sorted = [...overdue, ...dueToday, ...dueWeek, ...all];
 
     if (!sorted.length) {
-      tbody.innerHTML = `<tr><td colspan="8" class="empty-state">🎉 No pending follow-ups!</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" class="empty-state"> No pending follow-ups!</td></tr>`;
       return;
     }
 
@@ -1295,9 +1295,9 @@ async function loadReminders() {
       if (l.followup_date) {
         const fd = new Date(l.followup_date); fd.setHours(0,0,0,0);
         const diff = Math.floor((fd - today) / (1000*60*60*24));
-        if (diff < 0) { urgency = `<span class="badge badge-absent">🔴 Overdue ${Math.abs(diff)}d</span>`; rowStyle = "background:#fff5f5;"; }
-        else if (diff === 0) { urgency = `<span class="badge badge-contacted">🟡 Today</span>`; rowStyle = "background:#fffbeb;"; }
-        else if (diff <= 7) { urgency = `<span class="badge badge-followup">🟢 In ${diff}d</span>`; }
+        if (diff < 0) { urgency = `<span class="badge badge-absent"> Overdue ${Math.abs(diff)}d</span>`; rowStyle = "background:#fff5f5;"; }
+        else if (diff === 0) { urgency = `<span class="badge badge-contacted"> Today</span>`; rowStyle = "background:#fffbeb;"; }
+        else if (diff <= 7) { urgency = `<span class="badge badge-followup"> In ${diff}d</span>`; }
         else { urgency = `<span class="badge badge-half">${new Date(l.followup_date).toLocaleDateString("en-IN")}</span>`; }
       } else {
         urgency = `<span class="badge badge-half">No date set</span>`;
@@ -1314,7 +1314,7 @@ async function loadReminders() {
         <td>
           <div style="display:flex;gap:6px;">
             <button class="btn btn-teal btn-sm" onclick="markContacted(${l.id})">✅ Done</button>
-            <button class="btn btn-ghost btn-sm" onclick="openEditLead(${l.id})">✏️</button>
+            <button class="btn btn-ghost btn-sm" onclick="openEditLead(${l.id})"></button>
           </div>
         </td>
       </tr>`;
@@ -1344,7 +1344,7 @@ function statusBadge(s) {
   return `<span class="badge ${c}">${l}</span>`;
 }
 function leadStatusBadge(s) {
-  const m = {new:["badge-new","🆕 New"],contacted:["badge-contacted","📞 Contacted"],follow_up:["badge-followup","🔄 Follow Up"],converted:["badge-converted","✅ Converted"],lost:["badge-lost","❌ Lost"]};
+  const m = {new:["badge-new"," New"],contacted:["badge-contacted"," Contacted"],follow_up:["badge-followup"," Follow Up"],converted:["badge-converted"," Converted"],lost:["badge-lost"," Lost"]};
   const [c,l] = m[s]||["badge-half",s||"—"];
   return `<span class="badge ${c}">${l}</span>`;
 }
