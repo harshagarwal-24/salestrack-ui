@@ -1339,7 +1339,7 @@ async function markContacted(id) {
 
 
 function statusBadge(s) {
-  const m = {on_field:["badge-field","🚗 On Field"],in_office:["badge-office","🏢 Office"],wfh:["badge-wfh","🏠 WFH"],absent:["badge-absent","❌ Absent"],half_day:["badge-half","⏱️ Half Day"]};
+  const m = {on_field:["badge-field"," On Field"],in_office:["badge-office"," Office"],wfh:["badge-wfh"," WFH"],absent:["badge-absent"," Absent"],half_day:["badge-half","⏱️ Half Day"]};
   const [c,l] = m[s]||["badge-half",s||"—"];
   return `<span class="badge ${c}">${l}</span>`;
 }
@@ -1349,7 +1349,7 @@ function leadStatusBadge(s) {
   return `<span class="badge ${c}">${l}</span>`;
 }
 function sourceBadge(s) {
-  const m = {cold_call:"📞 Cold Call",referral:"🤝 Referral",walk_in:"🚶 Walk In",online:"🌐 Online",social_media:"📱 Social",other:"📋 Other"};
+  const m = {cold_call:" Cold Call",referral:" Referral",walk_in:" Walk In",online:" Online",social_media:" Social",other:" Other"};
   return `<span style="font-size:12px;color:var(--muted);">${m[s]||s||"—"}</span>`;
 }
 </script>
