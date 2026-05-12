@@ -248,11 +248,11 @@
             <div class="field">
               <label>Status</label>
               <select id="ci_status" onchange="onStatusChange()">
-                <option value="in_office">🏢 In Office</option>
-                <option value="on_field">🚗 On Field</option>
-                <option value="wfh">🏠 Work From Home</option>
-                <option value="half_day">⏱️ Half Day</option>
-                <option value="absent">❌ Absent</option>
+                <option value="in_office"> In Office</option>
+                <option value="on_field"> On Field</option>
+                <option value="wfh"> Work From Home</option>
+                <option value="half_day"> Half Day</option>
+                <option value="absent"> Absent</option>
               </select>
             </div>
             <div class="field"><label>Sales Target Today (₹)</label><input type="number" id="ci_target" placeholder="e.g. 50000"></div>
@@ -283,7 +283,7 @@
         </div>
 
         <div class="card field-section" id="fieldSection" style="display:none;">
-          <div class="card-title">🚗 Field Visit Details</div>
+          <div class="card-title"> Field Visit Details</div>
           <div class="form-grid">
             <div class="field span2"><label>Field Location / Area</label><input type="text" id="ci_location" placeholder="e.g. Sector 14, Faridabad"></div>
             <div class="field">
@@ -303,14 +303,14 @@
 
         <div class="btn-row">
           <button class="btn btn-teal" id="btnCheckIn" onclick="checkIn()">✅ Mark Check In</button>
-          <button class="btn btn-ghost" onclick="autoFill()">⚡ Auto Fill</button>
+          <button class="btn btn-ghost" onclick="autoFill()"> Auto Fill</button>
         </div>
       </div>
 
       <!-- CHECK OUT -->
       <div class="page" id="checkOutPage">
         <div class="page-header">
-          <div class="page-header-icon">🔴</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Check Out</div><div class="page-sub">Wrap up your day and submit your report</div></div>
         </div>
         <div class="card">
@@ -332,11 +332,11 @@
                     <label>Deal Type</label>
                     <select id="co_deal_type">
                       <option value="">Select type</option>
-                      <option value="b2b">🏢 B2B Sale</option>
-                      <option value="retail">🛍️ Retail Sale</option>
-                      <option value="renewal">🔄 Renewal</option>
-                      <option value="upsell">📈 Upsell</option>
-                      <option value="other">📋 Other</option>
+                      <option value="b2b"> B2B Sale</option>
+                      <option value="retail"> Retail Sale</option>
+                      <option value="renewal"> Renewal</option>
+                      <option value="upsell"> Upsell</option>
+                      <option value="other"> Other</option>
                     </select>
                   </div>
                   <div class="field">
@@ -387,15 +387,15 @@
           </div>
         </div>
         <div class="btn-row">
-          <button class="btn btn-danger" id="btnCheckOut" onclick="checkOut()">🔴 Mark Check Out</button>
-          <button class="btn btn-ghost" onclick="autoFillCO()">⚡ Auto Fill</button>
+          <button class="btn btn-danger" id="btnCheckOut" onclick="checkOut()"> Mark Check Out</button>
+          <button class="btn btn-ghost" onclick="autoFillCO()"> Auto Fill</button>
         </div>
       </div>
 
       <!-- FIELD VISIT LOG -->
       <div class="page" id="fieldVisitPage">
         <div class="page-header">
-          <div class="page-header-icon">🗺️</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Field Visit Log</div><div class="page-sub">Log additional field visits during the day</div></div>
         </div>
         <div class="card">
@@ -438,11 +438,11 @@
               <label>Outcome</label>
               <select id="fv_outcome">
                 <option value="">Select outcome</option>
-                <option value="interested">✅ Interested</option>
-                <option value="not_interested">❌ Not Interested</option>
-                <option value="follow_up_needed">🔄 Follow Up Needed</option>
-                <option value="deal_closed">🏆 Deal Closed</option>
-                <option value="no_contact">📵 No Contact</option>
+                <option value="interested"> Interested</option>
+                <option value="not_interested"> Not Interested</option>
+                <option value="follow_up_needed"> Follow Up Needed</option>
+                <option value="deal_closed"> Deal Closed</option>
+                <option value="no_contact"> No Contact</option>
               </select>
             </div>
             <div class="field">
@@ -455,8 +455,8 @@
             </div>
           </div>
           <div class="btn-row">
-            <button class="btn btn-teal" id="btnLogVisit" onclick="logFieldVisit()">🗺️ Log Visit</button>
-            <button class="btn btn-ghost" onclick="autoFillFV()">⚡ Auto Fill</button>
+            <button class="btn btn-teal" id="btnLogVisit" onclick="logFieldVisit()"> Log Visit</button>
+            <button class="btn btn-ghost" onclick="autoFillFV()"> Auto Fill</button>
           </div>
         </div>
 
@@ -472,16 +472,16 @@
       </div>
       <div class="page" id="dashboardPage">
         <div class="page-header">
-          <div class="page-header-icon">📊</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">My Dashboard</div><div class="page-sub">Your attendance & performance overview</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-label">Days Present</div><div class="stat-value" id="myPresent">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">Days on Field</div><div class="stat-value" id="myField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="mySales">—</div></div>
-          <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Orders Closed</div><div class="stat-value" id="myOrders">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-label">B2B Sales (₹)</div><div class="stat-value" id="myB2B">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🛍️</div><div class="stat-label">Retail Sales (₹)</div><div class="stat-value" id="myRetail">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Days Present</div><div class="stat-value" id="myPresent">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Days on Field</div><div class="stat-value" id="myField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="mySales">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Orders Closed</div><div class="stat-value" id="myOrders">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">B2B Sales (₹)</div><div class="stat-value" id="myB2B">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Retail Sales (₹)</div><div class="stat-value" id="myRetail">—</div></div>
         </div>
         <div class="card">
           <div class="card-title">Attendance Log</div>
@@ -497,14 +497,14 @@
       <!-- ADMIN -->
       <div class="page" id="adminPage">
         <div class="page-header">
-          <div class="page-header-icon">🛡️</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Admin Dashboard</div><div class="page-sub">Full team overview and management</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total Records</div><div class="stat-value" id="adTotal">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">On Field</div><div class="stat-value" id="adField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-label">In Office</div><div class="stat-value" id="adOffice">—</div></div>
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="adSales">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Records</div><div class="stat-value" id="adTotal">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">On Field</div><div class="stat-value" id="adField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">In Office</div><div class="stat-value" id="adOffice">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="adSales">—</div></div>
         </div>
         <div class="card">
           <div class="card-title">Filters & Export</div>
@@ -521,8 +521,8 @@
             </select>
             <input type="month" id="f_month" onchange="loadAdmin()" title="Filter by month">
             <button class="btn btn-ghost btn-sm" onclick="clearFilters()">Clear</button>
-            <button class="btn btn-teal btn-sm" onclick="exportToExcel()">📥 Export Excel</button>
-            <button class="btn btn-ghost btn-sm" onclick="goTo('monthlyPage',this);loadMonthly()">📊 Monthly Report</button>
+            <button class="btn btn-teal btn-sm" onclick="exportToExcel()"> Export Excel</button>
+            <button class="btn btn-ghost btn-sm" onclick="goTo('monthlyPage',this);loadMonthly()"> Monthly Report</button>
           </div>
         </div>
         <div class="card">
@@ -539,14 +539,14 @@
       <!-- LEADS -->
       <div class="page" id="leadsPage">
         <div class="page-header">
-          <div class="page-header-icon">🎯</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Leads</div><div class="page-sub">Manage your sales leads and pipeline</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-label">Total Leads</div><div class="stat-value" id="ldTotal">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🆕</div><div class="stat-label">New</div><div class="stat-value" id="ldNew">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">Follow Up</div><div class="stat-value" id="ldFollowup">—</div></div>
-          <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Converted</div><div class="stat-value" id="ldConverted">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Leads</div><div class="stat-value" id="ldTotal">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">New</div><div class="stat-value" id="ldNew">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Follow Up</div><div class="stat-value" id="ldFollowup">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Converted</div><div class="stat-value" id="ldConverted">—</div></div>
         </div>
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
@@ -587,23 +587,23 @@
       <!-- MONTHLY REPORT -->
       <div class="page" id="monthlyPage">
         <div class="page-header">
-          <div class="page-header-icon">📊</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Monthly Report</div><div class="page-sub">Team performance summary by month</div></div>
         </div>
         <div class="card">
           <div class="filter-bar" style="margin-bottom:0;">
             <input type="month" id="mr_month" onchange="loadMonthly()">
-            <button class="btn btn-teal btn-sm" onclick="exportMonthlyExcel()">📥 Export Excel</button>
+            <button class="btn btn-teal btn-sm" onclick="exportMonthlyExcel()"> Export Excel</button>
             <button class="btn btn-ghost btn-sm" onclick="goTo('adminPage', document.querySelector('.nav-btn.active')); loadAdmin()">← Back</button>
           </div>
         </div>
 
         <!-- Summary Stats -->
         <div class="stats-grid" id="mrStats">
-          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total Present</div><div class="stat-value" id="mrPresent">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">Field Visits</div><div class="stat-value" id="mrField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales</div><div class="stat-value" id="mrSales">—</div></div>
-          <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Total Orders</div><div class="stat-value" id="mrOrders">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Present</div><div class="stat-value" id="mrPresent">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Field Visits</div><div class="stat-value" id="mrField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales</div><div class="stat-value" id="mrSales">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Orders</div><div class="stat-value" id="mrOrders">—</div></div>
         </div>
 
         <!-- Per Employee Summary -->
@@ -632,21 +632,21 @@
       <!-- FOLLOW-UP REMINDERS -->
       <div class="page" id="remindersPage">
         <div class="page-header">
-          <div class="page-header-icon">🔔</div>
+          <div class="page-header-icon"></div>
           <div><div class="page-title">Follow-up Reminders</div><div class="page-sub">Leads that need follow-up today or are overdue</div></div>
         </div>
 
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">🔴</div><div class="stat-label">Overdue</div><div class="stat-value" id="rdOverdue">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🟡</div><div class="stat-label">Due Today</div><div class="stat-value" id="rdToday">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🟢</div><div class="stat-label">Due This Week</div><div class="stat-value" id="rdWeek">—</div></div>
-          <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-label">All Follow-ups</div><div class="stat-value" id="rdAll">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Overdue</div><div class="stat-value" id="rdOverdue">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Due Today</div><div class="stat-value" id="rdToday">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Due This Week</div><div class="stat-value" id="rdWeek">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">All Follow-ups</div><div class="stat-value" id="rdAll">—</div></div>
         </div>
 
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0;">
             <div class="card-title" style="margin-bottom:0;">Follow-up Leads</div>
-            <button class="btn btn-ghost btn-sm" onclick="loadReminders()">🔄 Refresh</button>
+            <button class="btn btn-ghost btn-sm" onclick="loadReminders()"> Refresh</button>
           </div>
         </div>
 
@@ -683,7 +683,7 @@
         <select id="lead_source"><option value="">Select source</option><option value="cold_call">Cold Call</option><option value="referral">Referral</option><option value="walk_in">Walk In</option><option value="field_visit">🗺️ Field Visit</option><option value="online">Online</option><option value="social_media">Social Media</option><option value="other">Other</option></select>
       </div>
       <div class="field"><label>Status</label>
-        <select id="lead_status"><option value="new">New</option><option value="prospect">🎯 Prospect</option><option value="contacted">Contacted</option><option value="follow_up">Follow Up</option><option value="converted">Converted</option><option value="lost">Lost</option></select>
+        <select id="lead_status"><option value="new">New</option><option value="prospect"> Prospect</option><option value="contacted">Contacted</option><option value="follow_up">Follow Up</option><option value="converted">Converted</option><option value="lost">Lost</option></select>
       </div>
       <div class="field"><label>Product Interested In</label><input type="text" id="lead_product" placeholder="e.g. Term Insurance"></div>
       <div class="field"><label>Assigned To</label>
@@ -691,7 +691,7 @@
       </div>
       <div class="field span2"><label>Notes</label><textarea id="lead_notes" placeholder="Any additional notes..."></textarea></div>
       <div class="field">
-        <label>📅 Follow-up Date</label>
+        <label> Follow-up Date</label>
         <input type="date" id="lead_followup_date" placeholder="Set follow-up date">
       </div>
       <div class="field">
@@ -700,7 +700,7 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-primary" id="saveLeadBtn" onclick="saveLead()">💾 Save Lead</button>
+      <button class="btn btn-primary" id="saveLeadBtn" onclick="saveLead()"> Save Lead</button>
       <button class="btn btn-ghost" onclick="closeLeadModal()">Cancel</button>
     </div>
   </div>
@@ -720,7 +720,7 @@
 <div class="modal-overlay" id="changePassModal">
   <div class="modal" style="max-width:420px;">
     <div class="modal-title">
-      <span>🔒 Change Password</span>
+      <span> Change Password</span>
       <button class="modal-close" onclick="document.getElementById('changePassModal').classList.remove('open')">×</button>
     </div>
     <div class="field" style="margin-bottom:12px;">
@@ -736,7 +736,7 @@
       <input type="password" id="cp_confirm" placeholder="Confirm new password">
     </div>
     <div class="btn-row" style="margin-top:0;">
-      <button class="btn btn-primary" onclick="changePassword()">💾 Update Password</button>
+      <button class="btn btn-primary" onclick="changePassword()"> Update Password</button>
       <button class="btn btn-ghost" onclick="document.getElementById('changePassModal').classList.remove('open')">Cancel</button>
     </div>
   </div>
@@ -826,7 +826,7 @@ function capturePhoto(prefix) {
     streams[prefix].getTracks().forEach(t => { try { t.enabled = false; } catch(e) {} });
   }
 
-  toast("Photo captured! ✅", "success");
+  toast("Photo captured! ", "success");
 }
 
 function retakePhoto(prefix) {
@@ -908,7 +908,7 @@ async function login() {
     document.getElementById("topName").textContent = user.name;
     document.getElementById("topRole").textContent = user.role.toUpperCase();
     setupRoleUI(user.role);
-    toast(`Welcome, ${user.name}! 👋`, "success");
+    toast(`Welcome, ${user.name}! `, "success");
   } catch { toast("Cannot connect to server", "error"); }
 }
 
@@ -917,15 +917,15 @@ function setupRoleUI(role) {
   if (role === "admin") {
     sidebar.innerHTML = `
       <div class="sidebar-section">Overview</div>
-      <button class="nav-btn active" onclick="goTo('adminPage',this);loadAdmin()"><span class="nav-icon">🛡️</span> Dashboard</button>
-      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly()"><span class="nav-icon">📊</span> Monthly Report</button>
+      <button class="nav-btn active" onclick="goTo('adminPage',this);loadAdmin()"><span class="nav-icon"></span> Dashboard</button>
+      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly()"><span class="nav-icon"></span> Monthly Report</button>
       <div class="sidebar-section">Attendance</div>
-      <button class="nav-btn" onclick="goTo('checkInPage',this);autoFill()"><span class="nav-icon">🟢</span> Check In</button>
-      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO()"><span class="nav-icon">🔴</span> Check Out</button>
-      <button class="nav-btn" onclick="goTo('fieldVisitPage',this);autoFillFV()"><span class="nav-icon">🗺️</span> Field Visit</button>
+      <button class="nav-btn" onclick="goTo('checkInPage',this);autoFill()"><span class="nav-icon"></span> Check In</button>
+      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO()"><span class="nav-icon"></span> Check Out</button>
+      <button class="nav-btn" onclick="goTo('fieldVisitPage',this);autoFillFV()"><span class="nav-icon"></span> Field Visit</button>
       <div class="sidebar-section">Sales</div>
-      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads()"><span class="nav-icon">🎯</span> Leads</button>
-      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders()"><span class="nav-icon">🔔</span> Reminders</button>
+      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads()"><span class="nav-icon"></span> Leads</button>
+      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders()"><span class="nav-icon"></span> Reminders</button>
     `;
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById("adminPage").classList.add("active");
@@ -933,13 +933,13 @@ function setupRoleUI(role) {
   } else {
     sidebar.innerHTML = `
       <div class="sidebar-section">Attendance</div>
-      <button class="nav-btn active" onclick="goTo('checkInPage',this)"><span class="nav-icon">🟢</span> Check In</button>
-      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO()"><span class="nav-icon">🔴</span> Check Out</button>
-      <button class="nav-btn" onclick="goTo('fieldVisitPage',this);autoFillFV()"><span class="nav-icon">🗺️</span> Field Visit</button>
-      <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard()"><span class="nav-icon">📊</span> My Dashboard</button>
+      <button class="nav-btn active" onclick="goTo('checkInPage',this)"><span class="nav-icon"></span> Check In</button>
+      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO()"><span class="nav-icon"></span> Check Out</button>
+      <button class="nav-btn" onclick="goTo('fieldVisitPage',this);autoFillFV()"><span class="nav-icon"></span> Field Visit</button>
+      <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard()"><span class="nav-icon"></span> My Dashboard</button>
       <div class="sidebar-section">Sales</div>
-      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads()"><span class="nav-icon">🎯</span> Leads</button>
-      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders()"><span class="nav-icon">🔔</span> Reminders</button>
+      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads()"><span class="nav-icon"></span> Leads</button>
+      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders()"><span class="nav-icon"></span> Reminders</button>
     `;
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById("checkInPage").classList.add("active");
@@ -1074,7 +1074,7 @@ async function checkOut() {
   } catch(err) {
     toast(err.message || "Cannot connect to server", "error");
   } finally {
-    btn.disabled = false; btn.textContent = "🔴 Mark Check Out";
+    btn.disabled = false; btn.textContent = " Mark Check Out";
   }
 }
 
@@ -1257,7 +1257,7 @@ async function saveLead() {
     closeLeadModal();
     loadLeads();
   } catch { toast("Cannot connect to server","error"); }
-  finally { btn.disabled = false; btn.textContent = "💾 Save Lead"; }
+  finally { btn.disabled = false; btn.textContent = " Save Lead"; }
 }
 
 async function deleteLead(id) {
@@ -1314,7 +1314,7 @@ async function logFieldVisit() {
     });
     const data = await res.json();
     if (!res.ok) return toast(data.error || "Error", "error");
-    toast("✅ Field visit logged!", "success");
+    toast(" Field visit logged!", "success");
     // Clear fields
     ["fv_client","fv_contact","fv_location","fv_product","fv_notes"].forEach(id => document.getElementById(id).value = "");
     document.getElementById("fv_visit_type").value = "";
@@ -1323,7 +1323,7 @@ async function logFieldVisit() {
     document.getElementById("fv_time").value = new Date().toTimeString().slice(0,5);
     loadTodayVisits();
   } catch { toast("Cannot connect to server", "error"); }
-  finally { btn.disabled = false; btn.textContent = "🗺️ Log Visit"; }
+  finally { btn.disabled = false; btn.textContent = " Log Visit"; }
 }
 
 async function loadTodayVisits() {
@@ -1335,8 +1335,8 @@ async function loadTodayVisits() {
     fieldVisits = data;
     const tbody = document.getElementById("fvTable");
     if (!data.length) { tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No visits logged yet today</td></tr>`; return; }
-    const outcomeMap = { interested:"✅ Interested", not_interested:"❌ Not Interested", follow_up_needed:"🔄 Follow Up", deal_closed:"🏆 Deal Closed", no_contact:"📵 No Contact" };
-    const typeMap = { fresh_visit:"🆕 Fresh Visit", follow_up:"🔄 Follow Up", client_visit:"👤 Client Visit" };
+    const outcomeMap = { interested:" Interested", not_interested:" Not Interested", follow_up_needed:" Follow Up", deal_closed:" Deal Closed", no_contact:" No Contact" };
+    const typeMap = { fresh_visit:" Fresh Visit", follow_up:" Follow Up", client_visit:" Client Visit" };
     tbody.innerHTML = data.map(v => `<tr>
       <td style="font-family:monospace;">${v.visit_time||"—"}</td>
       <td><span class="badge badge-office">${typeMap[v.visit_type]||v.visit_type||"—"}</span></td>
@@ -1399,7 +1399,7 @@ function exportToExcel() {
   a.download = `attendance_${new Date().toISOString().split("T")[0]}.csv`;
   a.click();
   URL.revokeObjectURL(url);
-  toast("✅ Excel file downloaded!", "success");
+  toast(" Excel file downloaded!", "success");
 }
 
 // ── MONTHLY REPORT ────────────────────────────────────────────────────────────
@@ -1547,7 +1547,7 @@ async function loadReminders() {
     const sorted = [...overdue, ...dueToday, ...dueWeek, ...all];
 
     if (!sorted.length) {
-      tbody.innerHTML = `<tr><td colspan="8" class="empty-state">🎉 No pending follow-ups!</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" class="empty-state"> No pending follow-ups!</td></tr>`;
       return;
     }
 
@@ -1557,9 +1557,9 @@ async function loadReminders() {
       if (l.followup_date) {
         const fd = new Date(l.followup_date); fd.setHours(0,0,0,0);
         const diff = Math.floor((fd - today) / (1000*60*60*24));
-        if (diff < 0) { urgency = `<span class="badge badge-absent">🔴 Overdue ${Math.abs(diff)}d</span>`; rowStyle = "background:#fff5f5;"; }
-        else if (diff === 0) { urgency = `<span class="badge badge-contacted">🟡 Today</span>`; rowStyle = "background:#fffbeb;"; }
-        else if (diff <= 7) { urgency = `<span class="badge badge-followup">🟢 In ${diff}d</span>`; }
+        if (diff < 0) { urgency = `<span class="badge badge-absent"> Overdue ${Math.abs(diff)}d</span>`; rowStyle = "background:#fff5f5;"; }
+        else if (diff === 0) { urgency = `<span class="badge badge-contacted"> Today</span>`; rowStyle = "background:#fffbeb;"; }
+        else if (diff <= 7) { urgency = `<span class="badge badge-followup"> In ${diff}d</span>`; }
         else { urgency = `<span class="badge badge-half">${new Date(l.followup_date).toLocaleDateString("en-IN")}</span>`; }
       } else {
         urgency = `<span class="badge badge-half">No date set</span>`;
@@ -1575,8 +1575,8 @@ async function loadReminders() {
         <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--muted);">${l.followup_note||l.notes||"—"}</td>
         <td>
           <div style="display:flex;gap:6px;">
-            <button class="btn btn-teal btn-sm" onclick="markContacted(${l.id})">✅ Done</button>
-            <button class="btn btn-ghost btn-sm" onclick="openEditLead(${l.id})">✏️</button>
+            <button class="btn btn-teal btn-sm" onclick="markContacted(${l.id})"> Done</button>
+            <button class="btn btn-ghost btn-sm" onclick="openEditLead(${l.id})"></button>
           </div>
         </td>
       </tr>`;
@@ -1593,7 +1593,7 @@ async function markContacted(id) {
     const res = await fetch(`${API}/leads/${id}`, { method:"PUT", headers: authHeaders(), body: JSON.stringify(payload) });
     const data = await res.json();
     if (!res.ok) return toast(data.error||"Error","error");
-    toast("✅ Marked as contacted!","success");
+    toast(" Marked as contacted!","success");
     loadReminders();
     loadLeads();
   } catch { toast("Failed to update","error"); }
@@ -1601,17 +1601,17 @@ async function markContacted(id) {
 
 
 function statusBadge(s) {
-  const m = {on_field:["badge-field","🚗 On Field"],in_office:["badge-office","🏢 Office"],wfh:["badge-wfh","🏠 WFH"],absent:["badge-absent","❌ Absent"],half_day:["badge-half","⏱️ Half Day"]};
+  const m = {on_field:["badge-field"," On Field"],in_office:["badge-office"," Office"],wfh:["badge-wfh"," WFH"],absent:["badge-absent"," Absent"],half_day:["badge-half"," Half Day"]};
   const [c,l] = m[s]||["badge-half",s||"—"];
   return `<span class="badge ${c}">${l}</span>`;
 }
 function leadStatusBadge(s) {
-  const m = {new:["badge-new","🆕 New"],prospect:["badge-office","🎯 Prospect"],contacted:["badge-contacted","📞 Contacted"],follow_up:["badge-followup","🔄 Follow Up"],converted:["badge-converted","✅ Converted"],lost:["badge-lost","❌ Lost"]};
+  const m = {new:["badge-new"," New"],prospect:["badge-office"," Prospect"],contacted:["badge-contacted"," Contacted"],follow_up:["badge-followup"," Follow Up"],converted:["badge-converted"," Converted"],lost:["badge-lost"," Lost"]};
   const [c,l] = m[s]||["badge-half",s||"—"];
   return `<span class="badge ${c}">${l}</span>`;
 }
 function sourceBadge(s) {
-  const m = {cold_call:"📞 Cold Call",referral:"🤝 Referral",walk_in:"🚶 Walk In",online:"🌐 Online",social_media:"📱 Social",other:"📋 Other"};
+  const m = {cold_call:" Cold Call",referral:" Referral",walk_in:" Walk In",online:" Online",social_media:" Social",other:" Other"};
   return `<span style="font-size:12px;color:var(--muted);">${m[s]||s||"—"}</span>`;
 }
 </script>
