@@ -204,7 +204,7 @@
     <div class="user-pill">
       <div class="avatar" id="topAvatar">--</div>
       <div><div class="user-name" id="topName">--</div><div class="user-role" id="topRole"></div></div>
-      <button class="btn-lock" title="Change Password" onclick="openChangePass()">🔒</button>
+      <button class="btn-lock" title="Change Password" onclick="openChangePass()"></button>
       <button class="btn-logout" onclick="logout()">×</button>
     </div>
   </div>
@@ -230,11 +230,11 @@
             <div class="field">
               <label>Status</label>
               <select id="ci_status">
-                <option value="in_office">🏢 In Office</option>
-                <option value="on_field">🚗 On Field</option>
-                <option value="wfh">🏠 Work From Home</option>
-                <option value="half_day">⏱️ Half Day</option>
-                <option value="absent">❌ Absent</option>
+                <option value="in_office"> In Office</option>
+                <option value="on_field"> On Field</option>
+                <option value="wfh"> Work From Home</option>
+                <option value="half_day"> Half Day</option>
+                <option value="absent"> Absent</option>
               </select>
             </div>
             <div class="field"><label>Sales Target Today (₹)</label><input type="number" id="ci_target" placeholder="e.g. 50000" min="0"></div>
@@ -284,16 +284,16 @@
             <div class="field"><label>KM Travelled</label><input type="number" id="co_km" placeholder="e.g. 45" min="0"></div>
             <div class="field span2" id="dealTypeSection" style="display:none;">
               <div class="field-section-card">
-                <div class="card-title" style="margin-bottom:10px;">📋 Deal Breakdown</div>
+                <div class="card-title" style="margin-bottom:10px;"> Deal Breakdown</div>
                 <div class="form-grid">
                   <div class="field"><label>Deal Type</label>
                     <select id="co_deal_type">
                       <option value="">Select type</option>
-                      <option value="b2b">🏢 B2B Sale</option>
-                      <option value="retail">🛍️ Retail Sale</option>
-                      <option value="renewal">🔄 Renewal</option>
-                      <option value="upsell">📈 Upsell</option>
-                      <option value="other">📋 Other</option>
+                      <option value="b2b"> B2B Sale</option>
+                      <option value="retail"> Retail Sale</option>
+                      <option value="renewal"> Renewal</option>
+                      <option value="upsell"> Upsell</option>
+                      <option value="other"> Other</option>
                     </select>
                   </div>
                   <div class="field"><label>Product Sold</label><input type="text" id="co_product_sold" placeholder="e.g. Term Insurance"></div>
@@ -330,7 +330,7 @@
         </div>
         <div class="btn-row">
           <button class="btn btn-danger" id="btnCheckOut" onclick="checkOut()">🔴 Mark Check Out</button>
-          <button class="btn btn-ghost" onclick="autoFillCO()">⚡ Auto Fill</button>
+          <button class="btn btn-ghost" onclick="autoFillCO()"> Auto Fill</button>
         </div>
       </div>
 
@@ -360,11 +360,11 @@
             <div class="field"><label>Outcome</label>
               <select id="fv_outcome">
                 <option value="">Select outcome</option>
-                <option value="interested">✅ Interested</option>
-                <option value="not_interested">❌ Not Interested</option>
-                <option value="follow_up_needed">🔄 Follow Up Needed</option>
-                <option value="deal_closed">🏆 Deal Closed</option>
-                <option value="no_contact">📵 No Contact</option>
+                <option value="interested"> Interested</option>
+                <option value="not_interested"> Not Interested</option>
+                <option value="follow_up_needed"> Follow Up Needed</option>
+                <option value="deal_closed"> Deal Closed</option>
+                <option value="no_contact"> No Contact</option>
               </select>
             </div>
             <div class="field"><label>Product Discussed</label><input type="text" id="fv_product" placeholder="e.g. Term Insurance"></div>
@@ -372,7 +372,7 @@
           </div>
           <div class="btn-row">
             <button class="btn btn-teal" id="btnLogVisit" onclick="logFieldVisit()">🗺️ Log Visit</button>
-            <button class="btn btn-ghost" onclick="autoFillFV()">⚡ Auto Fill</button>
+            <button class="btn btn-ghost" onclick="autoFillFV()"> Auto Fill</button>
           </div>
         </div>
         <div class="card">
@@ -1031,8 +1031,8 @@ async function loadTodayVisits(){
     fieldVisitData=await res.json();
     const tbody=document.getElementById("fvTable");
     if(!fieldVisitData.length){tbody.innerHTML=`<tr><td colspan="7" class="empty-state">No visits logged for this date</td></tr>`;return;}
-    const outcomeMap={interested:"✅ Interested",not_interested:"❌ Not Interested",follow_up_needed:"🔄 Follow Up",deal_closed:"🏆 Deal Closed",no_contact:"📵 No Contact"};
-    const typeMap={fresh_visit:"🆕 Fresh Visit",follow_up:"🔄 Follow Up",client_visit:"👤 Client Visit"};
+    const outcomeMap={interested:" Interested",not_interested:" Not Interested",follow_up_needed:" Follow Up",deal_closed:" Deal Closed",no_contact:" No Contact"};
+    const typeMap={fresh_visit:" Fresh Visit",follow_up:" Follow Up",client_visit:" Client Visit"};
     tbody.innerHTML=fieldVisitData.map(v=>`<tr>
       <td style="font-family:monospace;">${v.visit_time||"—"}</td>
       <td><span class="badge badge-office">${typeMap[v.visit_type]||v.visit_type||"—"}</span></td>
@@ -1499,17 +1499,17 @@ function downloadCSV(rows,filename){
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
 function statusBadge(s){
-  const m={on_field:["badge-field","🚗 On Field"],in_office:["badge-office","🏢 Office"],wfh:["badge-wfh","🏠 WFH"],absent:["badge-absent","❌ Absent"],half_day:["badge-half","⏱️ Half Day"]};
+  const m={on_field:["badge-field"," On Field"],in_office:["badge-office"," Office"],wfh:["badge-wfh"," WFH"],absent:["badge-absent"," Absent"],half_day:["badge-half"," Half Day"]};
   const[c,l]=m[s]||["badge-half",s||"—"];
   return `<span class="badge ${c}">${l}</span>`;
 }
 function leadStatusBadge(s){
-  const m={new:["badge-new","🆕 New"],prospect:["badge-prospect","🎯 Prospect"],contacted:["badge-contacted","📞 Contacted"],follow_up:["badge-followup","🔄 Follow Up"],converted:["badge-converted","✅ Converted"],lost:["badge-lost","❌ Lost"]};
+  const m={new:["badge-new"," New"],prospect:["badge-prospect"," Prospect"],contacted:["badge-contacted"," Contacted"],follow_up:["badge-followup"," Follow Up"],converted:["badge-converted"," Converted"],lost:["badge-lost"," Lost"]};
   const[c,l]=m[s]||["badge-half",s||"—"];
   return `<span class="badge ${c}">${l}</span>`;
 }
 function sourceBadge(s){
-  const m={cold_call:"📞 Cold Call",referral:"🤝 Referral",walk_in:"🚶 Walk In",field_visit:"🗺️ Field Visit",online:"🌐 Online",social_media:"📱 Social",other:"📋 Other"};
+  const m={cold_call:" Cold Call",referral:" Referral",walk_in:" Walk In",field_visit:" Field Visit",online:" Online",social_media:" Social",other:" Other"};
   return `<span style="font-size:12px;color:var(--muted);">${m[s]||s||"—"}</span>`;
 }
 </script>
