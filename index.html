@@ -1023,7 +1023,7 @@ async function checkIn(){
       checkin_photo:photoUrl,
       location_lat: document.getElementById("ciLat").value || undefined,    // ADD
       location_lng: document.getElementById("ciLng").value || undefined,    // ADD
-      location_address: document.getElementById("ciAddress").value || undefined  // ADD
+      location_address: document.getElementById("ciAddress").value || undefined,  // ADD
     };
     const res=await fetch(`${API}/attendance/checkin`,{method:"POST",headers:authHeaders(),body:JSON.stringify(payload)});
     const data=await res.json();
@@ -1069,7 +1069,7 @@ async function checkOut(){
       checkout_photo:photoUrl
       checkout_lat: document.getElementById("coLat").value || undefined,       // ADD
       checkout_lng: document.getElementById("coLng").value || undefined,       // ADD
-      checkout_address: document.getElementById("coAddress").value || undefined // ADD
+      checkout_address: document.getElementById("coAddress").value || undefined, // ADD
     };
     const res=await fetch(`${API}/attendance/checkout`,{method:"PUT",headers:authHeaders(),body:JSON.stringify(payload)});
     const data=await res.json();
