@@ -237,6 +237,13 @@
                 <option value="absent"> Absent</option>
               </select>
             </div>
+            <div class="field span2">
+              <label>📍 Location <span class="cam-required">AUTO CAPTURED</span></label>
+              <div id="ciLocationBox" style="background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px;">
+                <span id="ciLocationIcon">⏳</span>
+                <span id="ciLocationText">Detecting your location...</span>
+              </div>
+            </div>
             <div class="field"><label>Sales Target Today (₹)</label><input type="number" id="ci_target" placeholder="e.g. 50000" min="0"></div>
             <div class="field span2">
               <div class="cam-label">📸 Live Check-In Photo <span class="cam-required">REQUIRED</span></div>
@@ -258,6 +265,10 @@
                 </div>
               </div>
               <input type="hidden" id="ciPhotoData">
+              <input type="hidden" id="ciLat">
+              <input type="hidden" id="ciLng">
+              <input type="hidden" id="ciAddress">
+              
             </div>
           </div>
         </div>
@@ -303,6 +314,13 @@
                 </div>
               </div>
             </div>
+            <div class="field span2">
+              <label>📍 Check-Out Location <span class="cam-required">AUTO CAPTURED</span></label>
+              <div id="coLocationBox" style="background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px;">
+                <span id="coLocationIcon">⏳</span>
+                <span id="coLocationText">Detecting your location...</span>
+              </div>
+            </div>
             <div class="field span2"><label>Work Done Today</label><textarea id="co_work" placeholder="What was accomplished today..."></textarea></div>
             <div class="field span2"><label>Remarks / Issues</label><textarea id="co_remarks" placeholder="Any issues or follow-ups..."></textarea></div>
             <div class="field span2">
@@ -325,6 +343,9 @@
                 </div>
               </div>
               <input type="hidden" id="coPhotoData">
+              <input type="hidden" id="coLat">
+              <input type="hidden" id="coLng">
+              <input type="hidden" id="coAddress">
             </div>
           </div>
         </div>
@@ -888,6 +909,7 @@ function autoFill(){
   document.getElementById("ci_name").value=currentUser.name||"";
   document.getElementById("ci_date").value=today;
   document.getElementById("ci_checkin").value=now;
+  captureLocation("ci");
 }
 function autoFillCO(){
   if(!currentUser) return;
@@ -896,6 +918,7 @@ function autoFillCO(){
   document.getElementById("co_user_id").value=currentUser.id||"";
   document.getElementById("co_date").value=today;
   document.getElementById("co_checkout").value=now;
+  captureLocation("co");
 }
 function autoFillFV(){
   if(!currentUser) return;
@@ -911,7 +934,74 @@ function toggleDealType(){
   const orders=Number(document.getElementById("co_orders").value);
   document.getElementById("dealTypeSection").style.display=orders>0?"block":"none";
 }
+// ── LOCATION ──────────────────────────────────────────────────────────────────
+async function reverseGeocode(lat, lng) {
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+    const data = await res.json();
+    return data.display_name || `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  } catch {
+    return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  }
+}
 
+async function captureLocation(prefix) {
+  const box = document.getElementById(`${prefix}LocationBox`);
+  const icon = document.getElementById(`${prefix}LocationIcon`);
+  const text = document.getElementById(`${prefix}LocationText`);
+  const statusEl = document.getElementById("ci_status");
+
+  icon.textContent = "⏳";
+  text.textContent = "Detecting location...";
+  box.style.borderColor = "var(--border)";
+
+  return new Promise((resolve) => {
+    if (!navigator.geolocation) {
+      icon.textContent = "❌";
+      text.textContent = "Geolocation not supported by your browser";
+      box.style.borderColor = "#e53e3e";
+      resolve(null);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const accuracy = Math.round(pos.coords.accuracy);
+
+        document.getElementById(`${prefix}Lat`).value = lat;
+        document.getElementById(`${prefix}Lng`).value = lng;
+
+        // Reverse geocode to get address
+        const address = await reverseGeocode(lat, lng);
+        document.getElementById(`${prefix}Address`).value = address;
+
+        icon.textContent = "✅";
+        text.innerHTML = `<div>
+          <div style="color:var(--text);font-weight:600;margin-bottom:2px;">${address.split(",").slice(0,3).join(", ")}</div>
+          <div style="font-size:11px;color:var(--muted);">Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)} | Accuracy: ±${accuracy}m</div>
+          <div style="font-size:11px;margin-top:3px;">
+            <a href="https://maps.google.com/?q=${lat},${lng}" target="_blank" style="color:var(--teal);text-decoration:none;">🗺️ View on Google Maps</a>
+          </div>
+        </div>`;
+        box.style.borderColor = "var(--teal)";
+        resolve({ lat, lng, address });
+      },
+      (err) => {
+        let msg = "Location access denied";
+        if (err.code === 1) msg = "Please allow location permission and try again";
+        else if (err.code === 2) msg = "Location unavailable — check GPS/network";
+        else if (err.code === 3) msg = "Location request timed out";
+        icon.textContent = "❌";
+        text.textContent = msg;
+        box.style.borderColor = "#e53e3e";
+        resolve(null);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+    );
+  });
+}
 // ── CHECK IN ──────────────────────────────────────────────────────────────────
 async function checkIn(){
   const btn=document.getElementById("btnCheckIn");
@@ -931,6 +1021,9 @@ async function checkIn(){
       status:document.getElementById("ci_status").value,
       sales_target:Number(document.getElementById("ci_target").value)||undefined,
       checkin_photo:photoUrl
+      location_lat: document.getElementById("ciLat").value || undefined,    // ADD
+      location_lng: document.getElementById("ciLng").value || undefined,    // ADD
+      location_address: document.getElementById("ciAddress").value || undefined  // ADD
     };
     const res=await fetch(`${API}/attendance/checkin`,{method:"POST",headers:authHeaders(),body:JSON.stringify(payload)});
     const data=await res.json();
@@ -974,6 +1067,9 @@ async function checkOut(){
       work_description:document.getElementById("co_work").value,
       remarks:document.getElementById("co_remarks").value,
       checkout_photo:photoUrl
+      checkout_lat: document.getElementById("coLat").value || undefined,       // ADD
+      checkout_lng: document.getElementById("coLng").value || undefined,       // ADD
+      checkout_address: document.getElementById("coAddress").value || undefined // ADD
     };
     const res=await fetch(`${API}/attendance/checkout`,{method:"PUT",headers:authHeaders(),body:JSON.stringify(payload)});
     const data=await res.json();
