@@ -365,7 +365,7 @@
           <div class="card-title">Log a Visit</div>
           <div class="form-grid">
             <div class="field"><label>Employee ID</label><input type="text" id="fv_user_id" readonly style="opacity:0.6;"></div>
-            <div class="field"><label>Date</label><input type="date" id="fv_date" readonly style="pointer-events:none;opacity:0.6;"></div>
+            <div class="field"><label>Date</label><input type="date" id="fv_date" style="cursor:pointer;" onchange="syncFVDate()"></div>
             <div class="field"><label>Visit Time</label><input type="time" id="fv_time" readonly style="pointer-events:none;opacity:0.6;"></div>
             <div class="field"><label>Visit Type</label>
               <select id="fv_visit_type">
@@ -945,8 +945,11 @@ function autoFillCO(){
 function autoFillFV(){
   if(!currentUser) return;
   const today=new Date().toISOString().split("T")[0];
+  const yesterday=new Date(Date.now()-86400000).toISOString().split("T")[0];
   document.getElementById("fv_user_id").value=currentUser.id||"";
   document.getElementById("fv_date").value=today;
+  document.getElementById("fv_date").min=yesterday;
+  document.getElementById("fv_date").max=today;
   document.getElementById("fv_time").value=new Date().toTimeString().slice(0,5);
   document.getElementById("fv_filter_date").value=today;
   loadTodayVisits();
@@ -1138,7 +1141,8 @@ let fieldVisitData=[];
 
 async function loadTodayVisits(){
   try{
-    const filterDate=document.getElementById("fv_filter_date")?.value||new Date().toISOString().split("T")[0];
+    const selectedDate=document.getElementById("fv_date")?.value||new Date().toISOString().split("T")[0];
+    const filterDate=document.getElementById("fv_filter_date")?.value||selectedDate;
     const res=await fetch(`${API}/field-visits?user_id=${currentUser?.id}&date=${filterDate}`,{headers:authHeaders()});
     fieldVisitData=await res.json();
     const tbody=document.getElementById("fvTable");
@@ -1156,6 +1160,11 @@ async function loadTodayVisits(){
     </tr>`).join("");
   }catch{/*silent*/}
 }
+function syncFVDate(){
+  const selected=document.getElementById("fv_date").value;
+  document.getElementById("fv_filter_date").value=selected;
+  loadTodayVisits();
+}  
 
 function exportFieldVisits(){
   if(!fieldVisitData.length) return toast("No visits to export","error");
