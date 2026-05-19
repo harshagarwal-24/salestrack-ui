@@ -737,23 +737,6 @@
   </div>
 </div>
 
-<!-- CHANGE PASSWORD MODAL -->
-<div class="modal-overlay" id="changePassModal">
-  <div class="modal" style="max-width:400px;">
-    <div class="modal-title">
-      <span>🔒 Change Password</span>
-      <button class="modal-close" onclick="closeChangePass()">×</button>
-    </div>
-    <div class="field" style="margin-bottom:10px;"><label>Current Password</label><input type="password" id="cp_current" placeholder="Current password"></div>
-    <div class="field" style="margin-bottom:10px;"><label>New Password</label><input type="password" id="cp_new" placeholder="New password"></div>
-    <div class="field" style="margin-bottom:18px;"><label>Confirm New Password</label><input type="password" id="cp_confirm" placeholder="Confirm new password"></div>
-    <div class="btn-row" style="margin-top:0;">
-      <button class="btn btn-primary" onclick="changePassword()">💾 Update Password</button>
-      <button class="btn btn-ghost" onclick="closeChangePass()">Cancel</button>
-    </div>
-  </div>
-</div>
-
 <!-- PHOTO VIEWER -->
 <div class="modal-overlay" id="photoModal" onclick="closePhotoModal()">
   <div style="max-width:90vw;max-height:90vh;" onclick="event.stopPropagation()">
