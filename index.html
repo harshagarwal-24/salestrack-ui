@@ -229,14 +229,21 @@
             <div class="field"><label>Check-In Time</label><input type="time" id="ci_checkin" readonly style="pointer-events:none;opacity:0.6;"></div>
             <div class="field">
               <label>Status</label>
-              <select id="ci_status">
+              <select id="ci_status" onchange="handleStatusChange()">
                 <option value="in_office"> In Office</option>
                 <option value="on_field"> On Field</option>
-                <option value="wfh"> Work From Home</option>
+                <option value="wfh" id="wfhOption" disabled> Work From Home 🔒</option>
                 <option value="half_day"> Half Day</option>
                 <option value="absent"> Absent</option>
               </select>
+              <div id="wfhLockedMsg" style="display:none;margin-top:6px;font-size:12px;color:#e53e3e;background:#fff5f5;border:1px solid #fed7d7;border-radius:6px;padding:6px 10px;">
+                   WFH requires admin approval. Submit a request from the WFH Requests page.
+              </div>
+              <div id="wfhApprovedMsg" style="display:none;margin-top:6px;font-size:12px;color:#166534;background:#dcfce7;border:1px solid #bbf7d0;border-radius:6px;padding:6px 10px;">
+                   WFH approved for today!
+              </div>
             </div>
+            
             <div class="field span2">
               <label>📍 Location <span class="cam-required">AUTO CAPTURED</span></label>
               <div id="ciLocationBox" style="background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px;">
@@ -701,6 +708,93 @@
     </main>
   </div>
 </div>
+  <!-- WFH REQUESTS -->
+<div class="page" id="wfhPage">
+  <div class="page-header">
+    <div class="page-header-icon">🏠</div>
+    <div><div class="page-title">WFH Requests</div>
+    <div class="page-sub" id="wfhPageSub">Request work from home approval</div></div>
+  </div>
+
+  <!-- Sales: Submit Request -->
+  <div id="wfhRequestForm" style="display:none;">
+    <div class="card">
+      <div class="card-title">Submit WFH Request</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="wfh_req_date">
+        </div>
+        <div class="field span2">
+          <label>Reason</label>
+          <textarea id="wfh_req_reason" placeholder="Why do you need to work from home?"></textarea>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-teal" onclick="submitWFHRequest()">📨 Submit Request</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">My WFH Requests</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Date</th><th>Reason</th><th>Status</th><th>Admin Note</th><th>Submitted</th></tr></thead>
+          <tbody id="myWfhTable"><tr><td colspan="5" class="empty-state">No requests yet</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin: Manage Requests -->
+  <div id="wfhAdminPanel" style="display:none;">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-label">Pending</div><div class="stat-value" id="wfhPending">—</div></div>
+      <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Approved</div><div class="stat-value" id="wfhApproved">—</div></div>
+      <div class="stat-card"><div class="stat-icon">❌</div><div class="stat-label">Rejected</div><div class="stat-value" id="wfhRejected">—</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">All WFH Requests</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Employee</th><th>Date</th><th>Reason</th><th>Status</th><th>Admin Note</th><th>Actions</th></tr></thead>
+          <tbody id="adminWfhTable"><tr><td colspan="6" class="empty-state">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WFH APPROVE MODAL -->
+<div class="modal-overlay" id="wfhActionModal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-title">
+      <span id="wfhActionTitle">Review WFH Request</span>
+      <button class="modal-close" onclick="closeWFHModal()">×</button>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:4px;">Employee</div>
+      <div style="font-weight:600;" id="wfhModalEmployee">—</div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:4px;">Requested Date</div>
+      <div style="font-weight:600;" id="wfhModalDate">—</div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:4px;">Reason</div>
+      <div id="wfhModalReason">—</div>
+    </div>
+    <div class="field" style="margin-bottom:14px;">
+      <label>Admin Note (optional)</label>
+      <input type="text" id="wfhAdminNote" placeholder="Add a note...">
+    </div>
+    <input type="hidden" id="wfhActionId">
+    <div class="btn-row">
+      <button class="btn btn-teal" onclick="processWFH('approved')">✅ Approve</button>
+      <button class="btn btn-danger" onclick="processWFH('rejected')">❌ Reject</button>
+      <button class="btn btn-ghost" onclick="closeWFHModal()">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <!-- LEAD MODAL -->
 <div class="modal-overlay" id="leadModal">
@@ -876,6 +970,7 @@ function setupRoleUI(role){
       <div class="sidebar-section">Sales</div>
       <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>
       <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon">🔔</span> Reminders</button>`;
+      <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon">🏠</span> WFH Requests</button>`;
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById("adminPage").classList.add("active");
     loadAdmin();
@@ -899,6 +994,7 @@ function setupRoleUI(role){
       <div class="sidebar-section">Sales</div>
       <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>
       <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon">🔔</span> Reminders</button>`;
+      <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon">🏠</span> WFH Request</button>`;
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById("checkInPage").classList.add("active");
     autoFill();
@@ -923,7 +1019,7 @@ function logout(){
 }
 
 // ── AUTO FILL ─────────────────────────────────────────────────────────────────
-function autoFill(){
+async function autoFill(){
   if(!currentUser) return;
   const today=new Date().toISOString().split("T")[0];
   const now=new Date().toTimeString().slice(0,5);
@@ -932,6 +1028,49 @@ function autoFill(){
   document.getElementById("ci_date").value=today;
   document.getElementById("ci_checkin").value=now;
   captureLocation("ci");
+
+  // Check WFH approval for sales users only
+  if(currentUser.role === "sales"){
+    await checkWFHApproval(currentUser.id, today);
+  } else {
+    // Admin can always select WFH
+    document.getElementById("wfhOption").disabled = false;
+    document.getElementById("wfhOption").textContent = " Work From Home";
+  }
+}
+
+async function checkWFHApproval(userId, date){
+  try{
+    const res = await fetch(`${API}/wfh-requests/check/${userId}/${date}`, {headers: authHeaders()});
+    const data = await res.json();
+    const wfhOption = document.getElementById("wfhOption");
+    const lockedMsg = document.getElementById("wfhLockedMsg");
+    const approvedMsg = document.getElementById("wfhApprovedMsg");
+    if(data.approved){
+      wfhOption.disabled = false;
+      wfhOption.textContent = " Work From Home ✅";
+      approvedMsg.style.display = "block";
+      lockedMsg.style.display = "none";
+    } else {
+      wfhOption.disabled = true;
+      wfhOption.textContent = " Work From Home 🔒";
+      approvedMsg.style.display = "none";
+      lockedMsg.style.display = "none";
+    }
+  } catch {
+    document.getElementById("wfhOption").disabled = true;
+  }
+}
+
+function handleStatusChange(){
+  const val = document.getElementById("ci_status").value;
+  const lockedMsg = document.getElementById("wfhLockedMsg");
+  if(val === "wfh" && document.getElementById("wfhOption").disabled){
+    lockedMsg.style.display = "block";
+    document.getElementById("ci_status").value = "in_office";
+  } else {
+    lockedMsg.style.display = "none";
+  }
 }
 function autoFillCO(){
   if(!currentUser) return;
@@ -1580,12 +1719,124 @@ async function markContacted(id){
     loadReminders(); loadLeads();
   }catch{toast("Failed to update","error");}
 }
+// ── WFH REQUESTS ──────────────────────────────────────────────────────────────
+async function loadWFHPage(){
+  const today = new Date().toISOString().split("T")[0];
+  if(currentUser.role === "sales"){
+    document.getElementById("wfhRequestForm").style.display = "block";
+    document.getElementById("wfhAdminPanel").style.display = "none";
+    document.getElementById("wfhPageSub").textContent = "Request work from home approval";
+    // Set min = today, max = tomorrow
+    const tomorrow = new Date(Date.now()+86400000).toISOString().split("T")[0];
+    document.getElementById("wfh_req_date").value = today;
+    document.getElementById("wfh_req_date").min = today;
+    document.getElementById("wfh_req_date").max = tomorrow;
+    loadMyWFHRequests();
+  } else if(currentUser.role === "admin"){
+    document.getElementById("wfhRequestForm").style.display = "none";
+    document.getElementById("wfhAdminPanel").style.display = "block";
+    document.getElementById("wfhPageSub").textContent = "Manage team WFH requests";
+    loadAdminWFHRequests();
+  }
+}
 
-// ── CHANGE PASSWORD ───────────────────────────────────────────────────────────
-function openChangePass(){document.getElementById("changePassModal").classList.add("open");}
-function closeChangePass(){
-  document.getElementById("changePassModal").classList.remove("open");
-  ["cp_current","cp_new","cp_confirm"].forEach(id=>document.getElementById(id).value="");
+async function submitWFHRequest(){
+  const date = document.getElementById("wfh_req_date").value;
+  const reason = document.getElementById("wfh_req_reason").value.trim();
+  if(!date) return toast("Please select a date","error");
+  try{
+    const res = await fetch(`${API}/wfh-requests`,{
+      method:"POST", headers: authHeaders(),
+      body: JSON.stringify({
+        user_id: currentUser.id,
+        user_name: currentUser.name,
+        request_date: date,
+        reason
+      })
+    });
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast("✅ WFH request submitted! Awaiting admin approval.","success");
+    document.getElementById("wfh_req_reason").value = "";
+    loadMyWFHRequests();
+  } catch { toast("Cannot connect to server","error"); }
+}
+
+async function loadMyWFHRequests(){
+  try{
+    const res = await fetch(`${API}/wfh-requests/my/${currentUser.id}`,{headers: authHeaders()});
+    const data = await res.json();
+    const tbody = document.getElementById("myWfhTable");
+    if(!data.length){tbody.innerHTML=`<tr><td colspan="5" class="empty-state">No requests yet</td></tr>`;return;}
+    tbody.innerHTML = data.map(r=>`<tr>
+      <td>${r.request_date}</td>
+      <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.reason||"—"}</td>
+      <td>${wfhStatusBadge(r.status)}</td>
+      <td style="font-size:12px;color:var(--muted);">${r.admin_note||"—"}</td>
+      <td style="font-size:12px;color:var(--muted);">${new Date(r.created_at).toLocaleDateString("en-IN")}</td>
+    </tr>`).join("");
+  } catch { toast("Failed to load requests","error"); }
+}
+
+async function loadAdminWFHRequests(){
+  try{
+    const res = await fetch(`${API}/wfh-requests`,{headers: authHeaders()});
+    const data = await res.json();
+    document.getElementById("wfhPending").textContent = data.filter(r=>r.status==="pending").length;
+    document.getElementById("wfhApproved").textContent = data.filter(r=>r.status==="approved").length;
+    document.getElementById("wfhRejected").textContent = data.filter(r=>r.status==="rejected").length;
+    const tbody = document.getElementById("adminWfhTable");
+    if(!data.length){tbody.innerHTML=`<tr><td colspan="6" class="empty-state">No requests yet</td></tr>`;return;}
+    tbody.innerHTML = data.map(r=>`<tr>
+      <td style="font-weight:600;">${r.user_name}</td>
+      <td>${r.request_date}</td>
+      <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.reason||"—"}</td>
+      <td>${wfhStatusBadge(r.status)}</td>
+      <td style="font-size:12px;color:var(--muted);">${r.admin_note||"—"}</td>
+      <td>${r.status==="pending"
+        ? `<button class="btn btn-teal btn-sm" onclick="openWFHModal(${r.id},'${r.user_name}','${r.request_date}','${(r.reason||"").replace(/'/g,"\\'")}')">Review</button>`
+        : `<span style="font-size:12px;color:var(--muted);">Done</span>`
+      }</td>
+    </tr>`).join("");
+  } catch { toast("Failed to load WFH requests","error"); }
+}
+
+function openWFHModal(id, employee, date, reason){
+  document.getElementById("wfhActionId").value = id;
+  document.getElementById("wfhModalEmployee").textContent = employee;
+  document.getElementById("wfhModalDate").textContent = date;
+  document.getElementById("wfhModalReason").textContent = reason || "No reason provided";
+  document.getElementById("wfhAdminNote").value = "";
+  document.getElementById("wfhActionModal").classList.add("open");
+}
+
+function closeWFHModal(){
+  document.getElementById("wfhActionModal").classList.remove("open");
+}
+
+async function processWFH(status){
+  const id = document.getElementById("wfhActionId").value;
+  const admin_note = document.getElementById("wfhAdminNote").value.trim();
+  try{
+    const res = await fetch(`${API}/wfh-requests/${id}`,{
+      method:"PUT", headers: authHeaders(),
+      body: JSON.stringify({status, admin_note})
+    });
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(data.message,"success");
+    closeWFHModal();
+    loadAdminWFHRequests();
+  } catch { toast("Failed to update request","error"); }
+}
+
+function wfhStatusBadge(s){
+  const m={
+    pending:`<span class="badge badge-contacted">⏳ Pending</span>`,
+    approved:`<span class="badge badge-wfh">✅ Approved</span>`,
+    rejected:`<span class="badge badge-absent">❌ Rejected</span>`
+  };
+  return m[s]||`<span class="badge badge-half">${s}</span>`;
 }
 
 async function changePassword(){
