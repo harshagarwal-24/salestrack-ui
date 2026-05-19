@@ -1721,22 +1721,28 @@ async function markContacted(id){
 }
 // ── WFH REQUESTS ──────────────────────────────────────────────────────────────
 async function loadWFHPage(){
+  const requestForm = document.getElementById("wfhRequestForm");
+  const adminPanel = document.getElementById("wfhAdminPanel");
+
+  // hide both first
+  requestForm.style.display = "none";
+  adminPanel.style.display = "none";
+
   const today = new Date().toISOString().split("T")[0];
+  const tomorrow = new Date(Date.now()+86400000).toISOString().split("T")[0];
+
   if(currentUser.role === "sales"){
-    document.getElementById("wfhRequestForm").style.display = "block";
-    document.getElementById("wfhAdminPanel").style.display = "none";
+    requestForm.style.display = "block";
     document.getElementById("wfhPageSub").textContent = "Request work from home approval";
-    // Set min = today, max = tomorrow
-    const tomorrow = new Date(Date.now()+86400000).toISOString().split("T")[0];
     document.getElementById("wfh_req_date").value = today;
     document.getElementById("wfh_req_date").min = today;
     document.getElementById("wfh_req_date").max = tomorrow;
-    loadMyWFHRequests();
+    await loadMyWFHRequests();
+
   } else if(currentUser.role === "admin"){
-    document.getElementById("wfhRequestForm").style.display = "none";
-    document.getElementById("wfhAdminPanel").style.display = "block";
+    adminPanel.style.display = "block";
     document.getElementById("wfhPageSub").textContent = "Manage team WFH requests";
-    loadAdminWFHRequests();
+    await loadAdminWFHRequests();
   }
 }
 
