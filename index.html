@@ -964,13 +964,13 @@ function setupRoleUI(role){
   if(role==="admin"){
     sidebar.innerHTML=`
       <div class="sidebar-section">Overview</div>
-      <button class="nav-btn active" onclick="goTo('adminPage',this);loadAdmin();closeSidebar()"><span class="nav-icon">🛡️</span> Dashboard</button>
-      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly();closeSidebar()"><span class="nav-icon">📊</span> Monthly Report</button>
-      <button class="nav-btn" onclick="goTo('usersPage',this);loadUsers();closeSidebar()"><span class="nav-icon">👥</span> Users</button>
+      <button class="nav-btn active" onclick="goTo('adminPage',this);loadAdmin();closeSidebar()"><span class="nav-icon"></span> Dashboard</button>
+      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly();closeSidebar()"><span class="nav-icon"></span> Monthly Report</button>
+      <button class="nav-btn" onclick="goTo('usersPage',this);loadUsers();closeSidebar()"><span class="nav-icon"></span> Users</button>
       <div class="sidebar-section">Sales</div>
-      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>
-      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon">🔔</span> Reminders</button>`;
-      <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon">🏠</span> WFH Requests</button>`;
+      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon"></span> Leads</button>
+      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon"></span> Reminders</button>
+      <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon"></span> WFH Requests</button>`;
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById("adminPage").classList.add("active");
     loadAdmin();
@@ -993,7 +993,7 @@ function setupRoleUI(role){
       <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard();closeSidebar()"><span class="nav-icon">📊</span> My Dashboard</button>
       <div class="sidebar-section">Sales</div>
       <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>
-      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon">🔔</span> Reminders</button>`;
+      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon">🔔</span> Reminders</button>
       <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon">🏠</span> WFH Request</button>`;
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById("checkInPage").classList.add("active");
