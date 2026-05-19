@@ -536,6 +536,45 @@
           </div>
         </div>
       </div>
+      
+      <!-- USER REPORT PAGE -->
+      <div class="page" id="userReportPage">
+  <div class="page-header">
+    <button class="btn btn-ghost btn-sm" onclick="goBack()">← Back</button>
+    <div class="page-header-icon">👤</div>
+    <div><div class="page-title" id="urName">User Report</div><div class="page-sub" id="urSub"></div></div>
+  </div>
+  <div class="filter-bar">
+    <input type="month" id="ur_month" onchange="loadUserReport()">
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card clickable" onclick="filterUserTable('present')" style="cursor:pointer;">
+      <div class="stat-icon">✅</div><div class="stat-label">Present</div><div class="stat-value" id="urPresent">—</div>
+    </div>
+    <div class="stat-card clickable" onclick="filterUserTable('absent')" style="cursor:pointer;">
+      <div class="stat-icon">❌</div><div class="stat-label">Absent</div><div class="stat-value" id="urAbsent">—</div>
+    </div>
+    <div class="stat-card clickable" onclick="filterUserTable('on_field')" style="cursor:pointer;">
+      <div class="stat-icon">🚗</div><div class="stat-label">On Field</div><div class="stat-value" id="urField">—</div>
+    </div>
+    <div class="stat-card clickable" onclick="filterUserTable('half_day')" style="cursor:pointer;">
+      <div class="stat-icon">⏱️</div><div class="stat-label">Half Days</div><div class="stat-value" id="urHalf">—</div>
+    </div>
+    <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales</div><div class="stat-value" id="urSales">—</div></div>
+    <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Orders</div><div class="stat-value" id="urOrders">—</div></div>
+    <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-label">Achievement %</div><div class="stat-value" id="urAchieve">—</div></div>
+    <div class="stat-card"><div class="stat-icon">🗺️</div><div class="stat-label">KM Travelled</div><div class="stat-value" id="urKm">—</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title" id="urTableTitle">All Records</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Status</th><th>In</th><th>Out</th><th>Target (₹)</th><th>Achieved (₹)</th><th>KM</th><th>Orders</th></tr></thead>
+        <tbody id="urTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
       <!-- OPERATIONS DASHBOARD -->
       <div class="page" id="opsPage">
@@ -1594,6 +1633,9 @@ async function loadUsers(){
     </tr>`).join("");
   }catch{toast("Failed to load users","error");}
 }
+tbody.innerHTML=users.map(u=>`<tr style="cursor:pointer;" onclick="openUserReport('${u.id}','${u.name}')">
+  ...existing cells...
+</tr>`).join("");
 
 
 function viewPhoto(url){document.getElementById("photoModalImg").src=url;document.getElementById("photoModal").classList.add("open");}
@@ -1623,6 +1665,71 @@ function leadStatusBadge(s){
 function sourceBadge(s){
   const m={cold_call:" Cold Call",referral:" Referral",walk_in:" Walk In",field_visit:" Field Visit",online:" Online",social_media:" Social",other:" Other"};
   return `<span style="font-size:12px;color:var(--muted);">${m[s]||s||"—"}</span>`;
+}
+let urData = [], urUserId = "", urUserName = "";
+
+async function openUserReport(userId, userName) {
+  urUserId = userId; urUserName = userName;
+  document.getElementById("urName").textContent = userName;
+  const now = new Date();
+  document.getElementById("ur_month").value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+  goTo("userReportPage", null);
+  await loadUserReport();
+}
+
+function goBack() {
+  goTo("usersPage", null);
+  document.querySelectorAll(".nav-btn").forEach(b => {
+    if(b.textContent.includes("Users")) b.classList.add("active");
+  });
+}
+
+async function loadUserReport() {
+  const month = document.getElementById("ur_month").value;
+  const res = await fetch(`${API}/attendance/${urUserId}`, {headers: authHeaders()});
+  const all = await res.json();
+  urData = month ? all.filter(d => d.date && d.date.startsWith(month)) : all;
+  document.getElementById("urSub").textContent = `${month} • ${urUserName}`;
+  const present = urData.filter(d => d.status !== "absent").length;
+  const absent = urData.filter(d => d.status === "absent").length;
+  const field = urData.filter(d => d.status === "on_field").length;
+  const half = urData.filter(d => d.status === "half_day").length;
+  const totalSales = urData.reduce((s,d) => s+(d.sales_achieved||0), 0);
+  const totalTarget = urData.reduce((s,d) => s+(d.sales_target||0), 0);
+  const orders = urData.reduce((s,d) => s+(d.orders_taken||0), 0);
+  const km = urData.reduce((s,d) => s+(d.km_travelled||0), 0);
+  const pct = totalTarget > 0 ? Math.round((totalSales/totalTarget)*100) : 0;
+  document.getElementById("urPresent").textContent = present;
+  document.getElementById("urAbsent").textContent = absent;
+  document.getElementById("urField").textContent = field;
+  document.getElementById("urHalf").textContent = half;
+  document.getElementById("urSales").textContent = "₹"+totalSales.toLocaleString("en-IN");
+  document.getElementById("urOrders").textContent = orders;
+  document.getElementById("urAchieve").textContent = pct+"%";
+  document.getElementById("urKm").textContent = km+" km";
+  renderUserTable(urData, "All Records");
+}
+
+function filterUserTable(status) {
+  const labels = {present:"Present Days", absent:"Absent Days", on_field:"On Field Days", half_day:"Half Days"};
+  const filtered = status === "present"
+    ? urData.filter(d => d.status !== "absent")
+    : urData.filter(d => d.status === status);
+  renderUserTable(filtered, labels[status] || status);
+}
+
+function renderUserTable(data, title) {
+  document.getElementById("urTableTitle").textContent = title + ` (${data.length} records)`;
+  const tbody = document.getElementById("urTable");
+  if(!data.length){tbody.innerHTML=`<tr><td colspan="8" class="empty-state">No records</td></tr>`;return;}
+  tbody.innerHTML = data.map(d=>`<tr>
+    <td>${d.date}</td><td>${statusBadge(d.status)}</td>
+    <td>${d.check_in||"—"}</td><td>${d.check_out||"—"}</td>
+    <td>${d.sales_target!=null?"₹"+d.sales_target.toLocaleString("en-IN"):"—"}</td>
+    <td>${d.sales_achieved!=null?"₹"+d.sales_achieved.toLocaleString("en-IN"):"—"}</td>
+    <td>${d.km_travelled!=null?d.km_travelled+" km":"—"}</td>
+    <td>${d.orders_taken||0}</td>
+  </tr>`).join("");
 }
 </script>
 </body>
