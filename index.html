@@ -1624,7 +1624,8 @@ async function loadUsers(){
     };
     const tbody=document.getElementById("usersTable");
     if(!users.length){tbody.innerHTML=`<tr><td colspan="5" class="empty-state">No users found</td></tr>`;return;}
-    tbody.innerHTML=users.map(u=>`<tr>
+    tbody.innerHTML=users.map(u=>`
+      <tr style="cursor:pointer;" onclick="openUserReport('${u.id}','${u.name}')">
       <td style="font-size:12px;color:var(--muted);">${u.id}</td>
       <td style="font-weight:600;">${u.name}</td>
       <td style="font-size:13px;">${u.username}</td>
@@ -1633,9 +1634,6 @@ async function loadUsers(){
     </tr>`).join("");
   }catch{toast("Failed to load users","error");}
 }
-tbody.innerHTML=users.map(u=>`<tr style="cursor:pointer;" onclick="openUserReport('${u.id}','${u.name}')">
-  ...existing cells...
-</tr>`).join("");
 
 
 function viewPhoto(url){document.getElementById("photoModalImg").src=url;document.getElementById("photoModal").classList.add("open");}
