@@ -362,63 +362,103 @@
         </div>
       </div>
 
-      <!-- FIELD VISIT -->
-      <div class="page" id="fieldVisitPage">
-        <div class="page-header">
-          <div class="page-header-icon">🗺️</div>
-          <div><div class="page-title">Field Visit Log</div><div class="page-sub">Log multiple field visits during the day</div></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Log a Visit</div>
-          <div class="form-grid">
-            <div class="field"><label>Employee ID</label><input type="text" id="fv_user_id" readonly style="opacity:0.6;"></div>
-            <div class="field"><label>Date</label><input type="date" id="fv_date" style="cursor:pointer;" onchange="syncFVDate()"></div>
-            <div class="field"><label>Visit Time</label><input type="time" id="fv_time" readonly style="pointer-events:none;opacity:0.6;"></div>
-            <div class="field"><label>Visit Type</label>
-              <select id="fv_visit_type">
-                <option value="">Select type</option>
-                <option value="fresh_visit">1 - Fresh Visit</option>
-                <option value="follow_up">2 - Follow Up</option>
-                <option value="client_visit">3 - Client Visit</option>
-              </select>
-            </div>
-            <div class="field"><label>Client Name</label><input type="text" id="fv_client" placeholder="Client / company name"></div>
-            <div class="field"><label>Client Contact</label><input type="tel" id="fv_contact" placeholder="+91 98765 00000"></div>
-            <div class="field span2"><label>Location / Area</label><input type="text" id="fv_location" placeholder="e.g. Sector 14, Faridabad"></div>
-            <div class="field"><label>Outcome</label>
-              <select id="fv_outcome">
-                <option value="">Select outcome</option>
-                <option value="interested"> Interested</option>
-                <option value="not_interested"> Not Interested</option>
-                <option value="follow_up_needed"> Follow Up Needed</option>
-                <option value="deal_closed"> Deal Closed</option>
-                <option value="no_contact"> No Contact</option>
-              </select>
-            </div>
-            <div class="field"><label>Product Discussed</label><input type="text" id="fv_product" placeholder="e.g. Term Insurance"></div>
-            <div class="field span2"><label>Notes</label><textarea id="fv_notes" placeholder="What happened during this visit..."></textarea></div>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-teal" id="btnLogVisit" onclick="logFieldVisit()">🗺️ Log Visit</button>
-            <button class="btn btn-ghost" onclick="autoFillFV()">⚡ Auto Fill</button>
-          </div>
-        </div>
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <div class="card-title" style="margin-bottom:0;">Today's Visits</div>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <input type="date" id="fv_filter_date" onchange="loadTodayVisits()" style="width:auto;min-width:130px;">
-              <button class="btn btn-teal btn-sm" onclick="exportFieldVisits()">📥 Export</button>
-            </div>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Time</th><th>Type</th><th>Client</th><th>Location</th><th>Product</th><th>Outcome</th><th>Notes</th></tr></thead>
-              <tbody id="fvTable"><tr><td colspan="7" class="empty-state">No visits logged yet</td></tr></tbody>
-            </table>
-          </div>
-        </div>
+     <!-- FIELD VISIT -->
+<div class="page" id="fieldVisitPage">
+  <div class="page-header">
+    <div class="page-header-icon">🗺️</div>
+    <div><div class="page-title">Field Visit Log</div><div class="page-sub">Log multiple field visits during the day</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title" id="fvFormTitle">Log a Visit</div>
+    <div class="form-grid">
+      <input type="hidden" id="fv_edit_id">
+      <div class="field"><label>Employee ID</label><input type="text" id="fv_user_id" readonly style="opacity:0.6;"></div>
+      <div class="field">
+        <label>Date <span class="cam-required">REQUIRED</span></label>
+        <input type="date" id="fv_date" style="cursor:pointer;" onchange="syncFVDate()">
       </div>
+      <div class="field"><label>Visit Time</label><input type="time" id="fv_time" readonly style="pointer-events:none;opacity:0.6;"></div>
+      <div class="field">
+        <label>Visit Type</label>
+        <select id="fv_visit_type">
+          <option value="">Select type</option>
+          <option value="fresh_visit">1 - Fresh Visit</option>
+          <option value="follow_up">2 - Follow Up</option>
+          <option value="client_visit">3 - Client Visit</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Client Name <span class="cam-required">REQUIRED</span></label>
+        <input type="text" id="fv_client" placeholder="Client / person name">
+      </div>
+      <div class="field">
+        <label>Company Name</label>
+        <input type="text" id="fv_company" placeholder="Company / organization name">
+      </div>
+      <div class="field">
+        <label>Client Contact <span class="cam-required">REQUIRED</span></label>
+        <input type="tel" id="fv_contact" placeholder="+91 98765 00000">
+      </div>
+      <div class="field">
+        <label>Client Email</label>
+        <input type="email" id="fv_email" placeholder="client@example.com">
+      </div>
+      <div class="field span2">
+        <label>Location / Area</label>
+        <input type="text" id="fv_location" placeholder="e.g. Sector 14, Faridabad">
+      </div>
+      <div class="field">
+        <label>Outcome</label>
+        <select id="fv_outcome">
+          <option value="">Select outcome</option>
+          <option value="interested"> Interested</option>
+          <option value="not_interested"> Not Interested</option>
+          <option value="follow_up_needed"> Follow Up Needed</option>
+          <option value="deal_closed"> Deal Closed</option>
+          <option value="no_contact"> No Contact</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Product Discussed</label>
+        <input type="text" id="fv_product" placeholder="e.g. Term Insurance">
+      </div>
+      <div class="field span2">
+        <label>Action Taken</label>
+        <textarea id="fv_action_taken" placeholder="What action was taken during this visit..."></textarea>
+      </div>
+      <div class="field span2">
+        <label>Notes</label>
+        <textarea id="fv_notes" placeholder="Additional notes about this visit..."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-teal" id="btnLogVisit" onclick="logFieldVisit()">🗺️ Log Visit</button>
+      <button class="btn btn-ghost" id="btnCancelEdit" style="display:none;" onclick="cancelFVEdit()">✕ Cancel Edit</button>
+      <button class="btn btn-ghost" onclick="autoFillFV()">⚡ Auto Fill</button>
+    </div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div class="card-title" style="margin-bottom:0;">Visits</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input type="date" id="fv_filter_date" onchange="loadTodayVisits()" style="width:auto;min-width:130px;">
+        <button class="btn btn-teal btn-sm" onclick="exportFieldVisits()">📥 Export</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th><th>Type</th><th>Client</th><th>Company</th>
+            <th>Contact</th><th>Email</th><th>Location</th>
+            <th>Product</th><th>Outcome</th><th>Action Taken</th><th>Notes</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="fvTable"><tr><td colspan="12" class="empty-state">No visits logged yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
       <!-- MY DASHBOARD -->
       <div class="page" id="dashboardPage">
@@ -1246,76 +1286,190 @@ async function checkOut(){
 }
 
 // ── FIELD VISIT ───────────────────────────────────────────────────────────────
-async function logFieldVisit(){
-  const btn=document.getElementById("btnLogVisit");
-  const payload={
-    user_id:document.getElementById("fv_user_id").value,
-    date:document.getElementById("fv_date").value,
-    visit_time:document.getElementById("fv_time").value,
-    visit_type:document.getElementById("fv_visit_type").value,
-    client_name:document.getElementById("fv_client").value.trim(),
-    contact_number:document.getElementById("fv_contact").value.trim(),
-    location:document.getElementById("fv_location").value.trim(),
-    outcome:document.getElementById("fv_outcome").value,
-    product:document.getElementById("fv_product").value.trim(),
-    notes:document.getElementById("fv_notes").value.trim(),
-    logged_by:currentUser?.name
-  };
-  if(!payload.client_name) return toast("Client name is required","error");
-  btn.disabled=true; btn.textContent="Logging…";
-  try{
-    const res=await fetch(`${API}/field-visits`,{method:"POST",headers:authHeaders(),body:JSON.stringify(payload)});
-    const data=await res.json();
-    if(!res.ok) return toast(data.error||"Error","error");
-    toast("✅ Field visit logged!","success");
-    ["fv_client","fv_contact","fv_location","fv_product","fv_notes"].forEach(id=>document.getElementById(id).value="");
-    document.getElementById("fv_visit_type").value="";
-    document.getElementById("fv_outcome").value="";
-    document.getElementById("fv_time").value=new Date().toTimeString().slice(0,5);
-    loadTodayVisits();
-  }catch{toast("Cannot connect to server","error");}
-  finally{btn.disabled=false; btn.textContent="🗺️ Log Visit";}
+let fieldVisitData = [];
+
+function syncFVDate(){
+  const selected = document.getElementById("fv_date").value;
+  document.getElementById("fv_filter_date").value = selected;
+  loadTodayVisits();
 }
 
-let fieldVisitData=[];
+function autoFillFV(){
+  if(!currentUser) return;
+  const today = new Date().toISOString().split("T")[0];
+  const yesterday = new Date(Date.now()-86400000).toISOString().split("T")[0];
+  document.getElementById("fv_user_id").value = currentUser.id||"";
+  document.getElementById("fv_date").value = today;
+  document.getElementById("fv_date").min = yesterday;
+  document.getElementById("fv_date").max = today;
+  document.getElementById("fv_time").value = new Date().toTimeString().slice(0,5);
+  document.getElementById("fv_filter_date").value = today;
+  loadTodayVisits();
+}
+
+function clearFVForm(){
+  document.getElementById("fv_edit_id").value = "";
+  document.getElementById("fv_client").value = "";
+  document.getElementById("fv_company").value = "";
+  document.getElementById("fv_contact").value = "";
+  document.getElementById("fv_email").value = "";
+  document.getElementById("fv_location").value = "";
+  document.getElementById("fv_product").value = "";
+  document.getElementById("fv_notes").value = "";
+  document.getElementById("fv_action_taken").value = "";
+  document.getElementById("fv_visit_type").value = "";
+  document.getElementById("fv_outcome").value = "";
+  document.getElementById("fv_time").value = new Date().toTimeString().slice(0,5);
+  document.getElementById("fvFormTitle").textContent = "Log a Visit";
+  document.getElementById("btnLogVisit").textContent = "🗺️ Log Visit";
+  document.getElementById("btnCancelEdit").style.display = "none";
+}
+
+function cancelFVEdit(){
+  clearFVForm();
+  toast("Edit cancelled","info");
+}
+
+function editFieldVisit(id){
+  const visit = fieldVisitData.find(v => v.id === id);
+  if(!visit) return;
+  document.getElementById("fvFormTitle").scrollIntoView({behavior:"smooth"});
+  document.getElementById("fv_edit_id").value = visit.id;
+  document.getElementById("fv_client").value = visit.client_name||"";
+  document.getElementById("fv_company").value = visit.company_name||"";
+  document.getElementById("fv_contact").value = visit.contact_number||"";
+  document.getElementById("fv_email").value = visit.email||"";
+  document.getElementById("fv_location").value = visit.location||"";
+  document.getElementById("fv_product").value = visit.product||"";
+  document.getElementById("fv_notes").value = visit.notes||"";
+  document.getElementById("fv_action_taken").value = visit.action_taken||"";
+  document.getElementById("fv_visit_type").value = visit.visit_type||"";
+  document.getElementById("fv_outcome").value = visit.outcome||"";
+  document.getElementById("fv_time").value = visit.visit_time||"";
+  document.getElementById("fvFormTitle").textContent = "✏️ Edit Visit";
+  document.getElementById("btnLogVisit").textContent = "💾 Save Changes";
+  document.getElementById("btnCancelEdit").style.display = "inline-flex";
+  toast("Editing visit — make changes and save","info");
+}
+
+async function deleteFieldVisit(id){
+  if(!confirm("Delete this field visit?")) return;
+  try{
+    const res = await fetch(`${API}/field-visits/${id}`,{
+      method:"DELETE", headers: authHeaders()
+    });
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast("🗑️ Visit deleted","success");
+    loadTodayVisits();
+  } catch { toast("Cannot connect to server","error"); }
+}
+
+async function logFieldVisit(){
+  const btn = document.getElementById("btnLogVisit");
+  const editId = document.getElementById("fv_edit_id").value;
+
+  const date = document.getElementById("fv_date").value;
+  const client = document.getElementById("fv_client").value.trim();
+  const contact = document.getElementById("fv_contact").value.trim();
+
+  if(!date) return toast("Date is required","error");
+  if(!client) return toast("Client name is required","error");
+  if(!contact) return toast("Client contact is required","error");
+
+  const payload = {
+    user_id: document.getElementById("fv_user_id").value,
+    date,
+    visit_time: document.getElementById("fv_time").value,
+    visit_type: document.getElementById("fv_visit_type").value,
+    client_name: client,
+    company_name: document.getElementById("fv_company").value.trim(),
+    contact_number: contact,
+    email: document.getElementById("fv_email").value.trim(),
+    location: document.getElementById("fv_location").value.trim(),
+    outcome: document.getElementById("fv_outcome").value,
+    product: document.getElementById("fv_product").value.trim(),
+    notes: document.getElementById("fv_notes").value.trim(),
+    action_taken: document.getElementById("fv_action_taken").value.trim(),
+    logged_by: currentUser?.name
+  };
+
+  btn.disabled = true;
+  btn.textContent = editId ? "Saving…" : "Logging…";
+
+  try{
+    const url = editId ? `${API}/field-visits/${editId}` : `${API}/field-visits`;
+    const method = editId ? "PUT" : "POST";
+    const res = await fetch(url,{
+      method, headers: authHeaders(), body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(editId ? "✅ Visit updated!" : "✅ Field visit logged!","success");
+    clearFVForm();
+    loadTodayVisits();
+  } catch { toast("Cannot connect to server","error"); }
+  finally{
+    btn.disabled = false;
+    btn.textContent = document.getElementById("fv_edit_id").value ? "💾 Save Changes" : "🗺️ Log Visit";
+  }
+}
 
 async function loadTodayVisits(){
   try{
-    const selectedDate=document.getElementById("fv_date")?.value||new Date().toISOString().split("T")[0];
-    const filterDate=document.getElementById("fv_filter_date")?.value||selectedDate;
-    const res=await fetch(`${API}/field-visits?user_id=${currentUser?.id}&date=${filterDate}`,{headers:authHeaders()});
-    fieldVisitData=await res.json();
-    const tbody=document.getElementById("fvTable");
-    if(!fieldVisitData.length){tbody.innerHTML=`<tr><td colspan="7" class="empty-state">No visits logged for this date</td></tr>`;return;}
-    const outcomeMap={interested:" Interested",not_interested:" Not Interested",follow_up_needed:" Follow Up",deal_closed:" Deal Closed",no_contact:" No Contact"};
-    const typeMap={fresh_visit:" Fresh Visit",follow_up:" Follow Up",client_visit:" Client Visit"};
-    tbody.innerHTML=fieldVisitData.map(v=>`<tr>
+    const filterDate = document.getElementById("fv_filter_date")?.value || new Date().toISOString().split("T")[0];
+    const res = await fetch(`${API}/field-visits?user_id=${currentUser?.id}&date=${filterDate}`,{headers:authHeaders()});
+    fieldVisitData = await res.json();
+    const tbody = document.getElementById("fvTable");
+    if(!fieldVisitData.length){
+      tbody.innerHTML=`<tr><td colspan="12" class="empty-state">No visits logged for this date</td></tr>`;
+      return;
+    }
+    const outcomeMap={
+      interested:"✅ Interested",
+      not_interested:"❌ Not Interested",
+      follow_up_needed:"🔄 Follow Up",
+      deal_closed:"🎉 Deal Closed",
+      no_contact:"📵 No Contact"
+    };
+    const typeMap={
+      fresh_visit:"🆕 Fresh",
+      follow_up:"🔄 Follow Up",
+      client_visit:"🤝 Client"
+    };
+    tbody.innerHTML = fieldVisitData.map(v=>`<tr>
       <td style="font-family:monospace;">${v.visit_time||"—"}</td>
       <td><span class="badge badge-office">${typeMap[v.visit_type]||v.visit_type||"—"}</span></td>
       <td style="font-weight:600;">${v.client_name||"—"}</td>
-      <td style="font-size:12px;color:var(--muted);">${v.location||"—"}</td>
+      <td style="font-size:12px;">${v.company_name||"—"}</td>
+      <td style="font-size:12px;">${v.contact_number||"—"}</td>
+      <td style="font-size:12px;color:var(--muted);">${v.email||"—"}</td>
+      <td style="font-size:12px;color:var(--muted);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v.location||"—"}</td>
       <td style="font-size:12px;">${v.product||"—"}</td>
       <td>${outcomeMap[v.outcome]||v.outcome||"—"}</td>
-      <td style="font-size:12px;color:var(--muted);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v.notes||"—"}</td>
+      <td style="font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${v.action_taken||""}">${v.action_taken||"—"}</td>
+      <td style="font-size:12px;color:var(--muted);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${v.notes||""}">${v.notes||"—"}</td>
+      <td>
+        <div style="display:flex;gap:5px;">
+          <button class="btn btn-ghost btn-sm" onclick="editFieldVisit(${v.id})">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteFieldVisit(${v.id})">🗑️</button>
+        </div>
+      </td>
     </tr>`).join("");
-  }catch{/*silent*/}
+  } catch(e){console.error(e);}
 }
-function syncFVDate(){
-  const selected=document.getElementById("fv_date").value;
-  document.getElementById("fv_filter_date").value=selected;
-  loadTodayVisits();
-}  
 
 function exportFieldVisits(){
   if(!fieldVisitData.length) return toast("No visits to export","error");
-  const headers=["Date","Time","Visit Type","Client Name","Contact","Location","Product","Outcome","Notes","Logged By"];
+  const headers=["Date","Time","Visit Type","Client Name","Company","Contact","Email","Location","Product","Outcome","Action Taken","Notes","Logged By"];
   const typeMap={fresh_visit:"Fresh Visit",follow_up:"Follow Up",client_visit:"Client Visit"};
   const outcomeMap={interested:"Interested",not_interested:"Not Interested",follow_up_needed:"Follow Up Needed",deal_closed:"Deal Closed",no_contact:"No Contact"};
   const rows=[headers,...fieldVisitData.map(v=>[
     v.date||"", v.visit_time||"", typeMap[v.visit_type]||v.visit_type||"",
-    v.client_name||"", v.contact_number||"", v.location||"",
-    v.product||"", outcomeMap[v.outcome]||v.outcome||"",
-    v.notes||"", v.logged_by||""
+    v.client_name||"", v.company_name||"", v.contact_number||"",
+    v.email||"", v.location||"", v.product||"",
+    outcomeMap[v.outcome]||v.outcome||"",
+    v.action_taken||"", v.notes||"", v.logged_by||""
   ])];
   downloadCSV(rows,`field_visits_${document.getElementById("fv_filter_date")?.value||"all"}.csv`);
   toast("✅ Field visits exported!","success");
