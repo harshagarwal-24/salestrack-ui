@@ -705,6 +705,10 @@
                 <option value="online">Online</option>
                 <option value="social_media">Social Media</option>
                 <option value="other">Other</option>
+                <option value="">All Priority</option>
+                <option value="hot"> Hot</option>
+                <option value="warm"> Warm</option>
+                <option value="cold"> Cold</option>
               </select>
             </div>
             <div style="display:flex;gap:8px;">
@@ -717,7 +721,7 @@
           <div class="card-title">All Leads</div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Name</th><th>Phone</th><th>Company</th><th>Source</th><th>Status</th><th>Product</th><th>Assigned</th><th>Follow-up</th><th>Date</th><th>Actions</th></tr></thead>
+              <thead><tr><th>Name</th><th>Phone</th><th>Company</th><th>Priority</th><th>Source</th><th>Status</th><th>Product</th><th>Assigned</th><th>Follow-up</th><th>Date</th><th>Actions</th></tr></thead>
               <tbody id="leadsTable"><tr><td colspan="10" class="empty-state">Loading...</td></tr></tbody>
             </table>
           </div>
@@ -841,32 +845,133 @@
 
 <!-- LEAD MODAL -->
 <div class="modal-overlay" id="leadModal">
-  <div class="modal">
+  <div class="modal" style="width:640px;">
     <div class="modal-title">
       <span id="modalTitle">Add New Lead</span>
       <button class="modal-close" onclick="closeLeadModal()">×</button>
     </div>
-    <div class="form-grid">
+
+    <!-- PRIORITY BANNER -->
+    <div id="priorityBanner" style="display:none;margin-bottom:14px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
+
+    <!-- BASIC INFO -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;">👤 Basic Information</div>
+    <div class="form-grid" style="margin-bottom:16px;">
       <input type="hidden" id="lead_id">
-      <div class="field"><label>Lead Name *</label><input type="text" id="lead_name" placeholder="Full name"></div>
-      <div class="field"><label>Phone</label><input type="tel" id="lead_phone" placeholder="+91 98765 00000"></div>
-      <div class="field"><label>Email</label><input type="email" id="lead_email" placeholder="email@example.com"></div>
-      <div class="field"><label>Company Name</label><input type="text" id="lead_company" placeholder="Company / org name"></div>
-      <div class="field span2"><label>Address</label><input type="text" id="lead_address" placeholder="Full address"></div>
-      <div class="field"><label>Source</label>
-        <select id="lead_source"><option value="">Select source</option><option value="cold_call">Cold Call</option><option value="referral">Referral</option><option value="walk_in">Walk In</option><option value="field_visit"> Field Visit</option><option value="online">Online</option><option value="social_media">Social Media</option><option value="other">Other</option></select>
+      <div class="field">
+        <label>Lead Name <span style="color:var(--orange);">*</span></label>
+        <input type="text" id="lead_name" placeholder="Full name">
       </div>
-      <div class="field"><label>Status</label>
-        <select id="lead_status"><option value="new">New</option><option value="prospect"> Prospect</option><option value="contacted">Contacted</option><option value="follow_up">Follow Up</option><option value="converted">Converted</option><option value="lost">Lost</option></select>
+      <div class="field">
+        <label>Phone <span style="color:var(--orange);">*</span></label>
+        <input type="tel" id="lead_phone" placeholder="+91 98765 00000">
       </div>
-      <div class="field"><label>Product Interested In</label><input type="text" id="lead_product" placeholder="e.g. Term Insurance"></div>
-      <div class="field"><label>Assigned To</label>
-        <select id="lead_assigned"><option value="">Select salesperson</option><option value="u002">Rahul Sharma</option><option value="u003">Priya Singh</option><option value="u004">Amit Verma</option></select>
+      <div class="field">
+        <label>Email <span style="color:var(--orange);">*</span></label>
+        <input type="email" id="lead_email" placeholder="email@example.com">
       </div>
-      <div class="field span2"><label>Notes</label><textarea id="lead_notes" placeholder="Additional notes..."></textarea></div>
-      <div class="field"><label>📅 Follow-up Date</label><input type="date" id="lead_followup_date"></div>
-      <div class="field"><label>Follow-up Note</label><input type="text" id="lead_followup_note" placeholder="What to follow up on..."></div>
+      <div class="field">
+        <label>Source</label>
+        <select id="lead_source">
+          <option value="">Select source</option>
+          <option value="cold_call">Cold Call</option>
+          <option value="referral">Referral</option>
+          <option value="walk_in">Walk In</option>
+          <option value="field_visit">Field Visit</option>
+          <option value="online">Online</option>
+          <option value="social_media">Social Media</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="lead_status">
+          <option value="new">New</option>
+          <option value="prospect">Prospect</option>
+          <option value="contacted">Contacted</option>
+          <option value="follow_up">Follow Up</option>
+          <option value="converted">Converted</option>
+          <option value="lost">Lost</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Priority <span style="color:var(--orange);">*</span></label>
+        <select id="lead_priority" onchange="handlePriorityChange()">
+          <option value="cold">❄️ Cold — Occasional follow up</option>
+          <option value="warm">🌤️ Warm — Weekly follow up</option>
+          <option value="hot">🔥 Hot — Daily follow up needed</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Product Interested In</label>
+        <input type="text" id="lead_product" placeholder="e.g. Term Insurance">
+      </div>
+      <div class="field">
+        <label>Assigned To</label>
+        <select id="lead_assigned">
+          <option value="">Select salesperson</option>
+          <option value="u002">Rahul Sharma</option>
+          <option value="u003">Ayush Choudhary</option>
+          <option value="INT014">Yash Patel</option>
+          <option value="INT000">Zoya Raikwar</option>
+          <option value="INT001">Shivani Asati</option>
+          <option value="INT002">Vidhi</option>
+          <option value="INT003">Anvi Malik</option>
+          <option value="INT004">Anmol</option>
+          <option value="INT005">Bhaskar</option>
+          <option value="INT010">Anirudh Agrawal</option>
+          <option value="INT012">Tushar Goswami</option>
+          <option value="INT013">Harsh</option>
+        </select>
+      </div>
+      <div class="field span2">
+        <label>Address</label>
+        <input type="text" id="lead_address" placeholder="Full address">
+      </div>
+      <div class="field span2">
+        <label>Notes</label>
+        <textarea id="lead_notes" placeholder="Additional notes..." style="min-height:60px;"></textarea>
+      </div>
     </div>
+
+    <!-- COMPANY DETAILS -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;">🏢 Company Details</div>
+    <div class="form-grid" style="margin-bottom:16px;">
+      <div class="field span2">
+        <label>Company Name <span style="color:var(--orange);">*</span></label>
+        <input type="text" id="lead_company" placeholder="Company / organization name">
+      </div>
+      <div class="field">
+        <label>Annual Turnover</label>
+        <input type="text" id="lead_annual_turnover" placeholder="e.g. ₹5 Crore">
+      </div>
+      <div class="field">
+        <label>Employee Strength</label>
+        <input type="text" id="lead_employee_strength" placeholder="e.g. 50-100">
+      </div>
+      <div class="field">
+        <label>Sum Insured</label>
+        <input type="text" id="lead_sum_insured" placeholder="e.g. ₹10 Lakh per person">
+      </div>
+      <div class="field span2">
+        <label>Company Details</label>
+        <textarea id="lead_company_details" placeholder="Nature of business, industry, any other relevant details..." style="min-height:60px;"></textarea>
+      </div>
+    </div>
+
+    <!-- FOLLOW UP -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;">📅 Follow Up</div>
+    <div class="form-grid" style="margin-bottom:16px;">
+      <div class="field">
+        <label>Follow-up Date</label>
+        <input type="date" id="lead_followup_date">
+      </div>
+      <div class="field">
+        <label>Follow-up Note</label>
+        <input type="text" id="lead_followup_note" placeholder="What to follow up on...">
+      </div>
+    </div>
+
     <div class="btn-row">
       <button class="btn btn-primary" id="saveLeadBtn" onclick="saveLead()">💾 Save Lead</button>
       <button class="btn btn-ghost" onclick="closeLeadModal()">Cancel</button>
@@ -1689,40 +1794,86 @@ function exportOpsExcel(){
 }
 
 // ── LEADS ─────────────────────────────────────────────────────────────────────
+function handlePriorityChange(){
+  const priority = document.getElementById("lead_priority").value;
+  const banner = document.getElementById("priorityBanner");
+  const followupDate = document.getElementById("lead_followup_date");
+  const today = new Date();
+
+  if(priority === "hot"){
+    banner.style.display = "block";
+    banner.style.background = "#fff4e6";
+    banner.style.border = "1.5px solid #f59e0b";
+    banner.style.color = "#92400e";
+    banner.innerHTML = "🔥 <strong>HOT Lead</strong> — Daily follow up required. Follow-up date auto-set to tomorrow.";
+    // auto set followup to tomorrow
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    if(!followupDate.value) followupDate.value = tomorrow.toISOString().split("T")[0];
+  } else if(priority === "warm"){
+    banner.style.display = "block";
+    banner.style.background = "#fffbeb";
+    banner.style.border = "1.5px solid #fcd34d";
+    banner.style.color = "#78350f";
+    banner.innerHTML = "🌤️ <strong>WARM Lead</strong> — Weekly follow up recommended.";
+    if(!followupDate.value){
+      const nextWeek = new Date(today);
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      followupDate.value = nextWeek.toISOString().split("T")[0];
+    }
+  } else {
+    banner.style.display = "none";
+    followupDate.value = followupDate.value||"";
+  }
+}
+
+function priorityBadge(p){
+  const m = {
+    hot: `<span class="badge" style="background:#fff4e6;color:#92400e;">🔥 Hot</span>`,
+    warm: `<span class="badge" style="background:#fffbeb;color:#78350f;">🌤️ Warm</span>`,
+    cold: `<span class="badge" style="background:#eff6ff;color:#1e40af;">❄️ Cold</span>`
+  };
+  return m[p] || `<span class="badge badge-half">${p||"—"}</span>`;
+}
+
 async function loadLeads(){
   try{
-    const res=await fetch(`${API}/leads`,{headers:authHeaders()});
-    allLeads=await res.json();
+    const res = await fetch(`${API}/leads`,{headers:authHeaders()});
+    allLeads = await res.json();
     renderLeads(allLeads);
-    document.getElementById("ldTotal").textContent=allLeads.length;
-    document.getElementById("ldNew").textContent=allLeads.filter(l=>l.status==="new"||l.status==="prospect").length;
-    document.getElementById("ldFollowup").textContent=allLeads.filter(l=>l.status==="follow_up").length;
-    document.getElementById("ldConverted").textContent=allLeads.filter(l=>l.status==="converted").length;
-  }catch{toast("Failed to load leads","error");}
+    document.getElementById("ldTotal").textContent = allLeads.length;
+    document.getElementById("ldNew").textContent = allLeads.filter(l=>l.status==="new"||l.status==="prospect").length;
+    document.getElementById("ldFollowup").textContent = allLeads.filter(l=>l.status==="follow_up").length;
+    document.getElementById("ldConverted").textContent = allLeads.filter(l=>l.status==="converted").length;
+  } catch { toast("Failed to load leads","error"); }
 }
 
 function filterLeads(){
-  const search=document.getElementById("ld_search").value.toLowerCase();
-  const status=document.getElementById("ld_status_filter").value;
-  const source=document.getElementById("ld_source_filter").value;
+  const search = document.getElementById("ld_search").value.toLowerCase();
+  const status = document.getElementById("ld_status_filter").value;
+  const source = document.getElementById("ld_source_filter").value;
+  const priority = document.getElementById("ld_priority_filter")?.value||"";
   renderLeads(allLeads.filter(l=>
-    (!search||(l.name&&l.name.toLowerCase().includes(search))||(l.phone&&l.phone.includes(search)))&&
-    (!status||l.status===status)&&(!source||l.source===source)
+    (!search||(l.name&&l.name.toLowerCase().includes(search))||(l.phone&&l.phone.includes(search))||(l.company_name&&l.company_name.toLowerCase().includes(search)))&&
+    (!status||l.status===status)&&
+    (!source||l.source===source)&&
+    (!priority||l.priority===priority)
   ));
 }
 
 function renderLeads(leads){
-  const tbody=document.getElementById("leadsTable");
-  const isAdmin=currentUser?.role==="admin";
-  const isOps=currentUser?.role==="operations";
-  if(!leads.length){tbody.innerHTML=`<tr><td colspan="10" class="empty-state">No leads found</td></tr>`;return;}
-  tbody.innerHTML=leads.map(l=>`<tr>
+  const tbody = document.getElementById("leadsTable");
+  const isAdmin = currentUser?.role==="admin";
+  const isOps = currentUser?.role==="operations";
+  if(!leads.length){tbody.innerHTML=`<tr><td colspan="11" class="empty-state">No leads found</td></tr>`;return;}
+  tbody.innerHTML = leads.map(l=>`<tr>
     <td style="font-weight:600;">${l.name}</td>
     <td style="font-size:12px;">${l.phone||"—"}</td>
     <td style="font-size:12px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.company_name||"—"}</td>
+    <td>${priorityBadge(l.priority)}</td>
     <td>${sourceBadge(l.source)}</td>
     <td>${leadStatusBadge(l.status)}</td>
-    <td style="max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.product_interested||"—"}</td>
+    <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.product_interested||"—"}</td>
     <td style="font-size:12px;">${l.assigned_to||"—"}</td>
     <td style="font-size:12px;color:var(--muted);">${l.followup_date?new Date(l.followup_date).toLocaleDateString("en-IN"):"—"}</td>
     <td style="font-size:12px;color:var(--muted);">${l.created_at?new Date(l.created_at).toLocaleDateString("en-IN"):"—"}</td>
@@ -1735,83 +1886,120 @@ function renderLeads(leads){
 
 function exportLeadsExcel(){
   if(!allLeads.length) return toast("No leads to export","error");
-  const headers=["Name","Phone","Email","Company","Address","Source","Status","Product","Assigned To","Follow-up Date","Notes","Date Added"];
-  const rows=[headers,...allLeads.map(l=>[l.name||"",l.phone||"",l.email||"",l.company_name||"",l.address||"",l.source||"",l.status||"",l.product_interested||"",l.assigned_to||"",l.followup_date||"",l.notes||"",l.created_at?new Date(l.created_at).toLocaleDateString("en-IN"):""])];
+  const headers=["Name","Phone","Email","Company","Priority","Address","Source","Status","Product","Annual Turnover","Employee Strength","Sum Insured","Company Details","Assigned To","Follow-up Date","Notes","Date Added"];
+  const rows=[headers,...allLeads.map(l=>[
+    l.name||"",l.phone||"",l.email||"",l.company_name||"",l.priority||"cold",
+    l.address||"",l.source||"",l.status||"",l.product_interested||"",
+    l.annual_turnover||"",l.employee_strength||"",l.sum_insured||"",
+    l.company_details||"",l.assigned_to||"",l.followup_date||"",
+    l.notes||"",l.created_at?new Date(l.created_at).toLocaleDateString("en-IN"):""
+  ])];
   downloadCSV(rows,`leads_${new Date().toISOString().split("T")[0]}.csv`);
   toast("✅ Leads exported!","success");
 }
 
 function openAddLead(){
   if(currentUser?.role==="operations") return toast("Operations cannot add leads","error");
-  document.getElementById("modalTitle").textContent="Add New Lead";
-  ["lead_id","lead_name","lead_phone","lead_email","lead_company","lead_address","lead_product","lead_notes","lead_followup_date","lead_followup_note"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("lead_source").value="";
-  document.getElementById("lead_status").value="new";
-  document.getElementById("lead_assigned").value="";
+  document.getElementById("modalTitle").textContent = "Add New Lead";
+  ["lead_id","lead_name","lead_phone","lead_email","lead_company",
+   "lead_address","lead_product","lead_notes","lead_followup_date",
+   "lead_followup_note","lead_annual_turnover","lead_employee_strength",
+   "lead_sum_insured","lead_company_details"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("lead_source").value = "";
+  document.getElementById("lead_status").value = "new";
+  document.getElementById("lead_priority").value = "cold";
+  document.getElementById("lead_assigned").value = "";
+  document.getElementById("priorityBanner").style.display = "none";
   document.getElementById("leadModal").classList.add("open");
 }
 
 function openEditLead(id){
-  const lead=allLeads.find(l=>l.id===id);
+  const lead = allLeads.find(l=>l.id===id);
   if(!lead) return;
-  document.getElementById("modalTitle").textContent="Edit Lead";
-  document.getElementById("lead_id").value=lead.id;
-  document.getElementById("lead_name").value=lead.name||"";
-  document.getElementById("lead_phone").value=lead.phone||"";
-  document.getElementById("lead_email").value=lead.email||"";
-  document.getElementById("lead_company").value=lead.company_name||"";
-  document.getElementById("lead_address").value=lead.address||"";
-  document.getElementById("lead_source").value=lead.source||"";
-  document.getElementById("lead_status").value=lead.status||"new";
-  document.getElementById("lead_product").value=lead.product_interested||"";
-  document.getElementById("lead_assigned").value=lead.assigned_to_id||"";
-  document.getElementById("lead_notes").value=lead.notes||"";
-  document.getElementById("lead_followup_date").value=lead.followup_date||"";
-  document.getElementById("lead_followup_note").value=lead.followup_note||"";
+  document.getElementById("modalTitle").textContent = "Edit Lead";
+  document.getElementById("lead_id").value = lead.id;
+  document.getElementById("lead_name").value = lead.name||"";
+  document.getElementById("lead_phone").value = lead.phone||"";
+  document.getElementById("lead_email").value = lead.email||"";
+  document.getElementById("lead_company").value = lead.company_name||"";
+  document.getElementById("lead_address").value = lead.address||"";
+  document.getElementById("lead_source").value = lead.source||"";
+  document.getElementById("lead_status").value = lead.status||"new";
+  document.getElementById("lead_priority").value = lead.priority||"cold";
+  document.getElementById("lead_product").value = lead.product_interested||"";
+  document.getElementById("lead_assigned").value = lead.assigned_to_id||"";
+  document.getElementById("lead_notes").value = lead.notes||"";
+  document.getElementById("lead_followup_date").value = lead.followup_date||"";
+  document.getElementById("lead_followup_note").value = lead.followup_note||"";
+  document.getElementById("lead_annual_turnover").value = lead.annual_turnover||"";
+  document.getElementById("lead_employee_strength").value = lead.employee_strength||"";
+  document.getElementById("lead_sum_insured").value = lead.sum_insured||"";
+  document.getElementById("lead_company_details").value = lead.company_details||"";
+  // trigger priority banner
+  handlePriorityChange();
   document.getElementById("leadModal").classList.add("open");
 }
 
-function closeLeadModal(){document.getElementById("leadModal").classList.remove("open");}
+function closeLeadModal(){
+  document.getElementById("leadModal").classList.remove("open");
+}
 
 async function saveLead(){
-  const id=document.getElementById("lead_id").value;
-  const assignedSelect=document.getElementById("lead_assigned");
-  const payload={
-    name:document.getElementById("lead_name").value.trim(),
-    phone:document.getElementById("lead_phone").value.trim(),
-    email:document.getElementById("lead_email").value.trim(),
-    company_name:document.getElementById("lead_company").value.trim(),
-    address:document.getElementById("lead_address").value.trim(),
-    source:document.getElementById("lead_source").value,
-    status:document.getElementById("lead_status").value,
-    product_interested:document.getElementById("lead_product").value.trim(),
-    assigned_to:assignedSelect.value?assignedSelect.options[assignedSelect.selectedIndex].text:"",
-    assigned_to_id:assignedSelect.value,
-    notes:document.getElementById("lead_notes").value.trim(),
-    followup_date:document.getElementById("lead_followup_date").value||null,
-    followup_note:document.getElementById("lead_followup_note").value.trim(),
+  const name = document.getElementById("lead_name").value.trim();
+  const phone = document.getElementById("lead_phone").value.trim();
+  const email = document.getElementById("lead_email").value.trim();
+  const company_name = document.getElementById("lead_company").value.trim();
+
+  if(!name) return toast("Lead name is required","error");
+  if(!phone) return toast("Phone is required","error");
+  if(!email) return toast("Email is required","error");
+  if(!company_name) return toast("Company name is required","error");
+
+  const id = document.getElementById("lead_id").value;
+  const assignedSelect = document.getElementById("lead_assigned");
+  const payload = {
+    name, phone, email, company_name,
+    address: document.getElementById("lead_address").value.trim(),
+    source: document.getElementById("lead_source").value,
+    status: document.getElementById("lead_status").value,
+    priority: document.getElementById("lead_priority").value,
+    product_interested: document.getElementById("lead_product").value.trim(),
+    assigned_to: assignedSelect.value ? assignedSelect.options[assignedSelect.selectedIndex].text : "",
+    assigned_to_id: assignedSelect.value,
+    notes: document.getElementById("lead_notes").value.trim(),
+    followup_date: document.getElementById("lead_followup_date").value||null,
+    followup_note: document.getElementById("lead_followup_note").value.trim(),
+    annual_turnover: document.getElementById("lead_annual_turnover").value.trim(),
+    employee_strength: document.getElementById("lead_employee_strength").value.trim(),
+    sum_insured: document.getElementById("lead_sum_insured").value.trim(),
+    company_details: document.getElementById("lead_company_details").value.trim(),
   };
-  if(!payload.name) return toast("Lead name is required","error");
-  const btn=document.getElementById("saveLeadBtn");
-  btn.disabled=true; btn.textContent="Saving…";
+
+  const btn = document.getElementById("saveLeadBtn");
+  btn.disabled = true; btn.textContent = "Saving…";
   try{
-    const url=id?`${API}/leads/${id}`:`${API}/leads`;
-    const res=await fetch(url,{method:id?"PUT":"POST",headers:authHeaders(),body:JSON.stringify(payload)});
-    const data=await res.json();
+    const url = id ? `${API}/leads/${id}` : `${API}/leads`;
+    const res = await fetch(url,{
+      method: id?"PUT":"POST", headers: authHeaders(),
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
     if(!res.ok) return toast(data.error||"Error","error");
     toast(data.message,"success");
-    closeLeadModal(); loadLeads();
-  }catch{toast("Cannot connect to server","error");}
-  finally{btn.disabled=false; btn.textContent="💾 Save Lead";}
+    closeLeadModal();
+    loadLeads();
+  } catch { toast("Cannot connect to server","error"); }
+  finally { btn.disabled=false; btn.textContent="💾 Save Lead"; }
 }
 
 async function deleteLead(id){
   if(!confirm("Delete this lead?")) return;
   try{
-    const res=await fetch(`${API}/leads/${id}`,{method:"DELETE",headers:authHeaders()});
-    const data=await res.json();
-    toast(data.message,"success"); loadLeads();
-  }catch{toast("Failed to delete","error");}
+    const res = await fetch(`${API}/leads/${id}`,{method:"DELETE",headers:authHeaders()});
+    const data = await res.json();
+    toast(data.message,"success");
+    loadLeads();
+  } catch { toast("Failed to delete","error"); }
 }
 
 // ── REMINDERS ─────────────────────────────────────────────────────────────────
