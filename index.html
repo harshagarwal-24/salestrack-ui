@@ -204,7 +204,7 @@
     <div class="user-pill">
       <div class="avatar" id="topAvatar">--</div>
       <div><div class="user-name" id="topName">--</div><div class="user-role" id="topRole"></div></div>
-      <button class="btn-lock" title="Change Password" onclick="openChangePass()">🔒</button>
+      <button class="btn-lock" title="Change Password" onclick="openChangePass()"></button>
       <button class="btn-logout" onclick="logout()">×</button>
     </div>
   </div>
@@ -302,7 +302,7 @@
             <div class="field"><label>KM Travelled</label><input type="number" id="co_km" placeholder="e.g. 45" min="0"></div>
             <div class="field span2" id="dealTypeSection" style="display:none;">
               <div class="field-section-card">
-                <div class="card-title" style="margin-bottom:10px;">📋 Deal Breakdown</div>
+                <div class="card-title" style="margin-bottom:10px;"> Deal Breakdown</div>
                 <div class="form-grid">
                   <div class="field"><label>Deal Type</label>
                     <select id="co_deal_type">
@@ -358,7 +358,7 @@
         </div>
         <div class="btn-row">
           <button class="btn btn-danger" id="btnCheckOut" onclick="checkOut()">🔴 Mark Check Out</button>
-          <button class="btn btn-ghost" onclick="autoFillCO()">⚡ Auto Fill</button>
+          <button class="btn btn-ghost" onclick="autoFillCO()"> Auto Fill</button>
         </div>
       </div>
 
@@ -434,9 +434,9 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-teal" id="btnLogVisit" onclick="logFieldVisit()">🗺️ Log Visit</button>
+      <button class="btn btn-teal" id="btnLogVisit" onclick="logFieldVisit()"> Log Visit</button>
       <button class="btn btn-ghost" id="btnCancelEdit" style="display:none;" onclick="cancelFVEdit()">✕ Cancel Edit</button>
-      <button class="btn btn-ghost" onclick="autoFillFV()">⚡ Auto Fill</button>
+      <button class="btn btn-ghost" onclick="autoFillFV()"> Auto Fill</button>
     </div>
   </div>
   <div class="card">
@@ -444,7 +444,7 @@
       <div class="card-title" style="margin-bottom:0;">Visits</div>
       <div style="display:flex;gap:8px;align-items:center;">
         <input type="date" id="fv_filter_date" onchange="loadTodayVisits()" style="width:auto;min-width:130px;">
-        <button class="btn btn-teal btn-sm" onclick="exportFieldVisits()">📥 Export</button>
+        <button class="btn btn-teal btn-sm" onclick="exportFieldVisits()"> Export</button>
       </div>
     </div>
     <div class="table-wrap">
@@ -469,17 +469,17 @@
           <div><div class="page-title">My Dashboard</div><div class="page-sub">Your attendance & performance</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-label">Days Present</div><div class="stat-value" id="myPresent">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">Days on Field</div><div class="stat-value" id="myField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="mySales">—</div></div>
-          <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Orders Closed</div><div class="stat-value" id="myOrders">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-label">B2B Sales (₹)</div><div class="stat-value" id="myB2B">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🛍️</div><div class="stat-label">Retail Sales (₹)</div><div class="stat-value" id="myRetail">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Days Present</div><div class="stat-value" id="myPresent">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Days on Field</div><div class="stat-value" id="myField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="mySales">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Orders Closed</div><div class="stat-value" id="myOrders">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">B2B Sales (₹)</div><div class="stat-value" id="myB2B">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Retail Sales (₹)</div><div class="stat-value" id="myRetail">—</div></div>
         </div>
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
             <div class="card-title" style="margin-bottom:0;">Attendance Log</div>
-            <button class="btn btn-teal btn-sm" onclick="exportMyExcel()">📥 Export</button>
+            <button class="btn btn-teal btn-sm" onclick="exportMyExcel()"> Export</button>
           </div>
           <div class="table-wrap">
             <table>
@@ -497,10 +497,10 @@
           <div><div class="page-title">Admin Dashboard</div><div class="page-sub">Full team overview</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total Records</div><div class="stat-value" id="adTotal">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">On Field</div><div class="stat-value" id="adField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-label">In Office</div><div class="stat-value" id="adOffice">—</div></div>
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="adSales">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Records</div><div class="stat-value" id="adTotal">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">On Field</div><div class="stat-value" id="adField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">In Office</div><div class="stat-value" id="adOffice">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales (₹)</div><div class="stat-value" id="adSales">—</div></div>
         </div>
         <div class="card">
           <div class="card-title">Filters & Export</div>
@@ -517,7 +517,7 @@
             </select>
             <input type="month" id="f_month" onchange="loadAdmin()" title="Filter by month">
             <button class="btn btn-ghost btn-sm" onclick="clearFilters()">Clear</button>
-            <button class="btn btn-teal btn-sm" onclick="exportToExcel()">📥 Export Excel</button>
+            <button class="btn btn-teal btn-sm" onclick="exportToExcel()"> Export Excel</button>
           </div>
         </div>
         <div class="card">
@@ -532,14 +532,14 @@
        <!-- ADMIN FIELD VISITS CARD -->
       <div class="card" id="adminFVCard">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-          <div class="card-title" style="margin-bottom:0;">🗺️ Field Visit Log</div>
+          <div class="card-title" style="margin-bottom:0;"> Field Visit Log</div>
           <div style="display:flex;gap:8px;align-items:center;">
             <input type="date" id="af_date" onchange="loadAdminFieldVisits()">
             <select id="af_user" onchange="loadAdminFieldVisits()" style="width:auto;min-width:140px;">
               <option value="">All Employees</option>
             </select>
             <button class="btn btn-ghost btn-sm" onclick="clearAdminFVFilters()">Clear</button>
-            <button class="btn btn-teal btn-sm" onclick="exportAdminFV()">📥 Export</button>
+            <button class="btn btn-teal btn-sm" onclick="exportAdminFV()"> Export</button>
           </div>
         </div>
         <div class="table-wrap">
@@ -571,14 +571,14 @@
         <div class="card">
           <div class="filter-bar" style="margin-bottom:0;">
             <input type="month" id="mr_month" onchange="loadMonthly()">
-            <button class="btn btn-teal btn-sm" onclick="exportMonthlyExcel()">📥 Export Excel</button>
+            <button class="btn btn-teal btn-sm" onclick="exportMonthlyExcel()"> Export Excel</button>
           </div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total Present</div><div class="stat-value" id="mrPresent">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">Field Visits</div><div class="stat-value" id="mrField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales</div><div class="stat-value" id="mrSales">—</div></div>
-          <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Total Orders</div><div class="stat-value" id="mrOrders">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Present</div><div class="stat-value" id="mrPresent">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Field Visits</div><div class="stat-value" id="mrField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales</div><div class="stat-value" id="mrSales">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Orders</div><div class="stat-value" id="mrOrders">—</div></div>
         </div>
         <div class="card">
           <div class="card-title">Team Summary</div>
@@ -629,21 +629,21 @@
   </div>
   <div class="stats-grid">
     <div class="stat-card clickable" onclick="filterUserTable('present')" style="cursor:pointer;">
-      <div class="stat-icon">✅</div><div class="stat-label">Present</div><div class="stat-value" id="urPresent">—</div>
+      <div class="stat-icon"></div><div class="stat-label">Present</div><div class="stat-value" id="urPresent">—</div>
     </div>
     <div class="stat-card clickable" onclick="filterUserTable('absent')" style="cursor:pointer;">
-      <div class="stat-icon">❌</div><div class="stat-label">Absent</div><div class="stat-value" id="urAbsent">—</div>
+      <div class="stat-icon"></div><div class="stat-label">Absent</div><div class="stat-value" id="urAbsent">—</div>
     </div>
     <div class="stat-card clickable" onclick="filterUserTable('on_field')" style="cursor:pointer;">
-      <div class="stat-icon">🚗</div><div class="stat-label">On Field</div><div class="stat-value" id="urField">—</div>
+      <div class="stat-icon"></div><div class="stat-label">On Field</div><div class="stat-value" id="urField">—</div>
     </div>
     <div class="stat-card clickable" onclick="filterUserTable('half_day')" style="cursor:pointer;">
-      <div class="stat-icon">⏱️</div><div class="stat-label">Half Days</div><div class="stat-value" id="urHalf">—</div>
+      <div class="stat-icon"></div><div class="stat-label">Half Days</div><div class="stat-value" id="urHalf">—</div>
     </div>
-    <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Sales</div><div class="stat-value" id="urSales">—</div></div>
-    <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-label">Orders</div><div class="stat-value" id="urOrders">—</div></div>
-    <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-label">Achievement %</div><div class="stat-value" id="urAchieve">—</div></div>
-    <div class="stat-card"><div class="stat-icon">🗺️</div><div class="stat-label">KM Travelled</div><div class="stat-value" id="urKm">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Sales</div><div class="stat-value" id="urSales">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Orders</div><div class="stat-value" id="urOrders">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Achievement %</div><div class="stat-value" id="urAchieve">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">KM Travelled</div><div class="stat-value" id="urKm">—</div></div>
   </div>
   <div class="card">
     <div class="card-title" id="urTableTitle">All Records</div>
@@ -663,15 +663,15 @@
           <div><div class="page-title">Operations Dashboard</div><div class="page-sub">Attendance, field visits and leads overview</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-label">Total Records</div><div class="stat-value" id="opsTotal">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🚗</div><div class="stat-label">On Field</div><div class="stat-value" id="opsField">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-label">Total Leads</div><div class="stat-value" id="opsLeads">—</div></div>
-          <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Converted</div><div class="stat-value" id="opsConverted">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Records</div><div class="stat-value" id="opsTotal">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">On Field</div><div class="stat-value" id="opsField">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Leads</div><div class="stat-value" id="opsLeads">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Converted</div><div class="stat-value" id="opsConverted">—</div></div>
         </div>
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
             <div class="card-title" style="margin-bottom:0;">Attendance Records</div>
-            <button class="btn btn-teal btn-sm" onclick="exportOpsExcel()">📥 Export Excel</button>
+            <button class="btn btn-teal btn-sm" onclick="exportOpsExcel()"> Export Excel</button>
           </div>
           <div class="filter-bar">
             <input type="date" id="ops_date" onchange="loadOps()">
@@ -709,10 +709,10 @@
           <div><div class="page-title">Leads</div><div class="page-sub">Manage your sales pipeline</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-label">Total</div><div class="stat-value" id="ldTotal">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🆕</div><div class="stat-label">New</div><div class="stat-value" id="ldNew">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">Follow Up</div><div class="stat-value" id="ldFollowup">—</div></div>
-          <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Converted</div><div class="stat-value" id="ldConverted">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total</div><div class="stat-value" id="ldTotal">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">New</div><div class="stat-value" id="ldNew">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Follow Up</div><div class="stat-value" id="ldFollowup">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Converted</div><div class="stat-value" id="ldConverted">—</div></div>
         </div>
         <div class="card">
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
@@ -743,7 +743,7 @@
               </select>
             </div>
             <div style="display:flex;gap:8px;">
-              <button class="btn btn-teal btn-sm" onclick="exportLeadsExcel()">📥 Export</button>
+              <button class="btn btn-teal btn-sm" onclick="exportLeadsExcel()"> Export</button>
               <button class="btn btn-primary btn-sm" onclick="openAddLead()">+ Add Lead</button>
             </div>
           </div>
@@ -766,10 +766,10 @@
           <div><div class="page-title">Follow-up Reminders</div><div class="page-sub">Leads that need follow-up</div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon">🔴</div><div class="stat-label">Overdue</div><div class="stat-value" id="rdOverdue">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🟡</div><div class="stat-label">Due Today</div><div class="stat-value" id="rdToday">—</div></div>
-          <div class="stat-card"><div class="stat-icon">🟢</div><div class="stat-label">This Week</div><div class="stat-value" id="rdWeek">—</div></div>
-          <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-label">All Follow-ups</div><div class="stat-value" id="rdAll">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Overdue</div><div class="stat-value" id="rdOverdue">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Due Today</div><div class="stat-value" id="rdToday">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">This Week</div><div class="stat-value" id="rdWeek">—</div></div>
+          <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">All Follow-ups</div><div class="stat-value" id="rdAll">—</div></div>
         </div>
         <div class="card">
           <div class="card-title">Needs Follow-up</div>
@@ -805,7 +805,7 @@
         </div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-teal" onclick="submitWFHRequest()">📨 Submit Request</button>
+        <button class="btn btn-teal" onclick="submitWFHRequest()"> Submit Request</button>
       </div>
     </div>
     <div class="card">
@@ -822,9 +822,9 @@
   <!-- Admin: Manage Requests -->
   <div id="wfhAdminPanel" style="display:none;">
     <div class="stats-grid">
-      <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-label">Pending</div><div class="stat-value" id="wfhPending">—</div></div>
-      <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Approved</div><div class="stat-value" id="wfhApproved">—</div></div>
-      <div class="stat-card"><div class="stat-icon">❌</div><div class="stat-label">Rejected</div><div class="stat-value" id="wfhRejected">—</div></div>
+      <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Pending</div><div class="stat-value" id="wfhPending">—</div></div>
+      <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Approved</div><div class="stat-value" id="wfhApproved">—</div></div>
+      <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Rejected</div><div class="stat-value" id="wfhRejected">—</div></div>
     </div>
     <div class="card">
       <div class="card-title">All WFH Requests</div>
@@ -863,8 +863,8 @@
     </div>
     <input type="hidden" id="wfhActionId">
     <div class="btn-row">
-      <button class="btn btn-teal" onclick="processWFH('approved')">✅ Approve</button>
-      <button class="btn btn-danger" onclick="processWFH('rejected')">❌ Reject</button>
+      <button class="btn btn-teal" onclick="processWFH('approved')"> Approve</button>
+      <button class="btn btn-danger" onclick="processWFH('rejected')"> Reject</button>
       <button class="btn btn-ghost" onclick="closeWFHModal()">Cancel</button>
     </div>
   </div>
@@ -886,7 +886,7 @@
     <div id="priorityBanner" style="display:none;margin-bottom:14px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
 
     <!-- BASIC INFO -->
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;">👤 Basic Information</div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;"> Basic Information</div>
     <div class="form-grid" style="margin-bottom:16px;">
       <input type="hidden" id="lead_id">
       <div class="field">
@@ -928,9 +928,9 @@
       <div class="field">
         <label>Priority <span style="color:var(--orange);">*</span></label>
         <select id="lead_priority" onchange="handlePriorityChange()">
-          <option value="cold">❄️ Cold — Occasional follow up</option>
-          <option value="warm">🌤️ Warm — Weekly follow up</option>
-          <option value="hot">🔥 Hot — Daily follow up needed</option>
+          <option value="cold"> Cold — Occasional follow up</option>
+          <option value="warm"> Warm — Weekly follow up</option>
+          <option value="hot"> Hot — Daily follow up needed</option>
         </select>
       </div>
       <div class="field">
@@ -966,7 +966,7 @@
     </div>
 
     <!-- COMPANY DETAILS -->
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;">🏢 Company Details</div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;"> Company Details</div>
     <div class="form-grid" style="margin-bottom:16px;">
       <div class="field span2">
         <label>Company Name <span style="color:var(--orange);">*</span></label>
@@ -991,7 +991,7 @@
     </div>
 
     <!-- FOLLOW UP -->
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;">📅 Follow Up</div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;"> Follow Up</div>
     <div class="form-grid" style="margin-bottom:16px;">
       <div class="field">
         <label>Follow-up Date</label>
@@ -1004,7 +1004,7 @@
     </div>
 
     <div class="btn-row">
-      <button class="btn btn-primary" id="saveLeadBtn" onclick="saveLead()">💾 Save Lead</button>
+      <button class="btn btn-primary" id="saveLeadBtn" onclick="saveLead()"> Save Lead</button>
       <button class="btn btn-ghost" onclick="closeLeadModal()">Cancel</button>
     </div>
   </div>
@@ -1134,7 +1134,7 @@ async function login(){
     document.getElementById("topName").textContent=user.name;
     document.getElementById("topRole").textContent=user.role.toUpperCase();
     setupRoleUI(user.role);
-    toast(`Welcome, ${user.name}! 👋`,"success");
+    toast(`Welcome, ${user.name}! `,"success");
   }catch{toast("Cannot connect to server","error");}
 }
 
@@ -1143,37 +1143,37 @@ function setupRoleUI(role){
   if(role==="admin"){
     sidebar.innerHTML=`
       <div class="sidebar-section">Overview</div>
-      <button class="nav-btn active" onclick="goTo('adminPage',this);loadAdmin();closeSidebar()"><span class="nav-icon">🛡️</span> Dashboard</button>
-      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly();closeSidebar()"><span class="nav-icon">📊</span> Monthly Report</button>
-      <button class="nav-btn" onclick="goTo('usersPage',this);loadUsers();closeSidebar()"><span class="nav-icon">👥</span> Users</button>
-      <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon">🏠</span> WFH Requests</button>
+      <button class="nav-btn active" onclick="goTo('adminPage',this);loadAdmin();closeSidebar()"><span class="nav-icon"></span> Dashboard</button>
+      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly();closeSidebar()"><span class="nav-icon"></span> Monthly Report</button>
+      <button class="nav-btn" onclick="goTo('usersPage',this);loadUsers();closeSidebar()"><span class="nav-icon"></span> Users</button>
+      <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon"></span> WFH Requests</button>
       <div class="sidebar-section">Sales</div>
-      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>
-      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon">🔔</span> Reminders</button>`;
+      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon"></span> Leads</button>
+      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon"></span> Reminders</button>`;
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById("adminPage").classList.add("active");
     loadAdmin();
   } else if(role==="operations"){
     sidebar.innerHTML=`
       <div class="sidebar-section">Overview</div>
-      <button class="nav-btn active" onclick="goTo('opsPage',this);loadOps();closeSidebar()"><span class="nav-icon">📋</span> Dashboard</button>
-      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly();closeSidebar()"><span class="nav-icon">📊</span> Monthly Report</button>
+      <button class="nav-btn active" onclick="goTo('opsPage',this);loadOps();closeSidebar()"><span class="nav-icon"></span> Dashboard</button>
+      <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly();closeSidebar()"><span class="nav-icon"></span> Monthly Report</button>
       <div class="sidebar-section">Sales</div>
-      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>`;
+      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon"></span> Leads</button>`;
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById("opsPage").classList.add("active");
     loadOps();
   } else {
     sidebar.innerHTML=`
       <div class="sidebar-section">Attendance</div>
-      <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon">🟢</span> Check In</button>
-      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon">🔴</span> Check Out</button>
-      <button class="nav-btn" onclick="goTo('fieldVisitPage',this);autoFillFV();closeSidebar()"><span class="nav-icon">🗺️</span> Field Visit</button>
-      <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard();closeSidebar()"><span class="nav-icon">📊</span> My Dashboard</button>
-      <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon">🏠</span> WFH Request</button>
+      <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon"></span> Check In</button>
+      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon"></span> Check Out</button>
+      <button class="nav-btn" onclick="goTo('fieldVisitPage',this);autoFillFV();closeSidebar()"><span class="nav-icon"></span> Field Visit</button>
+      <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard();closeSidebar()"><span class="nav-icon"></span> My Dashboard</button>
+      <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon"></span> WFH Request</button>
       <div class="sidebar-section">Sales</div>
-      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>
-      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon">🔔</span> Reminders</button>`;
+      <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon"></span> Leads</button>
+      <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon"></span> Reminders</button>`;
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById("checkInPage").classList.add("active");
     autoFill();
@@ -1232,7 +1232,7 @@ async function checkWFHApproval(userId, date){
       lockedMsg.style.display = "none";
     } else {
       wfhOption.disabled = true;
-      wfhOption.textContent = " Work From Home 🔒";
+      wfhOption.textContent = " Work From Home ";
       approvedMsg.style.display = "none";
       lockedMsg.style.display = "none";
     }
@@ -1459,7 +1459,7 @@ function clearFVForm(){
   document.getElementById("fv_outcome").value = "";
   document.getElementById("fv_time").value = new Date().toTimeString().slice(0,5);
   document.getElementById("fvFormTitle").textContent = "Log a Visit";
-  document.getElementById("btnLogVisit").textContent = "🗺️ Log Visit";
+  document.getElementById("btnLogVisit").textContent = " Log Visit";
   document.getElementById("btnCancelEdit").style.display = "none";
 }
 
@@ -1484,8 +1484,8 @@ function editFieldVisit(id){
   document.getElementById("fv_visit_type").value = visit.visit_type||"";
   document.getElementById("fv_outcome").value = visit.outcome||"";
   document.getElementById("fv_time").value = visit.visit_time||"";
-  document.getElementById("fvFormTitle").textContent = "✏️ Edit Visit";
-  document.getElementById("btnLogVisit").textContent = "💾 Save Changes";
+  document.getElementById("fvFormTitle").textContent = " Edit Visit";
+  document.getElementById("btnLogVisit").textContent = " Save Changes";
   document.getElementById("btnCancelEdit").style.display = "inline-flex";
   toast("Editing visit — make changes and save","info");
 }
@@ -1548,7 +1548,7 @@ async function logFieldVisit(){
   } catch { toast("Cannot connect to server","error"); }
   finally{
     btn.disabled = false;
-    btn.textContent = document.getElementById("fv_edit_id").value ? "💾 Save Changes" : "🗺️ Log Visit";
+    btn.textContent = document.getElementById("fv_edit_id").value ? " Save Changes" : " Log Visit";
   }
 }
 
@@ -1563,11 +1563,11 @@ async function loadTodayVisits(){
       return;
     }
     const outcomeMap={
-      interested:"✅ Interested",
-      not_interested:"❌ Not Interested",
-      follow_up_needed:"🔄 Follow Up",
-      deal_closed:"🎉 Deal Closed",
-      no_contact:"📵 No Contact"
+      interested:" Interested",
+      not_interested:" Not Interested",
+      follow_up_needed:" Follow Up",
+      deal_closed:" Deal Closed",
+      no_contact:" No Contact"
     };
     const typeMap={
       fresh_visit:" Fresh",
@@ -1718,16 +1718,16 @@ function renderAdminFVTable(data){
   }
 
   const outcomeMap={
-    interested:"✅ Interested",
-    not_interested:"❌ Not Interested",
-    follow_up_needed:"🔄 Follow Up",
-    deal_closed:"🎉 Deal Closed",
-    no_contact:"📵 No Contact"
+    interested:" Interested",
+    not_interested:" Not Interested",
+    follow_up_needed:" Follow Up",
+    deal_closed:" Deal Closed",
+    no_contact:" No Contact"
   };
   const typeMap={
-    fresh_visit:"🆕 Fresh",
-    follow_up:"🔄 Follow Up",
-    client_visit:"🤝 Client"
+    fresh_visit:" Fresh",
+    follow_up:" Follow Up",
+    client_visit:" Client"
   };
 
   tbody.innerHTML = data.map(v=>`<tr>
@@ -1953,7 +1953,7 @@ function handlePriorityChange(){
     banner.style.background = "#fff4e6";
     banner.style.border = "1.5px solid #f59e0b";
     banner.style.color = "#92400e";
-    banner.innerHTML = "🔥 <strong>HOT Lead</strong> — Daily follow up required. Follow-up date auto-set to tomorrow.";
+    banner.innerHTML = " <strong>HOT Lead</strong> — Daily follow up required. Follow-up date auto-set to tomorrow.";
     // auto set followup to tomorrow
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -1963,7 +1963,7 @@ function handlePriorityChange(){
     banner.style.background = "#fffbeb";
     banner.style.border = "1.5px solid #fcd34d";
     banner.style.color = "#78350f";
-    banner.innerHTML = "🌤️ <strong>WARM Lead</strong> — Weekly follow up recommended.";
+    banner.innerHTML = " <strong>WARM Lead</strong> — Weekly follow up recommended.";
     if(!followupDate.value){
       const nextWeek = new Date(today);
       nextWeek.setDate(nextWeek.getDate() + 7);
@@ -1977,9 +1977,9 @@ function handlePriorityChange(){
 
 function priorityBadge(p){
   const m = {
-    hot: `<span class="badge" style="background:#fff4e6;color:#92400e;">🔥 Hot</span>`,
-    warm: `<span class="badge" style="background:#fffbeb;color:#78350f;">🌤️ Warm</span>`,
-    cold: `<span class="badge" style="background:#eff6ff;color:#1e40af;">❄️ Cold</span>`
+    hot: `<span class="badge" style="background:#fff4e6;color:#92400e;"> Hot</span>`,
+    warm: `<span class="badge" style="background:#fffbeb;color:#78350f;"> Warm</span>`,
+    cold: `<span class="badge" style="background:#eff6ff;color:#1e40af;"> Cold</span>`
   };
   return m[p] || `<span class="badge badge-half">${p||"—"}</span>`;
 }
@@ -2137,7 +2137,7 @@ async function saveLead(){
     closeLeadModal();
     loadLeads();
   } catch { toast("Cannot connect to server","error"); }
-  finally { btn.disabled=false; btn.textContent="💾 Save Lead"; }
+  finally { btn.disabled=false; btn.textContent=" Save Lead"; }
 }
 
 async function deleteLead(id){
