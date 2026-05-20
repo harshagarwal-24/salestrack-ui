@@ -1435,9 +1435,11 @@ async function loadTodayVisits(){
       no_contact:"📵 No Contact"
     };
     const typeMap={
-      fresh_visit:"🆕 Fresh",
-      follow_up:"🔄 Follow Up",
-      client_visit:"🤝 Client"
+      fresh_visit:" Fresh",
+      follow_up:" Follow Up",
+      client_visit:" Client",
+      POSP:" POSP",
+      retail:" retail"
     };
     tbody.innerHTML = fieldVisitData.map(v=>`<tr>
       <td style="font-family:monospace;">${v.visit_time||"—"}</td>
@@ -1464,7 +1466,7 @@ async function loadTodayVisits(){
 function exportFieldVisits(){
   if(!fieldVisitData.length) return toast("No visits to export","error");
   const headers=["Date","Time","Visit Type","Client Name","Company","Contact","Email","Location","Product","Outcome","Action Taken","Notes","Logged By"];
-  const typeMap={fresh_visit:"Fresh Visit",follow_up:"Follow Up",client_visit:"Client Visit"};
+  const typeMap={fresh_visit:"Fresh Visit",follow_up:"Follow Up",client_visit:"Client Visit",POSP:"POSP",Retail:"Retail"};
   const outcomeMap={interested:"Interested",not_interested:"Not Interested",follow_up_needed:"Follow Up Needed",deal_closed:"Deal Closed",no_contact:"No Contact"};
   const rows=[headers,...fieldVisitData.map(v=>[
     v.date||"", v.visit_time||"", typeMap[v.visit_type]||v.visit_type||"",
