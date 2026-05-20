@@ -398,7 +398,7 @@
         <input type="text" id="fv_company" placeholder="Company / organization name">
       </div>
       <div class="field">
-        <label>Client Contact <span class="cam-required">REQUIRED</span></label>
+        <label>Client Contact</label>
         <input type="tel" id="fv_contact" placeholder="+91 98765 00000">
       </div>
       <div class="field">
@@ -1478,11 +1478,9 @@ async function logFieldVisit(){
 
   const date = document.getElementById("fv_date").value;
   const client = document.getElementById("fv_client").value.trim();
-  const contact = document.getElementById("fv_contact").value.trim();
 
   if(!date) return toast("Date is required","error");
   if(!client) return toast("Client name is required","error");
-  if(!contact) return toast("Client contact is required","error");
 
   const payload = {
     user_id: document.getElementById("fv_user_id").value,
