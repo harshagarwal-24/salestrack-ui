@@ -1478,6 +1478,7 @@ async function logFieldVisit(){
 
   const date = document.getElementById("fv_date").value;
   const client = document.getElementById("fv_client").value.trim();
+  const contact = document.getElementById("fv_contact").value.trim();
 
   if(!date) return toast("Date is required","error");
   if(!client) return toast("Client name is required","error");
