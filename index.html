@@ -530,6 +530,36 @@
           </div>
         </div>
       </div>
+       <!-- ADMIN FIELD VISITS CARD -->
+      <div class="card" id="adminFVCard">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div class="card-title" style="margin-bottom:0;">🗺️ Field Visit Log</div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="date" id="af_date" onchange="loadAdminFieldVisits()">
+            <select id="af_user" onchange="loadAdminFieldVisits()" style="width:auto;min-width:140px;">
+              <option value="">All Employees</option>
+            </select>
+            <button class="btn btn-ghost btn-sm" onclick="clearAdminFVFilters()">Clear</button>
+            <button class="btn btn-teal btn-sm" onclick="exportAdminFV()">📥 Export</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Employee</th><th>Date</th><th>Time</th><th>Type</th>
+                <th>Client</th><th>Company</th><th>Contact</th>
+                <th>Location</th><th>Product</th><th>Outcome</th>
+                <th>Action Taken</th><th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="adminFVTable">
+              <tr><td colspan="12" class="empty-state">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="adminFVStats" style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;"></div>
+      </div>
 
       <!-- MONTHLY REPORT -->
       <div class="page" id="monthlyPage">
@@ -1616,7 +1646,6 @@ function exportMyExcel(){
 }
 
 // ── ADMIN ─────────────────────────────────────────────────────────────────────
-let adminData=[];
 async function loadAdmin(){
   try{
     const params=new URLSearchParams();
@@ -1639,23 +1668,142 @@ async function loadAdmin(){
     document.getElementById("adOffice").textContent=stats.attendance.inOffice;
     document.getElementById("adSales").textContent="₹"+(stats.sales.totalAchieved||0).toLocaleString("en-IN");
     const tbody=document.getElementById("adminTable");
-    if(!adminData.length){tbody.innerHTML=`<tr><td colspan="15" class="empty-state">No records found</td></tr>`;return;}
-    tbody.innerHTML=adminData.map(d=>`<tr>
-      <td style="font-weight:600;">${d.name||"—"}</td>
-      <td style="font-size:11px;color:var(--muted);">${d.user_id}</td>
-      <td>${d.date}</td><td>${statusBadge(d.status)}</td>
-      <td>${d.check_in||"—"}</td><td>${d.check_out||"—"}</td>
-      <td>${d.checkin_photo?`<img src="${d.checkin_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkin_photo}')">` :"—"}</td>
-      <td>${d.checkout_photo?`<img src="${d.checkout_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkout_photo}')">` :"—"}</td>
-      <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${d.field_location||"—"}</td>
-      <td>${d.client_name||"—"}</td>
-      <td>${d.sales_target!=null?"₹"+d.sales_target.toLocaleString("en-IN"):"—"}</td>
-      <td>${d.sales_achieved!=null?"₹"+d.sales_achieved.toLocaleString("en-IN"):"—"}</td>
-      <td>${d.b2b_sales!=null&&d.b2b_sales>0?"₹"+d.b2b_sales.toLocaleString("en-IN"):"—"}</td>
-      <td>${d.retail_sales!=null&&d.retail_sales>0?"₹"+d.retail_sales.toLocaleString("en-IN"):"—"}</td>
-      <td>${d.km_travelled!=null?d.km_travelled+" km":"—"}</td>
-    </tr>`).join("");
-  }catch{toast("Failed to load admin data","error");}
+    if(!adminData.length){tbody.innerHTML=`<tr><td colspan="15" class="empty-state">No records found</td></tr>`;}
+    else{
+      tbody.innerHTML=adminData.map(d=>`<tr>
+        <td style="font-weight:600;">${d.name||"—"}</td>
+        <td style="font-size:11px;color:var(--muted);">${d.user_id}</td>
+        <td>${d.date}</td><td>${statusBadge(d.status)}</td>
+        <td>${d.check_in||"—"}</td><td>${d.check_out||"—"}</td>
+        <td>${d.checkin_photo?`<img src="${d.checkin_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkin_photo}')">` :"—"}</td>
+        <td>${d.checkout_photo?`<img src="${d.checkout_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkout_photo}')">` :"—"}</td>
+        <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${d.field_location||"—"}</td>
+        <td>${d.client_name||"—"}</td>
+        <td>${d.sales_target!=null?"₹"+d.sales_target.toLocaleString("en-IN"):"—"}</td>
+        <td>${d.sales_achieved!=null?"₹"+d.sales_achieved.toLocaleString("en-IN"):"—"}</td>
+        <td>${d.b2b_sales!=null&&d.b2b_sales>0?"₹"+d.b2b_sales.toLocaleString("en-IN"):"—"}</td>
+        <td>${d.retail_sales!=null&&d.retail_sales>0?"₹"+d.retail_sales.toLocaleString("en-IN"):"—"}</td>
+        <td>${d.km_travelled!=null?d.km_travelled+" km":"—"}</td>
+      </tr>`).join("");
+    }
+    // Also load field visits for admin
+    await loadAdminFieldVisits();
+    // populate user filter after data loads
+    setTimeout(populateAdminFVUserFilter, 500);
+  }catch{ toast("Failed to load admin data","error"); }
+}
+  // ── ADMIN FIELD VISITS ────────────────────────────────────────────────────────
+let adminFVData = [];
+
+async function loadAdminFieldVisits(){
+  try{
+    const date = document.getElementById("af_date")?.value||"";
+    const userId = document.getElementById("af_user")?.value||"";
+    let url = `${API}/field-visits?`;
+    if(date) url += `date=${date}&`;
+    if(userId) url += `user_id=${userId}&`;
+    const res = await fetch(url, {headers: authHeaders()});
+    adminFVData = await res.json();
+    renderAdminFVTable(adminFVData);
+  } catch { toast("Failed to load field visits","error"); }
+}
+
+function renderAdminFVTable(data){
+  const tbody = document.getElementById("adminFVTable");
+  if(!data.length){
+    tbody.innerHTML=`<tr><td colspan="12" class="empty-state">No field visits found</td></tr>`;
+    document.getElementById("adminFVStats").innerHTML="";
+    return;
+  }
+
+  const outcomeMap={
+    interested:"✅ Interested",
+    not_interested:"❌ Not Interested",
+    follow_up_needed:"🔄 Follow Up",
+    deal_closed:"🎉 Deal Closed",
+    no_contact:"📵 No Contact"
+  };
+  const typeMap={
+    fresh_visit:"🆕 Fresh",
+    follow_up:"🔄 Follow Up",
+    client_visit:"🤝 Client"
+  };
+
+  tbody.innerHTML = data.map(v=>`<tr>
+    <td style="font-weight:600;">${v.logged_by||v.user_id||"—"}</td>
+    <td style="font-size:12px;">${v.date||"—"}</td>
+    <td style="font-family:monospace;font-size:12px;">${v.visit_time||"—"}</td>
+    <td><span class="badge badge-office">${typeMap[v.visit_type]||v.visit_type||"—"}</span></td>
+    <td style="font-weight:600;">${v.client_name||"—"}</td>
+    <td style="font-size:12px;">${v.company_name||"—"}</td>
+    <td style="font-size:12px;">${v.contact_number||"—"}</td>
+    <td style="font-size:12px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${v.location||""}">${v.location||"—"}</td>
+    <td style="font-size:12px;">${v.product||"—"}</td>
+    <td>${outcomeMap[v.outcome]||v.outcome||"—"}</td>
+    <td style="font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${v.action_taken||""}">${v.action_taken||"—"}</td>
+    <td style="font-size:12px;color:var(--muted);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${v.notes||""}">${v.notes||"—"}</td>
+  </tr>`).join("");
+
+  // Stats bar
+  const total = data.length;
+  const deals = data.filter(v=>v.outcome==="deal_closed").length;
+  const interested = data.filter(v=>v.outcome==="interested").length;
+  const followUp = data.filter(v=>v.outcome==="follow_up_needed").length;
+  // unique employees
+  const employees = [...new Set(data.map(v=>v.user_id))].length;
+
+  document.getElementById("adminFVStats").innerHTML=`
+    <div style="background:var(--teal-pale);border:1px solid rgba(43,173,155,0.2);border-radius:8px;padding:8px 14px;font-size:12px;">
+      <span style="font-weight:700;color:var(--teal);">${total}</span> <span style="color:var(--muted);">Total Visits</span>
+    </div>
+    <div style="background:#dcfce7;border:1px solid #bbf7d0;border-radius:8px;padding:8px 14px;font-size:12px;">
+      <span style="font-weight:700;color:#166534;">${deals}</span> <span style="color:var(--muted);">Deals Closed</span>
+    </div>
+    <div style="background:#fff4f1;border:1px solid #fed7c7;border-radius:8px;padding:8px 14px;font-size:12px;">
+      <span style="font-weight:700;color:var(--orange);">${interested}</span> <span style="color:var(--muted);">Interested</span>
+    </div>
+    <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:8px 14px;font-size:12px;">
+      <span style="font-weight:700;color:#92400e;">${followUp}</span> <span style="color:var(--muted);">Need Follow Up</span>
+    </div>
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:12px;">
+      <span style="font-weight:700;color:var(--text);">${employees}</span> <span style="color:var(--muted);">Employees Active</span>
+    </div>
+  `;
+}
+
+function clearAdminFVFilters(){
+  document.getElementById("af_date").value = "";
+  document.getElementById("af_user").value = "";
+  loadAdminFieldVisits();
+}
+
+function exportAdminFV(){
+  if(!adminFVData.length) return toast("No data to export","error");
+  const headers=["Employee","Date","Time","Visit Type","Client","Company","Contact","Email","Location","Product","Outcome","Action Taken","Notes"];
+  const typeMap={fresh_visit:"Fresh Visit",follow_up:"Follow Up",client_visit:"Client Visit"};
+  const outcomeMap={interested:"Interested",not_interested:"Not Interested",follow_up_needed:"Follow Up Needed",deal_closed:"Deal Closed",no_contact:"No Contact"};
+  const rows=[headers,...adminFVData.map(v=>[
+    v.logged_by||v.user_id||"",
+    v.date||"", v.visit_time||"",
+    typeMap[v.visit_type]||v.visit_type||"",
+    v.client_name||"", v.company_name||"",
+    v.contact_number||"", v.email||"",
+    v.location||"", v.product||"",
+    outcomeMap[v.outcome]||v.outcome||"",
+    v.action_taken||"", v.notes||""
+  ])];
+  downloadCSV(rows,`field_visits_admin_${new Date().toISOString().split("T")[0]}.csv`);
+  toast("✅ Field visits exported!","success");
+}
+
+function populateAdminFVUserFilter(){
+  const select = document.getElementById("af_user");
+  if(!select) return;
+  // get unique users from attendance data or use static list
+  const uniqueUsers = [...new Map(adminFVData.map(v=>[v.user_id, {id:v.user_id, name:v.logged_by||v.user_id}])).values()];
+  const currentVal = select.value;
+  select.innerHTML = `<option value="">All Employees</option>` +
+    uniqueUsers.map(u=>`<option value="${u.id}" ${currentVal===u.id?"selected":""}>${u.name}</option>`).join("");
 }
 
 function clearFilters(){
