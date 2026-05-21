@@ -2405,7 +2405,7 @@ async function loadWFHPage(){
   const today = new Date().toISOString().split("T")[0];
   const tomorrow = new Date(Date.now()+86400000).toISOString().split("T")[0];
 
-  if(currentUser.role === "sales"){
+  if(currentUser.role === "sales" || currentUser.role === "crm"){
     requestForm.style.display = "block";
     document.getElementById("wfhPageSub").textContent = "Request work from home approval";
     document.getElementById("wfh_req_date").value = today;
