@@ -870,6 +870,169 @@
   </div>
 </div>
 
+<!-- CRM ACTIVITY LOG -->
+<div class="page" id="crmActivityPage">
+  <div class="page-header">
+    <div class="page-header-icon">📋</div>
+    <div><div class="page-title">Log CRM Activity</div>
+    <div class="page-sub">Record your daily customer interactions</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title" id="crmFormTitle">New Activity</div>
+    <div class="form-grid">
+      <input type="hidden" id="crm_edit_id">
+      <div class="field"><label>Employee Name</label>
+        <input type="text" id="crm_employee" readonly style="opacity:0.6;">
+      </div>
+      <div class="field"><label>Date <span class="cam-required">REQUIRED</span></label>
+        <input type="date" id="crm_date" onchange="loadCRMTable()">
+      </div>
+      <div class="field"><label>Customer Name <span class="cam-required">REQUIRED</span></label>
+        <input type="text" id="crm_customer" placeholder="Full name">
+      </div>
+      <div class="field"><label>Company Name</label>
+        <input type="text" id="crm_company" placeholder="Company / organization">
+      </div>
+      <div class="field"><label>Contact Number</label>
+        <input type="tel" id="crm_contact" placeholder="+91 98765 00000">
+      </div>
+      <div class="field"><label>Insurance Type</label>
+        <select id="crm_insurance_type">
+          <option value="">Select type</option>
+          <option value="health">Health Insurance</option>
+          <option value="life">Life Insurance</option>
+          <option value="term">Term Insurance</option>
+          <option value="motor">Motor Insurance</option>
+          <option value="fire">Fire Insurance</option>
+          <option value="marine">Marine Insurance</option>
+          <option value="group_health">Group Health</option>
+          <option value="group_life">Group Life</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Activity Type</label>
+        <select id="crm_activity_type">
+          <option value="">Select activity</option>
+          <option value="call">📞 Call</option>
+          <option value="follow_up">🔄 Follow-up</option>
+          <option value="quotation_shared">📄 Quotation Shared</option>
+          <option value="meeting">🤝 Meeting</option>
+          <option value="policy_issued">✅ Policy Issued</option>
+        </select>
+      </div>
+      <div class="field"><label>Status</label>
+        <select id="crm_status">
+          <option value="pending">⏳ Pending</option>
+          <option value="interested">🟡 Interested</option>
+          <option value="closed">✅ Closed</option>
+          <option value="lost">❌ Lost</option>
+        </select>
+      </div>
+      <div class="field"><label>Premium Amount (₹)</label>
+        <input type="number" id="crm_premium" placeholder="e.g. 25000" min="0">
+      </div>
+      <div class="field"><label>Next Follow-up Date</label>
+        <input type="date" id="crm_followup_date">
+      </div>
+      <div class="field span2"><label>Work Details</label>
+        <textarea id="crm_work_details" placeholder="Describe what was discussed or done..."></textarea>
+      </div>
+      <div class="field span2"><label>Remarks</label>
+        <textarea id="crm_remarks" placeholder="Any additional remarks..."></textarea>
+      </div>
+      <div class="field span2">
+        <label>Attachment (optional)</label>
+        <input type="file" id="crm_attachment" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+          style="background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:9px 11px;width:100%;">
+        <div id="crm_attachment_preview" style="margin-top:8px;font-size:12px;color:var(--muted);"></div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-teal" id="btnLogCRM" onclick="logCRMActivity()">📋 Log Activity</button>
+      <button class="btn btn-ghost" id="btnCancelCRMEdit" style="display:none;" onclick="cancelCRMEdit()">✕ Cancel</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div class="card-title" style="margin-bottom:0;">Today's Activities</div>
+      <div style="display:flex;gap:8px;">
+        <input type="date" id="crm_filter_date" onchange="loadCRMTable()" style="width:auto;">
+        <button class="btn btn-teal btn-sm" onclick="exportCRMActivities()">⬇ Export</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Date</th><th>Customer</th><th>Company</th><th>Contact</th>
+          <th>Insurance</th><th>Activity</th><th>Premium (₹)</th>
+          <th>Status</th><th>Follow-up</th><th>Work Details</th><th>Remarks</th><th>Attachment</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="crmTable"><tr><td colspan="13" class="empty-state">No activities logged yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CRM DASHBOARD -->
+<div class="page" id="crmDashboardPage">
+  <div class="page-header">
+    <div class="page-header-icon">📊</div>
+    <div><div class="page-title">My CRM Dashboard</div>
+    <div class="page-sub">Your activity & performance overview</div></div>
+  </div>
+  <div class="filter-bar">
+    <input type="month" id="crm_dash_month" onchange="loadCRMDashboard()">
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Activities</div><div class="stat-value" id="crmTotal">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Quotations</div><div class="stat-value" id="crmQuotations">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Policies Issued</div><div class="stat-value" id="crmPolicies">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Premium (₹)</div><div class="stat-value" id="crmPremium">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Interested</div><div class="stat-value" id="crmInterested">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Lost</div><div class="stat-value" id="crmLost">—</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Activity Log</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Date</th><th>Customer</th><th>Company</th><th>Insurance</th>
+          <th>Activity</th><th>Premium (₹)</th><th>Status</th><th>Follow-up</th>
+        </tr></thead>
+        <tbody id="crmDashTable"><tr><td colspan="8" class="empty-state">Select a month</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CRM FOLLOW-UPS -->
+<div class="page" id="crmFollowupPage">
+  <div class="page-header">
+    <div class="page-header-icon">🔔</div>
+    <div><div class="page-title">Follow-up Reminders</div>
+    <div class="page-sub">Customers that need follow-up</div></div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Overdue</div><div class="stat-value" id="crmFUOverdue">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Due Today</div><div class="stat-value" id="crmFUToday">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">This Week</div><div class="stat-value" id="crmFUWeek">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Pending</div><div class="stat-value" id="crmFUTotal">—</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Pending Follow-ups</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Customer</th><th>Company</th><th>Contact</th><th>Insurance</th>
+          <th>Last Activity</th><th>Due Date</th><th>Status</th><th>Remarks</th><th>Action</th>
+        </tr></thead>
+        <tbody id="crmFollowupTable"><tr><td colspan="9" class="empty-state">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>     
+
 </main>
 </div>
 </div>      
@@ -1163,6 +1326,19 @@ function setupRoleUI(role){
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
     document.getElementById("opsPage").classList.add("active");
     loadOps();
+   } else if(role === "crm") {
+  sidebar.innerHTML = `
+    <div class="sidebar-section">Attendance</div>
+    <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon"></span> Check In</button>
+    <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon"></span> Check Out</button>
+    <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon"></span> WFH Request</button>
+    <div class="sidebar-section">CRM</div>
+    <button class="nav-btn" onclick="goTo('crmActivityPage',this);autoFillCRM();closeSidebar()"><span class="nav-icon"></span> Log Activity</button>
+    <button class="nav-btn" onclick="goTo('crmDashboardPage',this);loadCRMDashboard();closeSidebar()"><span class="nav-icon"></span> My Dashboard</button>
+    <button class="nav-btn" onclick="goTo('crmFollowupPage',this);loadCRMFollowups();closeSidebar()"><span class="nav-icon"></span> Follow-ups</button>`;
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("checkInPage").classList.add("active");
+  autoFill(); 
   } else {
     sidebar.innerHTML=`
       <div class="sidebar-section">Attendance</div>
@@ -2475,6 +2651,307 @@ function renderUserTable(data, title) {
     <td>${d.km_travelled!=null?d.km_travelled+" km":"—"}</td>
     <td>${d.orders_taken||0}</td>
   </tr>`).join("");
+}
+
+// ── CRM ───────────────────────────────────────────────────────────────────────
+let crmData = [];
+
+function autoFillCRM(){
+  if(!currentUser) return;
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("crm_employee").value = currentUser.name||"";
+  document.getElementById("crm_date").value = today;
+  document.getElementById("crm_filter_date").value = today;
+  loadCRMTable();
+}
+
+function clearCRMForm(){
+  document.getElementById("crm_edit_id").value = "";
+  document.getElementById("crm_customer").value = "";
+  document.getElementById("crm_company").value = "";
+  document.getElementById("crm_contact").value = "";
+  document.getElementById("crm_insurance_type").value = "";
+  document.getElementById("crm_activity_type").value = "";
+  document.getElementById("crm_status").value = "pending";
+  document.getElementById("crm_premium").value = "";
+  document.getElementById("crm_followup_date").value = "";
+  document.getElementById("crm_work_details").value = "";
+  document.getElementById("crm_remarks").value = "";
+  document.getElementById("crm_attachment").value = "";
+  document.getElementById("crm_attachment_preview").textContent = "";
+  document.getElementById("crmFormTitle").textContent = "New Activity";
+  document.getElementById("btnLogCRM").textContent = "📋 Log Activity";
+  document.getElementById("btnCancelCRMEdit").style.display = "none";
+}
+
+function cancelCRMEdit(){
+  clearCRMForm();
+  toast("Edit cancelled","info");
+}
+
+function editCRMActivity(id){
+  const a = crmData.find(c => c.id === id);
+  if(!a) return;
+  document.getElementById("crmFormTitle").scrollIntoView({behavior:"smooth"});
+  document.getElementById("crm_edit_id").value = a.id;
+  document.getElementById("crm_customer").value = a.customer_name||"";
+  document.getElementById("crm_company").value = a.company_name||"";
+  document.getElementById("crm_contact").value = a.contact_number||"";
+  document.getElementById("crm_insurance_type").value = a.insurance_type||"";
+  document.getElementById("crm_activity_type").value = a.activity_type||"";
+  document.getElementById("crm_status").value = a.status||"pending";
+  document.getElementById("crm_premium").value = a.premium_amount||"";
+  document.getElementById("crm_followup_date").value = a.next_followup_date?a.next_followup_date.split("T")[0]:"";
+  document.getElementById("crm_work_details").value = a.work_details||"";
+  document.getElementById("crm_remarks").value = a.remarks||"";
+  document.getElementById("crmFormTitle").textContent = "✏️ Edit Activity";
+  document.getElementById("btnLogCRM").textContent = "💾 Save Changes";
+  document.getElementById("btnCancelCRMEdit").style.display = "inline-flex";
+  toast("Editing activity — make changes and save","info");
+}
+
+async function deleteCRMActivity(id){
+  if(!confirm("Delete this activity?")) return;
+  try{
+    const res = await fetch(`${API}/crm-activities/${id}`,{method:"DELETE",headers:authHeaders()});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast("🗑️ Activity deleted","success");
+    loadCRMTable();
+  } catch { toast("Cannot connect","error"); }
+}
+
+async function logCRMActivity(){
+  const btn = document.getElementById("btnLogCRM");
+  const editId = document.getElementById("crm_edit_id").value;
+  const customer = document.getElementById("crm_customer").value.trim();
+  const date = document.getElementById("crm_date").value;
+  if(!customer) return toast("Customer name is required","error");
+  if(!date) return toast("Date is required","error");
+
+  // Handle attachment upload if any
+  let attachmentUrl = "";
+  const fileInput = document.getElementById("crm_attachment");
+  if(fileInput.files.length > 0){
+    btn.disabled = true; btn.textContent = "Uploading attachment…";
+    try{
+      const file = fileInput.files[0];
+      const fileName = `crm_${currentUser.id}_${Date.now()}_${file.name}`;
+      const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/checkin-photos/${fileName}`,{
+        method:"POST",
+        headers:{"Authorization":`Bearer ${SUPABASE_ANON_KEY}`,"Content-Type":file.type,"x-upsert":"true"},
+        body: file
+      });
+      if(uploadRes.ok){
+        attachmentUrl = `${SUPABASE_URL}/storage/v1/object/public/checkin-photos/${fileName}`;
+      }
+    } catch { toast("Attachment upload failed, saving without it","error"); }
+  }
+
+  const payload = {
+    user_id: currentUser.id,
+    employee_name: currentUser.name,
+    date,
+    customer_name: customer,
+    company_name: document.getElementById("crm_company").value.trim(),
+    contact_number: document.getElementById("crm_contact").value.trim(),
+    insurance_type: document.getElementById("crm_insurance_type").value,
+    activity_type: document.getElementById("crm_activity_type").value,
+    work_details: document.getElementById("crm_work_details").value.trim(),
+    premium_amount: Number(document.getElementById("crm_premium").value)||null,
+    status: document.getElementById("crm_status").value,
+    next_followup_date: document.getElementById("crm_followup_date").value||null,
+    remarks: document.getElementById("crm_remarks").value.trim(),
+    attachment_url: attachmentUrl || (editId ? crmData.find(c=>c.id==editId)?.attachment_url||"" : "")
+  };
+
+  btn.disabled = true;
+  btn.textContent = editId ? "Saving…" : "Logging…";
+
+  try{
+    const url = editId ? `${API}/crm-activities/${editId}` : `${API}/crm-activities`;
+    const method = editId ? "PUT" : "POST";
+    const res = await fetch(url,{method,headers:authHeaders(),body:JSON.stringify(payload)});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(editId ? "✅ Activity updated!" : "✅ Activity logged!","success");
+    clearCRMForm();
+    loadCRMTable();
+  } catch { toast("Cannot connect to server","error"); }
+  finally{
+    btn.disabled = false;
+    btn.textContent = document.getElementById("crm_edit_id").value ? "💾 Save Changes" : "📋 Log Activity";
+  }
+}
+
+async function loadCRMTable(){
+  try{
+    const date = document.getElementById("crm_filter_date")?.value||new Date().toISOString().split("T")[0];
+    const res = await fetch(`${API}/crm-activities?date=${date}`,{headers:authHeaders()});
+    crmData = await res.json();
+    renderCRMTable(crmData);
+  } catch { toast("Failed to load activities","error"); }
+}
+
+function renderCRMTable(data){
+  const tbody = document.getElementById("crmTable");
+  if(!data.length){
+    tbody.innerHTML=`<tr><td colspan="13" class="empty-state">No activities for this date</td></tr>`;
+    return;
+  }
+  const actMap={
+    call:"📞 Call", follow_up:"🔄 Follow-up",
+    quotation_shared:"📄 Quotation", meeting:"🤝 Meeting",
+    policy_issued:"✅ Policy Issued"
+  };
+  const statusMap={
+    pending:`<span class="badge badge-half">⏳ Pending</span>`,
+    interested:`<span class="badge badge-contacted">🟡 Interested</span>`,
+    closed:`<span class="badge badge-wfh">✅ Closed</span>`,
+    lost:`<span class="badge badge-absent">❌ Lost</span>`
+  };
+  tbody.innerHTML = data.map(a=>`<tr>
+    <td style="font-size:12px;">${a.date?a.date.split("T")[0]:"—"}</td>
+    <td style="font-weight:600;">${a.customer_name}</td>
+    <td style="font-size:12px;">${a.company_name||"—"}</td>
+    <td style="font-size:12px;">${a.contact_number||"—"}</td>
+    <td style="font-size:12px;">${a.insurance_type||"—"}</td>
+    <td>${actMap[a.activity_type]||a.activity_type||"—"}</td>
+    <td>${a.premium_amount?"₹"+Number(a.premium_amount).toLocaleString("en-IN"):"—"}</td>
+    <td>${statusMap[a.status]||a.status||"—"}</td>
+    <td style="font-size:12px;color:var(--muted);">${a.next_followup_date?a.next_followup_date.split("T")[0]:"—"}</td>
+    <td style="font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${a.work_details||""}">${a.work_details||"—"}</td>
+    <td style="font-size:12px;color:var(--muted);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${a.remarks||""}">${a.remarks||"—"}</td>
+    <td>${a.attachment_url?`<a href="${a.attachment_url}" target="_blank" class="btn btn-ghost btn-sm">📎 View</a>`:"—"}</td>
+    <td><div style="display:flex;gap:5px;">
+      <button class="btn btn-ghost btn-sm" onclick="editCRMActivity(${a.id})">✏️</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteCRMActivity(${a.id})">🗑️</button>
+    </div></td>
+  </tr>`).join("");
+}
+
+async function loadCRMDashboard(){
+  const monthEl = document.getElementById("crm_dash_month");
+  if(!monthEl.value){
+    const now = new Date();
+    monthEl.value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+  }
+  try{
+    const res = await fetch(`${API}/crm-activities?month=${monthEl.value}`,{headers:authHeaders()});
+    const data = await res.json();
+    const total = data.length;
+    const quotations = data.filter(a=>a.activity_type==="quotation_shared").length;
+    const policies = data.filter(a=>a.activity_type==="policy_issued").length;
+    const premium = data.reduce((s,a)=>s+(Number(a.premium_amount)||0),0);
+    const interested = data.filter(a=>a.status==="interested").length;
+    const lost = data.filter(a=>a.status==="lost").length;
+    document.getElementById("crmTotal").textContent = total;
+    document.getElementById("crmQuotations").textContent = quotations;
+    document.getElementById("crmPolicies").textContent = policies;
+    document.getElementById("crmPremium").textContent = "₹"+premium.toLocaleString("en-IN");
+    document.getElementById("crmInterested").textContent = interested;
+    document.getElementById("crmLost").textContent = lost;
+    const actMap={call:"📞 Call",follow_up:"🔄 Follow-up",quotation_shared:"📄 Quotation",meeting:"🤝 Meeting",policy_issued:"✅ Policy Issued"};
+    const statusMap={
+      pending:`<span class="badge badge-half">⏳ Pending</span>`,
+      interested:`<span class="badge badge-contacted">🟡 Interested</span>`,
+      closed:`<span class="badge badge-wfh">✅ Closed</span>`,
+      lost:`<span class="badge badge-absent">❌ Lost</span>`
+    };
+    const tbody = document.getElementById("crmDashTable");
+    if(!data.length){tbody.innerHTML=`<tr><td colspan="8" class="empty-state">No data for this month</td></tr>`;return;}
+    tbody.innerHTML = data.map(a=>`<tr>
+      <td>${a.date?a.date.split("T")[0]:"—"}</td>
+      <td style="font-weight:600;">${a.customer_name}</td>
+      <td style="font-size:12px;">${a.company_name||"—"}</td>
+      <td style="font-size:12px;">${a.insurance_type||"—"}</td>
+      <td>${actMap[a.activity_type]||a.activity_type||"—"}</td>
+      <td>${a.premium_amount?"₹"+Number(a.premium_amount).toLocaleString("en-IN"):"—"}</td>
+      <td>${statusMap[a.status]||a.status||"—"}</td>
+      <td style="font-size:12px;color:var(--muted);">${a.next_followup_date?a.next_followup_date.split("T")[0]:"—"}</td>
+    </tr>`).join("");
+  } catch { toast("Failed to load dashboard","error"); }
+}
+
+async function loadCRMFollowups(){
+  try{
+    const res = await fetch(`${API}/crm-activities`,{headers:authHeaders()});
+    const all = await res.json();
+    const withFollowup = all.filter(a=>a.next_followup_date && a.status !== "closed" && a.status !== "lost");
+    const today = new Date(); today.setHours(0,0,0,0);
+    const overdue=[],dueToday=[],dueWeek=[],later=[];
+    withFollowup.forEach(a=>{
+      const fd = new Date(a.next_followup_date); fd.setHours(0,0,0,0);
+      const diff = Math.floor((fd-today)/(1000*60*60*24));
+      if(diff<0) overdue.push(a);
+      else if(diff===0) dueToday.push(a);
+      else if(diff<=7) dueWeek.push(a);
+      else later.push(a);
+    });
+    document.getElementById("crmFUOverdue").textContent = overdue.length;
+    document.getElementById("crmFUToday").textContent = dueToday.length;
+    document.getElementById("crmFUWeek").textContent = dueWeek.length;
+    document.getElementById("crmFUTotal").textContent = withFollowup.length;
+    const actMap={call:"📞 Call",follow_up:"🔄 Follow-up",quotation_shared:"📄 Quotation",meeting:"🤝 Meeting",policy_issued:"✅ Policy Issued"};
+    const tbody = document.getElementById("crmFollowupTable");
+    const sorted = [...overdue,...dueToday,...dueWeek,...later];
+    if(!sorted.length){tbody.innerHTML=`<tr><td colspan="9" class="empty-state">🎉 No pending follow-ups!</td></tr>`;return;}
+    tbody.innerHTML = sorted.map(a=>{
+      const fd = new Date(a.next_followup_date); fd.setHours(0,0,0,0);
+      const diff = Math.floor((fd-today)/(1000*60*60*24));
+      let urgency="", rowStyle="";
+      if(diff<0){urgency=`<span class="badge badge-absent">🔴 Overdue ${Math.abs(diff)}d</span>`;rowStyle="background:#fff5f5;";}
+      else if(diff===0){urgency=`<span class="badge badge-contacted">🟡 Today</span>`;rowStyle="background:#fffbeb;";}
+      else if(diff<=7){urgency=`<span class="badge badge-followup">🟢 In ${diff}d</span>`;}
+      else urgency=`<span class="badge badge-half">${a.next_followup_date.split("T")[0]}</span>`;
+      return `<tr style="${rowStyle}">
+        <td style="font-weight:600;">${a.customer_name}</td>
+        <td style="font-size:12px;">${a.company_name||"—"}</td>
+        <td style="font-size:12px;">${a.contact_number||"—"}</td>
+        <td style="font-size:12px;">${a.insurance_type||"—"}</td>
+        <td>${actMap[a.activity_type]||a.activity_type||"—"}</td>
+        <td>${urgency}</td>
+        <td><span class="badge badge-half">${a.status}</span></td>
+        <td style="font-size:12px;color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a.remarks||"—"}</td>
+        <td><div style="display:flex;gap:5px;">
+          <button class="btn btn-teal btn-sm" onclick="markCRMDone(${a.id})">✅ Done</button>
+          <button class="btn btn-ghost btn-sm" onclick="editCRMActivity(${a.id});goTo('crmActivityPage',null)">✏️</button>
+        </div></td>
+      </tr>`;
+    }).join("");
+  } catch { toast("Failed to load follow-ups","error"); }
+}
+
+async function markCRMDone(id){
+  const activity = crmData.find(a=>a.id===id);
+  if(!activity) { await loadCRMFollowups(); return; }
+  try{
+    const payload = {...activity, status:"closed", next_followup_date:null};
+    const res = await fetch(`${API}/crm-activities/${id}`,{
+      method:"PUT", headers:authHeaders(), body:JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast("✅ Marked as closed!","success");
+    loadCRMFollowups();
+  } catch { toast("Failed to update","error"); }
+}
+
+function exportCRMActivities(){
+  if(!crmData.length) return toast("No data to export","error");
+  const headers=["Date","Employee","Customer","Company","Contact","Insurance Type","Activity","Premium (₹)","Status","Next Follow-up","Work Details","Remarks"];
+  const actMap={call:"Call",follow_up:"Follow-up",quotation_shared:"Quotation Shared",meeting:"Meeting",policy_issued:"Policy Issued"};
+  const rows=[headers,...crmData.map(a=>[
+    a.date?a.date.split("T")[0]:"",
+    a.employee_name||"", a.customer_name||"", a.company_name||"",
+    a.contact_number||"", a.insurance_type||"",
+    actMap[a.activity_type]||a.activity_type||"",
+    a.premium_amount||0, a.status||"",
+    a.next_followup_date?a.next_followup_date.split("T")[0]:"",
+    a.work_details||"", a.remarks||""
+  ])];
+  downloadCSV(rows,`crm_activities_${document.getElementById("crm_filter_date")?.value||"all"}.csv`);
+  toast("✅ Exported!","success");
 }
 </script>
 </body>
