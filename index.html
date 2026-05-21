@@ -1681,7 +1681,7 @@ async function loadAdmin(){
         <td>${d.check_in||"—"}</td><td>${d.check_out||"—"}</td>
         <td>${d.checkin_photo?`<img src="${d.checkin_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkin_photo}')">` :"—"}</td>
         <td>${d.checkout_photo?`<img src="${d.checkout_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkout_photo}')">` :"—"}</td>
-        <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${d.field_location||"—"}</td>
+        <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${d.location_address||""}">${d.location_address ? d.location_address.split(",").slice(0,2).join(", ") : "—"}</td>
         <td>${d.client_name||"—"}</td>
         <td>${d.sales_target!=null?"₹"+d.sales_target.toLocaleString("en-IN"):"—"}</td>
         <td>${d.sales_achieved!=null?"₹"+d.sales_achieved.toLocaleString("en-IN"):"—"}</td>
@@ -1819,7 +1819,7 @@ function clearFilters(){
 function exportToExcel(){
   if(!adminData.length) return toast("No data to export","error");
   const headers=["Name","ID","Date","Status","Check In","Check Out","Location","Client","Target (₹)","Achieved (₹)","B2B (₹)","Retail (₹)","KM","Orders","Deal Type","Product Sold"];
-  const rows=[headers,...adminData.map(d=>[d.name||"",d.user_id,d.date,d.status,d.check_in||"",d.check_out||"",d.field_location||"",d.client_name||"",d.sales_target||0,d.sales_achieved||0,d.b2b_sales||0,d.retail_sales||0,d.km_travelled||0,d.orders_taken||0,d.deal_type||"",d.product_sold||""])];
+  const rows=[headers,...adminData.map(d=>[d.name||"",d.user_id,d.date,d.status,d.check_in||"",d.check_out||"",d.location_address||"",d.client_name||"",d.sales_target||0,d.sales_achieved||0,d.b2b_sales||0,d.retail_sales||0,d.km_travelled||0,d.orders_taken||0,d.deal_type||"",d.product_sold||""])];
   downloadCSV(rows,`attendance_${new Date().toISOString().split("T")[0]}.csv`);
   toast("✅ Excel downloaded!","success");
 }
@@ -1912,7 +1912,7 @@ async function loadOps(){
       tbody.innerHTML=opsData.map(d=>`<tr>
         <td style="font-weight:600;">${d.name||"—"}</td><td>${d.date}</td><td>${statusBadge(d.status)}</td>
         <td>${d.check_in||"—"}</td><td>${d.check_out||"—"}</td>
-        <td style="max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${d.field_location||"—"}</td>
+        <td style="max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${d.location_address||""}">${d.location_address ? d.location_address.split(",").slice(0,2).join(", ") : "—"}</td>
         <td>${d.sales_target!=null?"₹"+d.sales_target.toLocaleString("en-IN"):"—"}</td>
         <td>${d.sales_achieved!=null?"₹"+d.sales_achieved.toLocaleString("en-IN"):"—"}</td>
         <td>${d.km_travelled!=null?d.km_travelled+" km":"—"}</td>
@@ -1936,7 +1936,7 @@ async function loadOps(){
 function exportOpsExcel(){
   if(!opsData.length) return toast("No data to export","error");
   const headers=["Name","Date","Status","Check In","Check Out","Location","Target (₹)","Achieved (₹)","KM","Orders","B2B Sales","Retail Sales"];
-  const rows=[headers,...opsData.map(d=>[d.name||"",d.date,d.status,d.check_in||"",d.check_out||"",d.field_location||"",d.sales_target||0,d.sales_achieved||0,d.km_travelled||0,d.orders_taken||0,d.b2b_sales||0,d.retail_sales||0])];
+  const rows=[headers,...opsData.map(d=>[d.name||"",d.date,d.status,d.check_in||"",d.check_out||"",d.location_address||"",d.sales_target||0,d.sales_achieved||0,d.km_travelled||0,d.orders_taken||0,d.b2b_sales||0,d.retail_sales||0])];
   rows.push([]);rows.push(["--- LEADS ---"]);
   rows.push(["Name","Phone","Company","Source","Status","Product","Assigned To","Date"]);
   opsLeadsData.forEach(l=>rows.push([l.name||"",l.phone||"",l.company_name||"",l.source||"",l.status||"",l.product_interested||"",l.assigned_to||"",l.created_at?new Date(l.created_at).toLocaleDateString("en-IN"):""]));
