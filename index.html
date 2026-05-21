@@ -2772,9 +2772,9 @@ async function logCRMActivity(){
   const date = document.getElementById("crm_date").value;
   if(!customer) return toast("Customer name is required","error");
   if(!date) return toast("Date is required","error");
-  fresh_calls: Number(document.getElementById("crm_fresh_calls").value)||0,
-  followup_calls: Number(document.getElementById("crm_followup_calls").value)||0,
-  total_calls: Number(document.getElementById("crm_total_calls").value)||0,
+  fresh_calls: Number(document.getElementById("crm_fresh_calls").value)||0;
+  followup_calls: Number(document.getElementById("crm_followup_calls").value)||0;
+  total_calls: Number(document.getElementById("crm_total_calls").value)||0;
 
   // Handle attachment upload if any
   let attachmentUrl = "";
