@@ -1664,6 +1664,9 @@ async function loadAdmin(){
     adminData=await attRes.json();
     const stats=await statsRes.json();
     if(month) adminData=adminData.filter(d=>d.date&&d.date.startsWith(month));
+    if(date) adminData=adminData.filter(d=>d.date&&d.date.startsWith(date));
+    if(uid) adminData=adminData.filter(d=>d.user_id===uid);
+    if(st) adminData=adminData.filter(d=>d.status===st);
     document.getElementById("adTotal").textContent=stats.attendance.total;
     document.getElementById("adField").textContent=stats.attendance.onField;
     document.getElementById("adOffice").textContent=stats.attendance.inOffice;
@@ -1674,7 +1677,7 @@ async function loadAdmin(){
       tbody.innerHTML=adminData.map(d=>`<tr>
         <td style="font-weight:600;">${d.name||"—"}</td>
         <td style="font-size:11px;color:var(--muted);">${d.user_id}</td>
-        <td>${d.date}</td><td>${statusBadge(d.status)}</td>
+        <td>${d.date?d.date.split("T")[0]:""}</td><td>${statusBadge(d.status)}</td>
         <td>${d.check_in||"—"}</td><td>${d.check_out||"—"}</td>
         <td>${d.checkin_photo?`<img src="${d.checkin_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkin_photo}')">` :"—"}</td>
         <td>${d.checkout_photo?`<img src="${d.checkout_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkout_photo}')">` :"—"}</td>
