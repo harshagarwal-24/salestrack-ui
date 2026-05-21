@@ -913,11 +913,12 @@
       <div class="field"><label>Activity Type</label>
         <select id="crm_activity_type">
           <option value="">Select activity</option>
-          <option value="call"> Call</option>
-          <option value="follow_up"> Follow-up</option>
-          <option value="quotation_shared"> Quotation Shared</option>
-          <option value="meeting"> Meeting</option>
-          <option value="policy_issued"> Policy Issued</option>
+          <option value="fresh_call">📞 Fresh Call</option>
+          <option value="followup_call">🔄 Follow-up Call</option>
+          <option value="online_meeting">💻 Online Meeting</option>
+          <option value="rfq">📋 RFQ</option>
+          <option value="quotation_shared">📄 Quotation Shared</option>
+          <option value="policy_issued">✅ Policy Issued</option>
         </select>
       </div>
       <div class="field"><label>Status</label>
@@ -927,6 +928,25 @@
           <option value="closed"> Closed</option>
           <option value="lost"> Lost</option>
         </select>
+      </div>
+      <div class="field span2">
+        <div class="field-section-card">
+          <div class="card-title" style="margin-bottom:10px;">📞 Daily Call Tracker</div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Fresh Calls Made</label>
+              <input type="number" id="crm_fresh_calls" placeholder="e.g. 15" min="0" oninput="updateTotalCalls()">
+            </div>
+            <div class="field">
+             <label>Follow-up Calls Made</label>
+             <input type="number" id="crm_followup_calls" placeholder="e.g. 10" min="0" oninput="updateTotalCalls()">
+            </div>
+            <div class="field">
+              <label>Total Calls Today</label>
+              <input type="number" id="crm_total_calls" placeholder="Auto calculated" min="0" readonly style="opacity:0.7;background:var(--bg);">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="field"><label>Premium Amount (₹)</label>
         <input type="number" id="crm_premium" placeholder="e.g. 25000" min="0">
@@ -963,11 +983,23 @@
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr>
-          <th>Date</th><th>Customer</th><th>Company</th><th>Contact</th>
-          <th>Insurance</th><th>Activity</th><th>Premium (₹)</th>
-          <th>Status</th><th>Follow-up</th><th>Work Details</th><th>Remarks</th><th>Attachment</th><th>Actions</th>
-        </tr></thead>
+    <thead><tr>
+      <th>Date</th>
+      <th>Fresh Calls</th>
+      <th>Followup Calls</th>
+      <th>Customer</th>
+      <th>Company</th>
+      <th>Contact</th>
+      <th>Insurance</th>
+      <th>Activity</th>
+      <th>Premium (₹)</th>
+      <th>Status</th>
+      <th>Follow-up</th>
+      <th>Work Details</th>
+      <th>Remarks</th>
+      <th>Attachment</th>
+      <th>Actions</th>
+    </tr></thead>
         <tbody id="crmTable"><tr><td colspan="13" class="empty-state">No activities logged yet</td></tr></tbody>
       </table>
     </div>
@@ -984,13 +1016,16 @@
   <div class="filter-bar">
     <input type="month" id="crm_dash_month" onchange="loadCRMDashboard()">
   </div>
-  <div class="stats-grid">
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Activities</div><div class="stat-value" id="crmTotal">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Quotations</div><div class="stat-value" id="crmQuotations">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Policies Issued</div><div class="stat-value" id="crmPolicies">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Premium (₹)</div><div class="stat-value" id="crmPremium">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Interested</div><div class="stat-value" id="crmInterested">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Lost</div><div class="stat-value" id="crmLost">—</div></div>
+     <div class="stats-grid">
+     <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-label">Total Activities</div><div class="stat-value" id="crmTotal">—</div></div>
+     <div class="stat-card"><div class="stat-icon">📞</div><div class="stat-label">Fresh Calls</div><div class="stat-value" id="crmFreshCalls">—</div></div>
+     <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">Follow-up Calls</div><div class="stat-value" id="crmFollowupCalls">—</div></div>
+     <div class="stat-card"><div class="stat-icon">📄</div><div class="stat-label">Quotations</div><div class="stat-value" id="crmQuotations">—</div></div>
+     <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Policies Issued</div><div class="stat-value" id="crmPolicies">—</div></div>
+     <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-label">RFQs</div><div class="stat-value" id="crmRFQ">—</div></div>
+     <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Premium (₹)</div><div class="stat-value" id="crmPremium">—</div></div>
+     <div class="stat-card"><div class="stat-icon">🟡</div><div class="stat-label">Interested</div><div class="stat-value" id="crmInterested">—</div></div>
+     <div class="stat-card"><div class="stat-icon">❌</div><div class="stat-label">Lost</div><div class="stat-value" id="crmLost">—</div></div>
   </div>
   <div class="card">
     <div class="card-title">Activity Log</div>
@@ -1329,13 +1364,16 @@ function setupRoleUI(role){
    } else if(role === "crm") {
   sidebar.innerHTML = `
     <div class="sidebar-section">Attendance</div>
-    <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon"></span> Check In</button>
-    <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon"></span> Check Out</button>
-    <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon"></span> WFH Request</button>
+    <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon">🟢</span> Check In</button>
+    <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon">🔴</span> Check Out</button>
+    <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon">🏠</span> WFH Request</button>
     <div class="sidebar-section">CRM</div>
-    <button class="nav-btn" onclick="goTo('crmActivityPage',this);autoFillCRM();closeSidebar()"><span class="nav-icon"></span> Log Activity</button>
-    <button class="nav-btn" onclick="goTo('crmDashboardPage',this);loadCRMDashboard();closeSidebar()"><span class="nav-icon"></span> My Dashboard</button>
-    <button class="nav-btn" onclick="goTo('crmFollowupPage',this);loadCRMFollowups();closeSidebar()"><span class="nav-icon"></span> Follow-ups</button>`;
+    <button class="nav-btn" onclick="goTo('crmActivityPage',this);autoFillCRM();closeSidebar()"><span class="nav-icon">📋</span> Log Activity</button>
+    <button class="nav-btn" onclick="goTo('crmDashboardPage',this);loadCRMDashboard();closeSidebar()"><span class="nav-icon">📊</span> My Dashboard</button>
+    <button class="nav-btn" onclick="goTo('crmFollowupPage',this);loadCRMFollowups();closeSidebar()"><span class="nav-icon">🔔</span> Follow-ups</button>
+    <div class="sidebar-section">Sales</div>
+    <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>
+    <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon">🔔</span> Reminders</button>`;
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById("checkInPage").classList.add("active");
   autoFill(); 
@@ -2682,6 +2720,9 @@ function clearCRMForm(){
   document.getElementById("crmFormTitle").textContent = "New Activity";
   document.getElementById("btnLogCRM").textContent = "📋 Log Activity";
   document.getElementById("btnCancelCRMEdit").style.display = "none";
+  document.getElementById("crm_fresh_calls").value = "";
+  document.getElementById("crm_followup_calls").value = "";
+  document.getElementById("crm_total_calls").value = "";
 }
 
 function cancelCRMEdit(){
@@ -2707,6 +2748,9 @@ function editCRMActivity(id){
   document.getElementById("crmFormTitle").textContent = "✏️ Edit Activity";
   document.getElementById("btnLogCRM").textContent = "💾 Save Changes";
   document.getElementById("btnCancelCRMEdit").style.display = "inline-flex";
+  document.getElementById("crm_fresh_calls").value = a.fresh_calls||"";
+  document.getElementById("crm_followup_calls").value = a.followup_calls||"";
+  document.getElementById("crm_total_calls").value = a.total_calls||"";
   toast("Editing activity — make changes and save","info");
 }
 
@@ -2728,6 +2772,9 @@ async function logCRMActivity(){
   const date = document.getElementById("crm_date").value;
   if(!customer) return toast("Customer name is required","error");
   if(!date) return toast("Date is required","error");
+  fresh_calls: Number(document.getElementById("crm_fresh_calls").value)||0,
+  followup_calls: Number(document.getElementById("crm_followup_calls").value)||0,
+  total_calls: Number(document.getElementById("crm_total_calls").value)||0,
 
   // Handle attachment upload if any
   let attachmentUrl = "";
@@ -2796,12 +2843,15 @@ async function loadCRMTable(){
 function renderCRMTable(data){
   const tbody = document.getElementById("crmTable");
   if(!data.length){
-    tbody.innerHTML=`<tr><td colspan="13" class="empty-state">No activities for this date</td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="15" class="empty-state">No activities for this date</td></tr>`;
     return;
   }
   const actMap={
-    call:"📞 Call", follow_up:"🔄 Follow-up",
-    quotation_shared:"📄 Quotation", meeting:"🤝 Meeting",
+    fresh_call:"📞 Fresh Call",
+    followup_call:"🔄 Follow-up Call",
+    online_meeting:"💻 Online Meeting",
+    rfq:"📋 RFQ",
+    quotation_shared:"📄 Quotation Shared",
     policy_issued:"✅ Policy Issued"
   };
   const statusMap={
@@ -2812,6 +2862,8 @@ function renderCRMTable(data){
   };
   tbody.innerHTML = data.map(a=>`<tr>
     <td style="font-size:12px;">${a.date?a.date.split("T")[0]:"—"}</td>
+    <td style="text-align:center;font-weight:600;color:var(--teal);">${a.fresh_calls||0}</td>
+    <td style="text-align:center;font-weight:600;color:var(--orange);">${a.followup_calls||0}</td>
     <td style="font-weight:600;">${a.customer_name}</td>
     <td style="font-size:12px;">${a.company_name||"—"}</td>
     <td style="font-size:12px;">${a.contact_number||"—"}</td>
@@ -2829,7 +2881,6 @@ function renderCRMTable(data){
     </div></td>
   </tr>`).join("");
 }
-
 async function loadCRMDashboard(){
   const monthEl = document.getElementById("crm_dash_month");
   if(!monthEl.value){
@@ -2840,18 +2891,24 @@ async function loadCRMDashboard(){
     const res = await fetch(`${API}/crm-activities?month=${monthEl.value}`,{headers:authHeaders()});
     const data = await res.json();
     const total = data.length;
+    const freshCalls = data.reduce((s,a)=>s+(Number(a.fresh_calls)||0),0);
+    const followupCalls = data.reduce((s,a)=>s+(Number(a.followup_calls)||0),0);
     const quotations = data.filter(a=>a.activity_type==="quotation_shared").length;
     const policies = data.filter(a=>a.activity_type==="policy_issued").length;
+    const rfqs = data.filter(a=>a.activity_type==="rfq").length;
     const premium = data.reduce((s,a)=>s+(Number(a.premium_amount)||0),0);
     const interested = data.filter(a=>a.status==="interested").length;
     const lost = data.filter(a=>a.status==="lost").length;
     document.getElementById("crmTotal").textContent = total;
+    document.getElementById("crmFreshCalls").textContent = freshCalls;
+    document.getElementById("crmFollowupCalls").textContent = followupCalls;
     document.getElementById("crmQuotations").textContent = quotations;
     document.getElementById("crmPolicies").textContent = policies;
+    document.getElementById("crmRFQ").textContent = rfqs;
     document.getElementById("crmPremium").textContent = "₹"+premium.toLocaleString("en-IN");
     document.getElementById("crmInterested").textContent = interested;
     document.getElementById("crmLost").textContent = lost;
-    const actMap={call:"📞 Call",follow_up:"🔄 Follow-up",quotation_shared:"📄 Quotation",meeting:"🤝 Meeting",policy_issued:"✅ Policy Issued"};
+    const actMap={fresh_call:"Fresh Call",followup_call:" Follow-up Call",quotation_shared:" Quotation Shared",online_meeting:"Online Meeting",policy_issued:" Policy Issued",rfq:" RFQ"};
     const statusMap={
       pending:`<span class="badge badge-half">⏳ Pending</span>`,
       interested:`<span class="badge badge-contacted">🟡 Interested</span>`,
@@ -2873,6 +2930,12 @@ async function loadCRMDashboard(){
   } catch { toast("Failed to load dashboard","error"); }
 }
 
+function updateTotalCalls(){
+  const fresh = Number(document.getElementById("crm_fresh_calls").value)||0;
+  const followup = Number(document.getElementById("crm_followup_calls").value)||0;
+  document.getElementById("crm_total_calls").value = fresh + followup;
+}
+
 async function loadCRMFollowups(){
   try{
     const res = await fetch(`${API}/crm-activities`,{headers:authHeaders()});
@@ -2892,7 +2955,7 @@ async function loadCRMFollowups(){
     document.getElementById("crmFUToday").textContent = dueToday.length;
     document.getElementById("crmFUWeek").textContent = dueWeek.length;
     document.getElementById("crmFUTotal").textContent = withFollowup.length;
-    const actMap={call:"📞 Call",follow_up:"🔄 Follow-up",quotation_shared:"📄 Quotation",meeting:"🤝 Meeting",policy_issued:"✅ Policy Issued"};
+    const actMap={fresh_call:"Fresh Call",followup_call:" Follow-up Call",quotation_shared:" Quotation Shared",online_meeting:"Online Meeting",policy_issued:" Policy Issued",rfq:" RFQ"};
     const tbody = document.getElementById("crmFollowupTable");
     const sorted = [...overdue,...dueToday,...dueWeek,...later];
     if(!sorted.length){tbody.innerHTML=`<tr><td colspan="9" class="empty-state">🎉 No pending follow-ups!</td></tr>`;return;}
@@ -2939,17 +3002,39 @@ async function markCRMDone(id){
 
 function exportCRMActivities(){
   if(!crmData.length) return toast("No data to export","error");
-  const headers=["Date","Employee","Customer","Company","Contact","Insurance Type","Activity","Premium (₹)","Status","Next Follow-up","Work Details","Remarks"];
-  const actMap={call:"Call",follow_up:"Follow-up",quotation_shared:"Quotation Shared",meeting:"Meeting",policy_issued:"Policy Issued"};
-  const rows=[headers,...crmData.map(a=>[
-    a.date?a.date.split("T")[0]:"",
-    a.employee_name||"", a.customer_name||"", a.company_name||"",
-    a.contact_number||"", a.insurance_type||"",
-    actMap[a.activity_type]||a.activity_type||"",
-    a.premium_amount||0, a.status||"",
-    a.next_followup_date?a.next_followup_date.split("T")[0]:"",
-    a.work_details||"", a.remarks||""
-  ])];
+  const headers=[
+    "Date","Employee","Customer","Company","Contact",
+    "Insurance Type","Activity","Fresh Calls","Followup Calls","Total Calls",
+    "Premium (₹)","Status","Next Follow-up","Work Details","Remarks"
+  ];
+  const actMap={
+    fresh_call:"Fresh Call",
+    followup_call:"Follow-up Call",
+    online_meeting:"Online Meeting",
+    rfq:"RFQ",
+    quotation_shared:"Quotation Shared",
+    policy_issued:"Policy Issued"
+  };
+  const rows=[
+    headers,
+    ...crmData.map(a=>[
+      a.date?a.date.split("T")[0]:"",
+      a.employee_name||"",
+      a.customer_name||"",
+      a.company_name||"",
+      a.contact_number||"",
+      a.insurance_type||"",
+      actMap[a.activity_type]||a.activity_type||"",
+      a.fresh_calls||0,
+      a.followup_calls||0,
+      a.total_calls||0,
+      a.premium_amount||0,
+      a.status||"",
+      a.next_followup_date?a.next_followup_date.split("T")[0]:"",
+      a.work_details||"",
+      a.remarks||""
+    ])
+  ];
   downloadCSV(rows,`crm_activities_${document.getElementById("crm_filter_date")?.value||"all"}.csv`);
   toast("✅ Exported!","success");
 }
