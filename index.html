@@ -1066,7 +1066,301 @@
       </table>
     </div>
   </div>
-</div>     
+</div>
+
+<!-- TECH TASKS PAGE -->
+<div class="page" id="techTasksPage">
+  <div class="page-header">
+    <div class="page-header-icon">✅</div>
+    <div><div class="page-title">Task Tracker</div>
+    <div class="page-sub">Manage and track tech tasks</div></div>
+  </div>
+
+  <!-- Add Task Form -->
+  <div class="card" id="techTaskFormCard">
+    <div class="card-title" id="techTaskFormTitle">New Task</div>
+    <div class="form-grid">
+      <input type="hidden" id="tt_edit_id">
+      <div class="field span2">
+        <label>Task Title <span class="cam-required">REQUIRED</span></label>
+        <input type="text" id="tt_title" placeholder="What needs to be done?">
+      </div>
+      <div class="field">
+        <label>Priority</label>
+        <select id="tt_priority">
+          <option value="low">🟢 Low</option>
+          <option value="medium" selected>🟡 Medium</option>
+          <option value="high">🔴 High</option>
+          <option value="critical">🚨 Critical</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Due Date</label>
+        <input type="date" id="tt_due_date">
+      </div>
+      <div class="field" id="tt_assign_field">
+        <label>Assign To</label>
+        <select id="tt_assigned_to">
+          <option value="">Self / Unassigned</option>
+          <option value="tech000">harshagarwal</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="tt_status">
+          <option value="pending">⏳ Pending</option>
+          <option value="in_progress">🔄 In Progress</option>
+          <option value="completed">✅ Completed</option>
+          <option value="on_hold">⏸️ On Hold</option>
+        </select>
+      </div>
+      <div class="field span2">
+        <label>Description</label>
+        <textarea id="tt_description" placeholder="Describe the task in detail..."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-teal" id="btnSaveTask" onclick="saveTechTask()">✅ Save Task</button>
+      <button class="btn btn-ghost" id="btnCancelTask" style="display:none;" onclick="cancelTechTask()">✕ Cancel</button>
+    </div>
+  </div>
+
+  <!-- Task Stats -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-label">Total</div><div class="stat-value" id="ttTotal">—</div></div>
+    <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-label">Pending</div><div class="stat-value" id="ttPending">—</div></div>
+    <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">In Progress</div><div class="stat-value" id="ttInProgress">—</div></div>
+    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Completed</div><div class="stat-value" id="ttCompleted">—</div></div>
+  </div>
+
+  <!-- Task List -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div class="card-title" style="margin-bottom:0;">All Tasks</div>
+      <div style="display:flex;gap:8px;">
+        <select id="tt_filter_status" onchange="loadTechTasks()" style="width:auto;">
+          <option value="">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="in_progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="on_hold">On Hold</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Title</th><th>Priority</th><th>Assigned To</th><th>Due Date</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+        <tbody id="techTasksTable"><tr><td colspan="7" class="empty-state">No tasks yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TECH BUGS PAGE -->
+<div class="page" id="techBugsPage">
+  <div class="page-header">
+    <div class="page-header-icon">🐛</div>
+    <div><div class="page-title">Bug Reports</div>
+    <div class="page-sub">Report and track issues</div></div>
+  </div>
+
+  <!-- Report Bug Form -->
+  <div class="card">
+    <div class="card-title" id="techBugFormTitle">Report a Bug</div>
+    <div class="form-grid">
+      <input type="hidden" id="tb_edit_id">
+      <div class="field span2">
+        <label>Bug Title <span class="cam-required">REQUIRED</span></label>
+        <input type="text" id="tb_title" placeholder="Short description of the issue">
+      </div>
+      <div class="field">
+        <label>Severity</label>
+        <select id="tb_severity">
+          <option value="low">🟢 Low</option>
+          <option value="medium" selected>🟡 Medium</option>
+          <option value="high">🔴 High</option>
+          <option value="critical">🚨 Critical</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Module / Area</label>
+        <select id="tb_module">
+          <option value="">Select module</option>
+          <option value="attendance">Attendance</option>
+          <option value="check_in">Check In/Out</option>
+          <option value="field_visits">Field Visits</option>
+          <option value="leads">Leads</option>
+          <option value="crm">CRM</option>
+          <option value="reports">Reports</option>
+          <option value="login">Login / Auth</option>
+          <option value="equipment">Equipment</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="tb_status">
+          <option value="open">🔴 Open</option>
+          <option value="in_progress">🔄 In Progress</option>
+          <option value="resolved">✅ Resolved</option>
+          <option value="closed">⬛ Closed</option>
+        </select>
+      </div>
+      <div class="field span2">
+        <label>Description</label>
+        <textarea id="tb_description" placeholder="Describe the bug in detail..."></textarea>
+      </div>
+      <div class="field span2">
+        <label>Steps to Reproduce</label>
+        <textarea id="tb_steps" placeholder="1. Go to...\n2. Click on...\n3. See error..."></textarea>
+      </div>
+      <div class="field span2" id="tb_resolution_field" style="display:none;">
+        <label>Resolution Note</label>
+        <textarea id="tb_resolution" placeholder="How was this resolved?"></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btnSaveBug" onclick="saveTechBug()">🐛 Report Bug</button>
+      <button class="btn btn-ghost" id="btnCancelBug" style="display:none;" onclick="cancelTechBug()">✕ Cancel</button>
+    </div>
+  </div>
+
+  <!-- Bug Stats -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon">🐛</div><div class="stat-label">Total</div><div class="stat-value" id="tbTotal">—</div></div>
+    <div class="stat-card"><div class="stat-icon">🔴</div><div class="stat-label">Open</div><div class="stat-value" id="tbOpen">—</div></div>
+    <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-label">In Progress</div><div class="stat-value" id="tbInProgress">—</div></div>
+    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Resolved</div><div class="stat-value" id="tbResolved">—</div></div>
+  </div>
+
+  <!-- Bug List -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div class="card-title" style="margin-bottom:0;">All Bug Reports</div>
+      <div style="display:flex;gap:8px;">
+        <select id="tb_filter_status" onchange="loadTechBugs()" style="width:auto;">
+          <option value="">All Status</option>
+          <option value="open">Open</option>
+          <option value="in_progress">In Progress</option>
+          <option value="resolved">Resolved</option>
+          <option value="closed">Closed</option>
+        </select>
+        <select id="tb_filter_severity" onchange="loadTechBugs()" style="width:auto;">
+          <option value="">All Severity</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="critical">Critical</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Title</th><th>Module</th><th>Severity</th><th>Reported By</th><th>Status</th><th>Resolution</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody id="techBugsTable"><tr><td colspan="8" class="empty-state">No bugs reported</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TECH EQUIPMENT PAGE -->
+<div class="page" id="techEquipmentPage">
+  <div class="page-header">
+    <div class="page-header-icon">🖥️</div>
+    <div><div class="page-title">Equipment Inventory</div>
+    <div class="page-sub">Office equipment tracking</div></div>
+  </div>
+
+  <!-- Add Equipment Form (admin only) -->
+  <div class="card" id="techEqFormCard">
+    <div class="card-title" id="techEqFormTitle">Add Equipment</div>
+    <div class="form-grid">
+      <input type="hidden" id="te_edit_id">
+      <div class="field">
+        <label>Equipment Name <span class="cam-required">REQUIRED</span></label>
+        <input type="text" id="te_name" placeholder="e.g. Dell Laptop">
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select id="te_category">
+          <option value="">Select category</option>
+          <option value="laptop">💻 Laptop</option>
+          <option value="desktop">🖥️ Desktop</option>
+          <option value="monitor">🖥️ Monitor</option>
+          <option value="printer">🖨️ Printer</option>
+          <option value="phone">📱 Phone</option>
+          <option value="networking">🌐 Networking</option>
+          <option value="furniture">🪑 Furniture</option>
+          <option value="other">📦 Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Serial Number</label>
+        <input type="text" id="te_serial" placeholder="SN / Asset tag">
+      </div>
+      <div class="field">
+        <label>Purchase Date</label>
+        <input type="date" id="te_purchase_date">
+      </div>
+      <div class="field">
+        <label>Condition</label>
+        <select id="te_condition">
+          <option value="new">✨ New</option>
+          <option value="good" selected>✅ Good</option>
+          <option value="fair">🟡 Fair</option>
+          <option value="poor">🔴 Poor</option>
+          <option value="retired">⬛ Retired</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="te_status">
+          <option value="active">✅ Active</option>
+          <option value="under_repair">🔧 Under Repair</option>
+          <option value="retired">⬛ Retired</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Assigned To</label>
+        <input type="text" id="te_assigned_to" placeholder="Person name or dept">
+      </div>
+      <div class="field">
+        <label>Location</label>
+        <input type="text" id="te_location" placeholder="e.g. Floor 2, Desk 4">
+      </div>
+      <div class="field span2">
+        <label>Notes</label>
+        <textarea id="te_notes" placeholder="Any additional notes..."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-teal" id="btnSaveEquipment" onclick="saveTechEquipment()">🖥️ Save Equipment</button>
+      <button class="btn btn-ghost" id="btnCancelEquipment" style="display:none;" onclick="cancelTechEquipment()">✕ Cancel</button>
+    </div>
+  </div>
+
+  <!-- Equipment Stats -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon">🖥️</div><div class="stat-label">Total Items</div><div class="stat-value" id="teTotal">—</div></div>
+    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Active</div><div class="stat-value" id="teActive">—</div></div>
+    <div class="stat-card"><div class="stat-icon">🔧</div><div class="stat-label">Under Repair</div><div class="stat-value" id="teRepair">—</div></div>
+    <div class="stat-card"><div class="stat-icon">⬛</div><div class="stat-label">Retired</div><div class="stat-value" id="teRetired">—</div></div>
+  </div>
+
+  <!-- Equipment List -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div class="card-title" style="margin-bottom:0;">Inventory</div>
+      <button class="btn btn-teal btn-sm" onclick="exportEquipment()">⬇ Export</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Name</th><th>Category</th><th>Serial No.</th><th>Condition</th><th>Status</th><th>Assigned To</th><th>Location</th><th>Purchase Date</th><th>Notes</th><th>Actions</th></tr></thead>
+        <tbody id="techEquipmentTable"><tr><td colspan="10" class="empty-state">No equipment added yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 </main>
 </div>
@@ -1345,6 +1639,9 @@ function setupRoleUI(role){
       <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly();closeSidebar()"><span class="nav-icon"></span> Monthly Report</button>
       <button class="nav-btn" onclick="goTo('usersPage',this);loadUsers();closeSidebar()"><span class="nav-icon"></span> Users</button>
       <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon"></span> WFH Requests</button>
+      <button class="nav-btn" onclick="goTo('techTasksPage',this);loadTechTasks();closeSidebar()"><span class="nav-icon">✅</span> Tech Tasks</button>
+      <button class="nav-btn" onclick="goTo('techBugsPage',this);loadTechBugs();closeSidebar()"><span class="nav-icon">🐛</span> Bug Reports</button>
+      <button class="nav-btn" onclick="goTo('techEquipmentPage',this);loadTechEquipment();closeSidebar()"><span class="nav-icon">🖥️</span> Equipment</button>
       <div class="sidebar-section">Sales</div>
       <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon"></span> Leads</button>
       <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon"></span> Reminders</button>`;
@@ -1377,6 +1674,20 @@ function setupRoleUI(role){
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById("checkInPage").classList.add("active");
   autoFill(); 
+  } else if(role === "tech") {
+  sidebar.innerHTML = `
+    <div class="sidebar-section">Attendance</div>
+    <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon">🟢</span> Check In</button>
+    <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon">🔴</span> Check Out</button>
+    <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard();closeSidebar()"><span class="nav-icon">📊</span> My Attendance</button>
+    <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon">🏠</span> WFH Request</button>
+    <div class="sidebar-section">Tech</div>
+    <button class="nav-btn" onclick="goTo('techTasksPage',this);loadTechTasks();closeSidebar()"><span class="nav-icon">✅</span> My Tasks</button>
+    <button class="nav-btn" onclick="goTo('techBugsPage',this);loadTechBugs();closeSidebar()"><span class="nav-icon">🐛</span> Bug Reports</button>
+    <button class="nav-btn" onclick="goTo('techEquipmentPage',this);loadTechEquipment();closeSidebar()"><span class="nav-icon">🖥️</span> Equipment</button>`;
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("checkInPage").classList.add("active");
+  autoFill();  
   } else {
     sidebar.innerHTML=`
       <div class="sidebar-section">Attendance</div>
@@ -1423,7 +1734,7 @@ async function autoFill(){
   captureLocation("ci");
 
   // Check WFH approval for sales users only
-  if(currentUser.role === "sales" || currentUser.role === "crm"){
+  if(currentUser.role === "sales" || currentUser.role === "crm" || currentUser.role === "tech"){
     await checkWFHApproval(currentUser.id, today);
   } else {
     // Admin can always select WFH
@@ -2443,7 +2754,7 @@ async function loadWFHPage(){
   const today = new Date().toISOString().split("T")[0];
   const tomorrow = new Date(Date.now()+86400000).toISOString().split("T")[0];
 
-  if(currentUser.role === "sales" || currentUser.role === "crm"){
+  if(currentUser.role === "sales" || currentUser.role === "crm" || currentUser.role === "tech"){
     requestForm.style.display = "block";
     document.getElementById("wfhPageSub").textContent = "Request work from home approval";
     document.getElementById("wfh_req_date").value = today;
@@ -2690,6 +3001,393 @@ function renderUserTable(data, title) {
     <td>${d.orders_taken||0}</td>
   </tr>`).join("");
 }
+
+// ── TECH TASKS ────────────────────────────────────────────────────────────────
+let techTasksData = [];
+
+function cancelTechTask(){
+  document.getElementById("tt_edit_id").value = "";
+  document.getElementById("tt_title").value = "";
+  document.getElementById("tt_description").value = "";
+  document.getElementById("tt_priority").value = "medium";
+  document.getElementById("tt_due_date").value = "";
+  document.getElementById("tt_assigned_to").value = "";
+  document.getElementById("tt_status").value = "pending";
+  document.getElementById("techTaskFormTitle").textContent = "New Task";
+  document.getElementById("btnSaveTask").textContent = "✅ Save Task";
+  document.getElementById("btnCancelTask").style.display = "none";
+}
+
+function editTechTask(id){
+  const task = techTasksData.find(t => t.id === id);
+  if(!task) return;
+  document.getElementById("techTaskFormTitle").scrollIntoView({behavior:"smooth"});
+  document.getElementById("tt_edit_id").value = task.id;
+  document.getElementById("tt_title").value = task.title||"";
+  document.getElementById("tt_description").value = task.description||"";
+  document.getElementById("tt_priority").value = task.priority||"medium";
+  document.getElementById("tt_due_date").value = task.due_date?task.due_date.split("T")[0]:"";
+  document.getElementById("tt_assigned_to").value = task.assigned_to_id||"";
+  document.getElementById("tt_status").value = task.status||"pending";
+  document.getElementById("techTaskFormTitle").textContent = "✏️ Edit Task";
+  document.getElementById("btnSaveTask").textContent = "💾 Save Changes";
+  document.getElementById("btnCancelTask").style.display = "inline-flex";
+  toast("Editing task","info");
+}
+
+async function saveTechTask(){
+  const btn = document.getElementById("btnSaveTask");
+  const editId = document.getElementById("tt_edit_id").value;
+  const title = document.getElementById("tt_title").value.trim();
+  if(!title) return toast("Task title is required","error");
+  const assignedSelect = document.getElementById("tt_assigned_to");
+  const assignedName = assignedSelect.value ? assignedSelect.options[assignedSelect.selectedIndex].text : "";
+  const payload = {
+    title,
+    description: document.getElementById("tt_description").value.trim(),
+    priority: document.getElementById("tt_priority").value,
+    due_date: document.getElementById("tt_due_date").value||null,
+    assigned_to_id: assignedSelect.value||null,
+    assigned_to_name: assignedName||null,
+    status: document.getElementById("tt_status").value,
+    created_by: currentUser.id
+  };
+  btn.disabled = true; btn.textContent = "Saving…";
+  try{
+    const url = editId ? `${API}/tech-tasks/${editId}` : `${API}/tech-tasks`;
+    const res = await fetch(url,{method:editId?"PUT":"POST",headers:authHeaders(),body:JSON.stringify(payload)});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(data.message,"success");
+    cancelTechTask();
+    loadTechTasks();
+  } catch { toast("Cannot connect","error"); }
+  finally { btn.disabled=false; btn.textContent = editId ? "💾 Save Changes" : "✅ Save Task"; }
+}
+
+async function deleteTechTask(id){
+  if(!confirm("Delete this task?")) return;
+  try{
+    const res = await fetch(`${API}/tech-tasks/${id}`,{method:"DELETE",headers:authHeaders()});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(data.message,"success"); loadTechTasks();
+  } catch { toast("Cannot connect","error"); }
+}
+
+async function loadTechTasks(){
+  try{
+    const status = document.getElementById("tt_filter_status")?.value||"";
+    let url = `${API}/tech-tasks`;
+    if(status) url += `?status=${status}`;
+    const res = await fetch(url,{headers:authHeaders()});
+    techTasksData = await res.json();
+    document.getElementById("ttTotal").textContent = techTasksData.length;
+    document.getElementById("ttPending").textContent = techTasksData.filter(t=>t.status==="pending").length;
+    document.getElementById("ttInProgress").textContent = techTasksData.filter(t=>t.status==="in_progress").length;
+    document.getElementById("ttCompleted").textContent = techTasksData.filter(t=>t.status==="completed").length;
+    const priorityBadge = p => ({
+      low:`<span class="badge badge-wfh">🟢 Low</span>`,
+      medium:`<span class="badge badge-contacted">🟡 Medium</span>`,
+      high:`<span class="badge badge-absent">🔴 High</span>`,
+      critical:`<span class="badge" style="background:#7f1d1d;color:#fff;">🚨 Critical</span>`
+    }[p]||`<span class="badge badge-half">${p}</span>`);
+    const statusBadgeTech = s => ({
+      pending:`<span class="badge badge-half">⏳ Pending</span>`,
+      in_progress:`<span class="badge badge-contacted">🔄 In Progress</span>`,
+      completed:`<span class="badge badge-wfh">✅ Completed</span>`,
+      on_hold:`<span class="badge badge-office">⏸️ On Hold</span>`
+    }[s]||`<span class="badge badge-half">${s}</span>`);
+    const tbody = document.getElementById("techTasksTable");
+    const isAdmin = currentUser?.role === "admin";
+    if(!techTasksData.length){tbody.innerHTML=`<tr><td colspan="7" class="empty-state">No tasks yet</td></tr>`;return;}
+    tbody.innerHTML = techTasksData.map(t=>{
+      const today = new Date(); today.setHours(0,0,0,0);
+      let dueDateDisplay = "—";
+      if(t.due_date){
+        const dd = new Date(t.due_date); dd.setHours(0,0,0,0);
+        const diff = Math.floor((dd-today)/(1000*60*60*24));
+        const dateStr = new Date(t.due_date).toLocaleDateString("en-IN");
+        if(diff < 0) dueDateDisplay = `<span style="color:#e53e3e;font-weight:600;">⚠️ ${dateStr}</span>`;
+        else if(diff === 0) dueDateDisplay = `<span style="color:#d97706;font-weight:600;">📅 Today</span>`;
+        else dueDateDisplay = dateStr;
+      }
+      return `<tr>
+        <td style="font-weight:600;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${t.description||""}">${t.title}</td>
+        <td>${priorityBadge(t.priority)}</td>
+        <td style="font-size:12px;">${t.assigned_to_name||"Unassigned"}</td>
+        <td style="font-size:12px;">${dueDateDisplay}</td>
+        <td>${statusBadgeTech(t.status)}</td>
+        <td style="font-size:12px;color:var(--muted);">${new Date(t.created_at).toLocaleDateString("en-IN")}</td>
+        <td><div style="display:flex;gap:5px;">
+          <button class="btn btn-ghost btn-sm" onclick="editTechTask(${t.id})">✏️</button>
+          ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteTechTask(${t.id})">🗑️</button>`:""}
+        </div></td>
+      </tr>`;
+    }).join("");
+    // hide form for tech read-only if needed
+    if(currentUser?.role === "tech"){
+      document.getElementById("tt_assign_field").style.display = "none";
+    }
+  } catch { toast("Failed to load tasks","error"); }
+}
+
+// ── TECH BUGS ─────────────────────────────────────────────────────────────────
+let techBugsData = [];
+
+function cancelTechBug(){
+  document.getElementById("tb_edit_id").value = "";
+  document.getElementById("tb_title").value = "";
+  document.getElementById("tb_description").value = "";
+  document.getElementById("tb_severity").value = "medium";
+  document.getElementById("tb_module").value = "";
+  document.getElementById("tb_steps").value = "";
+  document.getElementById("tb_status").value = "open";
+  document.getElementById("tb_resolution").value = "";
+  document.getElementById("tb_resolution_field").style.display = "none";
+  document.getElementById("techBugFormTitle").textContent = "Report a Bug";
+  document.getElementById("btnSaveBug").textContent = "🐛 Report Bug";
+  document.getElementById("btnCancelBug").style.display = "none";
+}
+
+function editTechBug(id){
+  const bug = techBugsData.find(b => b.id === id);
+  if(!bug) return;
+  document.getElementById("techBugFormTitle").scrollIntoView({behavior:"smooth"});
+  document.getElementById("tb_edit_id").value = bug.id;
+  document.getElementById("tb_title").value = bug.title||"";
+  document.getElementById("tb_description").value = bug.description||"";
+  document.getElementById("tb_severity").value = bug.severity||"medium";
+  document.getElementById("tb_module").value = bug.module||"";
+  document.getElementById("tb_steps").value = bug.steps_to_reproduce||"";
+  document.getElementById("tb_status").value = bug.status||"open";
+  document.getElementById("tb_resolution").value = bug.resolution_note||"";
+  document.getElementById("tb_resolution_field").style.display = "block";
+  document.getElementById("techBugFormTitle").textContent = "✏️ Edit Bug Report";
+  document.getElementById("btnSaveBug").textContent = "💾 Save Changes";
+  document.getElementById("btnCancelBug").style.display = "inline-flex";
+  toast("Editing bug report","info");
+}
+
+async function saveTechBug(){
+  const btn = document.getElementById("btnSaveBug");
+  const editId = document.getElementById("tb_edit_id").value;
+  const title = document.getElementById("tb_title").value.trim();
+  if(!title) return toast("Bug title is required","error");
+  const payload = {
+    title,
+    description: document.getElementById("tb_description").value.trim(),
+    severity: document.getElementById("tb_severity").value,
+    module: document.getElementById("tb_module").value,
+    steps_to_reproduce: document.getElementById("tb_steps").value.trim(),
+    status: document.getElementById("tb_status").value,
+    resolution_note: document.getElementById("tb_resolution").value.trim(),
+    reported_by: currentUser.name,
+    reported_by_id: currentUser.id
+  };
+  btn.disabled = true; btn.textContent = "Saving…";
+  try{
+    const url = editId ? `${API}/tech-bugs/${editId}` : `${API}/tech-bugs`;
+    const res = await fetch(url,{method:editId?"PUT":"POST",headers:authHeaders(),body:JSON.stringify(payload)});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(data.message,"success");
+    cancelTechBug();
+    loadTechBugs();
+  } catch { toast("Cannot connect","error"); }
+  finally { btn.disabled=false; btn.textContent = editId ? "💾 Save Changes" : "🐛 Report Bug"; }
+}
+
+async function deleteTechBug(id){
+  if(!confirm("Delete this bug report?")) return;
+  try{
+    const res = await fetch(`${API}/tech-bugs/${id}`,{method:"DELETE",headers:authHeaders()});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(data.message,"success"); loadTechBugs();
+  } catch { toast("Cannot connect","error"); }
+}
+
+async function loadTechBugs(){
+  try{
+    const status = document.getElementById("tb_filter_status")?.value||"";
+    const severity = document.getElementById("tb_filter_severity")?.value||"";
+    let url = `${API}/tech-bugs?`;
+    if(status) url += `status=${status}&`;
+    if(severity) url += `severity=${severity}&`;
+    const res = await fetch(url,{headers:authHeaders()});
+    techBugsData = await res.json();
+    document.getElementById("tbTotal").textContent = techBugsData.length;
+    document.getElementById("tbOpen").textContent = techBugsData.filter(b=>b.status==="open").length;
+    document.getElementById("tbInProgress").textContent = techBugsData.filter(b=>b.status==="in_progress").length;
+    document.getElementById("tbResolved").textContent = techBugsData.filter(b=>b.status==="resolved").length;
+    const severityBadge = s => ({
+      low:`<span class="badge badge-wfh">🟢 Low</span>`,
+      medium:`<span class="badge badge-contacted">🟡 Medium</span>`,
+      high:`<span class="badge badge-absent">🔴 High</span>`,
+      critical:`<span class="badge" style="background:#7f1d1d;color:#fff;">🚨 Critical</span>`
+    }[s]||`<span class="badge badge-half">${s}</span>`);
+    const bugStatusBadge = s => ({
+      open:`<span class="badge badge-absent">🔴 Open</span>`,
+      in_progress:`<span class="badge badge-contacted">🔄 In Progress</span>`,
+      resolved:`<span class="badge badge-wfh">✅ Resolved</span>`,
+      closed:`<span class="badge badge-half">⬛ Closed</span>`
+    }[s]||`<span class="badge badge-half">${s}</span>`);
+    const isAdmin = currentUser?.role === "admin";
+    const tbody = document.getElementById("techBugsTable");
+    if(!techBugsData.length){tbody.innerHTML=`<tr><td colspan="8" class="empty-state">No bugs reported 🎉</td></tr>`;return;}
+    tbody.innerHTML = techBugsData.map(b=>`<tr>
+      <td style="font-weight:600;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${b.description||""}">${b.title}</td>
+      <td style="font-size:12px;">${b.module||"—"}</td>
+      <td>${severityBadge(b.severity)}</td>
+      <td style="font-size:12px;">${b.reported_by||"—"}</td>
+      <td>${bugStatusBadge(b.status)}</td>
+      <td style="font-size:12px;color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${b.resolution_note||""}">${b.resolution_note||"—"}</td>
+      <td style="font-size:12px;color:var(--muted);">${new Date(b.created_at).toLocaleDateString("en-IN")}</td>
+      <td><div style="display:flex;gap:5px;">
+        <button class="btn btn-ghost btn-sm" onclick="editTechBug(${b.id})">✏️</button>
+        ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteTechBug(${b.id})">🗑️</button>`:""}
+      </div></td>
+    </tr>`).join("");
+  } catch { toast("Failed to load bugs","error"); }
+}
+
+// ── TECH EQUIPMENT ────────────────────────────────────────────────────────────
+let techEquipmentData = [];
+
+function cancelTechEquipment(){
+  document.getElementById("te_edit_id").value = "";
+  document.getElementById("te_name").value = "";
+  document.getElementById("te_category").value = "";
+  document.getElementById("te_serial").value = "";
+  document.getElementById("te_purchase_date").value = "";
+  document.getElementById("te_condition").value = "good";
+  document.getElementById("te_status").value = "active";
+  document.getElementById("te_assigned_to").value = "";
+  document.getElementById("te_location").value = "";
+  document.getElementById("te_notes").value = "";
+  document.getElementById("techEqFormTitle").textContent = "Add Equipment";
+  document.getElementById("btnSaveEquipment").textContent = "🖥️ Save Equipment";
+  document.getElementById("btnCancelEquipment").style.display = "none";
+}
+
+function editTechEquipment(id){
+  const eq = techEquipmentData.find(e => e.id === id);
+  if(!eq) return;
+  document.getElementById("techEqFormTitle").scrollIntoView({behavior:"smooth"});
+  document.getElementById("te_edit_id").value = eq.id;
+  document.getElementById("te_name").value = eq.name||"";
+  document.getElementById("te_category").value = eq.category||"";
+  document.getElementById("te_serial").value = eq.serial_number||"";
+  document.getElementById("te_purchase_date").value = eq.purchase_date?eq.purchase_date.split("T")[0]:"";
+  document.getElementById("te_condition").value = eq.condition||"good";
+  document.getElementById("te_status").value = eq.status||"active";
+  document.getElementById("te_assigned_to").value = eq.assigned_to||"";
+  document.getElementById("te_location").value = eq.location||"";
+  document.getElementById("te_notes").value = eq.notes||"";
+  document.getElementById("techEqFormTitle").textContent = "✏️ Edit Equipment";
+  document.getElementById("btnSaveEquipment").textContent = "💾 Save Changes";
+  document.getElementById("btnCancelEquipment").style.display = "inline-flex";
+  toast("Editing equipment","info");
+}
+
+async function saveTechEquipment(){
+  const btn = document.getElementById("btnSaveEquipment");
+  const editId = document.getElementById("te_edit_id").value;
+  const name = document.getElementById("te_name").value.trim();
+  if(!name) return toast("Equipment name is required","error");
+  const payload = {
+    name,
+    category: document.getElementById("te_category").value,
+    serial_number: document.getElementById("te_serial").value.trim(),
+    purchase_date: document.getElementById("te_purchase_date").value||null,
+    condition: document.getElementById("te_condition").value,
+    status: document.getElementById("te_status").value,
+    assigned_to: document.getElementById("te_assigned_to").value.trim(),
+    location: document.getElementById("te_location").value.trim(),
+    notes: document.getElementById("te_notes").value.trim()
+  };
+  btn.disabled = true; btn.textContent = "Saving…";
+  try{
+    const url = editId ? `${API}/tech-equipment/${editId}` : `${API}/tech-equipment`;
+    const res = await fetch(url,{method:editId?"PUT":"POST",headers:authHeaders(),body:JSON.stringify(payload)});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(data.message,"success");
+    cancelTechEquipment();
+    loadTechEquipment();
+  } catch { toast("Cannot connect","error"); }
+  finally { btn.disabled=false; btn.textContent = editId ? "💾 Save Changes" : "🖥️ Save Equipment"; }
+}
+
+async function deleteTechEquipment(id){
+  if(!confirm("Delete this equipment?")) return;
+  try{
+    const res = await fetch(`${API}/tech-equipment/${id}`,{method:"DELETE",headers:authHeaders()});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(data.message,"success"); loadTechEquipment();
+  } catch { toast("Cannot connect","error"); }
+}
+
+async function loadTechEquipment(){
+  try{
+    const res = await fetch(`${API}/tech-equipment`,{headers:authHeaders()});
+    techEquipmentData = await res.json();
+    document.getElementById("teTotal").textContent = techEquipmentData.length;
+    document.getElementById("teActive").textContent = techEquipmentData.filter(e=>e.status==="active").length;
+    document.getElementById("teRepair").textContent = techEquipmentData.filter(e=>e.status==="under_repair").length;
+    document.getElementById("teRetired").textContent = techEquipmentData.filter(e=>e.status==="retired").length;
+    const conditionBadge = c => ({
+      new:`<span class="badge badge-wfh">✨ New</span>`,
+      good:`<span class="badge badge-wfh">✅ Good</span>`,
+      fair:`<span class="badge badge-contacted">🟡 Fair</span>`,
+      poor:`<span class="badge badge-absent">🔴 Poor</span>`,
+      retired:`<span class="badge badge-half">⬛ Retired</span>`
+    }[c]||`<span class="badge badge-half">${c}</span>`);
+    const eqStatusBadge = s => ({
+      active:`<span class="badge badge-wfh">✅ Active</span>`,
+      under_repair:`<span class="badge badge-contacted">🔧 Repair</span>`,
+      retired:`<span class="badge badge-half">⬛ Retired</span>`
+    }[s]||`<span class="badge badge-half">${s}</span>`);
+    const catMap={laptop:"💻",desktop:"🖥️",monitor:"🖥️",printer:"🖨️",phone:"📱",networking:"🌐",furniture:"🪑",other:"📦"};
+    const isAdmin = currentUser?.role === "admin";
+    // hide form for tech users (view only for equipment)
+    if(document.getElementById("techEqFormCard")){
+      document.getElementById("techEqFormCard").style.display = isAdmin ? "block" : "none";
+    }
+    const tbody = document.getElementById("techEquipmentTable");
+    if(!techEquipmentData.length){tbody.innerHTML=`<tr><td colspan="10" class="empty-state">No equipment added yet</td></tr>`;return;}
+    tbody.innerHTML = techEquipmentData.map(e=>`<tr>
+      <td style="font-weight:600;">${catMap[e.category]||"📦"} ${e.name}</td>
+      <td style="font-size:12px;">${e.category||"—"}</td>
+      <td style="font-family:monospace;font-size:12px;">${e.serial_number||"—"}</td>
+      <td>${conditionBadge(e.condition)}</td>
+      <td>${eqStatusBadge(e.status)}</td>
+      <td style="font-size:12px;">${e.assigned_to||"—"}</td>
+      <td style="font-size:12px;color:var(--muted);">${e.location||"—"}</td>
+      <td style="font-size:12px;color:var(--muted);">${e.purchase_date?new Date(e.purchase_date).toLocaleDateString("en-IN"):"—"}</td>
+      <td style="font-size:12px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${e.notes||""}">${e.notes||"—"}</td>
+      <td>${isAdmin?`<div style="display:flex;gap:5px;">
+        <button class="btn btn-ghost btn-sm" onclick="editTechEquipment(${e.id})">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteTechEquipment(${e.id})">🗑️</button>
+      </div>`:"<span style='font-size:12px;color:var(--muted);'>View only</span>"}</td>
+    </tr>`).join("");
+  } catch { toast("Failed to load equipment","error"); }
+}
+
+function exportEquipment(){
+  if(!techEquipmentData.length) return toast("No data to export","error");
+  const headers=["Name","Category","Serial No.","Condition","Status","Assigned To","Location","Purchase Date","Notes"];
+  const rows=[headers,...techEquipmentData.map(e=>[
+    e.name||"",e.category||"",e.serial_number||"",
+    e.condition||"",e.status||"",e.assigned_to||"",
+    e.location||"",e.purchase_date?new Date(e.purchase_date).toLocaleDateString("en-IN"):"",
+    e.notes||""
+  ])];
+  downloadCSV(rows,`equipment_${new Date().toISOString().split("T")[0]}.csv`);
+  toast("✅ Equipment list exported!","success");
+}  
 
 // ── CRM ───────────────────────────────────────────────────────────────────────
 let crmData = [];
