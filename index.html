@@ -2801,7 +2801,7 @@ function downloadTemplate(){
   ];
   const rows = [headers, sample];
   downloadCSV(rows, "leads_import_template.csv");
-  toast("✅ Template downloaded!","success");
+  toast(" Template downloaded!","success");
 }
 
 async function handleImportFile(event){
@@ -3190,12 +3190,18 @@ function viewPhoto(url){document.getElementById("photoModalImg").src=url;documen
 function closePhotoModal(){document.getElementById("photoModal").classList.remove("open");}
 
 // ── CSV DOWNLOAD ──────────────────────────────────────────────────────────────
-function downloadCSV(rows,filename){
-  const csv=rows.map(r=>r.map(c=>`"${(c||"").toString().replace(/"/g,'""')}"`).join(",")).join("\n");
-  const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url; a.download=filename; a.click();
+function downloadCSV(rows, filename){
+  const csv = rows.map(r => 
+    r.map(c => `"${(c||"").toString().replace(/"/g,'""')}"`).join(",")
+  ).join("\n");
+  const blob = new Blob(["\uFEFF" + csv], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 
