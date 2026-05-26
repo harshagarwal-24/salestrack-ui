@@ -2672,6 +2672,7 @@ function exportLeadsExcel(){
 
 function openAddLead(){
   if(currentUser?.role==="operations") return toast("Operations cannot add leads","error");
+  document.getElementById("importModal").classList.remove("open");
   document.getElementById("modalTitle").textContent = "Add New Lead";
   ["lead_id","lead_name","lead_phone","lead_email","lead_company",
    "lead_address","lead_product","lead_notes","lead_followup_date",
@@ -2779,14 +2780,12 @@ let importedRows = [];
 
 function openImportModal(){
   document.getElementById("leadModal").classList.remove("open");
-  document.getElementById("leadModal").style.display = "none";
   resetImport();
   document.getElementById("importModal").classList.add("open");
 }
 
 function closeImportModal(){
   document.getElementById("importModal").classList.remove("open");
-  document.getElementById("leadModal").style.display = "";
 }
 
 function resetImport(){
