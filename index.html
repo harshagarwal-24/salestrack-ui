@@ -1457,11 +1457,11 @@
         <textarea id="lead_notes" placeholder="Additional notes..." style="min-height:60px;"></textarea>
       </div>
     </div>
-    <!-- IMPORT LEADS MODAL -->
+<!-- IMPORT LEADS MODAL -->
 <div class="modal-overlay" id="importModal">
   <div class="modal" style="width:580px;">
     <div class="modal-title">
-      <span>📥 Import Leads from Excel / CSV</span>
+      <span>Import Leads from Excel / CSV</span>
       <button class="modal-close" onclick="closeImportModal()">×</button>
     </div>
 
@@ -1472,18 +1472,29 @@
         <div style="font-weight:600;margin-bottom:4px;">Upload Excel or CSV file</div>
         <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Supports .xlsx, .xls, .csv</div>
         <input type="file" id="importFile" accept=".xlsx,.xls,.csv" onchange="handleImportFile(event)" style="display:none;">
-        <button class="btn btn-teal" onclick="document.getElementById('importFile').click()">📂 Choose File</button>
+        <button class="btn btn-teal" onclick="document.getElementById('importFile').click()">Choose File</button>
       </div>
 
-      <!-- Template download -->
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:16px;">
-        <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;">REQUIRED COLUMNS</div>
+        <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px;">REQUIRED COLUMNS</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
-          ${["name*","phone*","email*","company_name*","source","status","priority","product_interested","assigned_to","address","notes","followup_date","annual_turnover","employee_strength","sum_insured"].map(col=>`
-          <span style="font-size:11px;background:${col.includes('*')?'var(--orange-pale)':'var(--bg)'};border:1px solid ${col.includes('*')?'var(--orange)':'var(--border)'};color:${col.includes('*')?'var(--orange)':'var(--muted)'};padding:2px 8px;border-radius:10px;font-family:monospace;">${col}</span>
-          `).join("")}
+          <span style="font-size:11px;background:var(--orange-pale);border:1px solid var(--orange);color:var(--orange);padding:2px 8px;border-radius:10px;font-family:monospace;">name*</span>
+          <span style="font-size:11px;background:var(--orange-pale);border:1px solid var(--orange);color:var(--orange);padding:2px 8px;border-radius:10px;font-family:monospace;">phone*</span>
+          <span style="font-size:11px;background:var(--orange-pale);border:1px solid var(--orange);color:var(--orange);padding:2px 8px;border-radius:10px;font-family:monospace;">email*</span>
+          <span style="font-size:11px;background:var(--orange-pale);border:1px solid var(--orange);color:var(--orange);padding:2px 8px;border-radius:10px;font-family:monospace;">company_name*</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">source</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">status</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">priority</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">product_interested</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">assigned_to</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">address</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">notes</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">followup_date</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">annual_turnover</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">employee_strength</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">sum_insured</span>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="downloadTemplate()">⬇ Download Template</button>
+        <button class="btn btn-ghost btn-sm" onclick="downloadTemplate()">Download Template</button>
       </div>
     </div>
 
@@ -1494,13 +1505,9 @@
           <div style="font-weight:700;font-size:15px;" id="importFileInfo">—</div>
           <div style="font-size:12px;color:var(--muted);" id="importRowCount">—</div>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="resetImport()">🔄 Change File</button>
+        <button class="btn btn-ghost btn-sm" onclick="resetImport()">Change File</button>
       </div>
-
-      <!-- Validation summary -->
       <div id="importValidation" style="margin-bottom:12px;"></div>
-
-      <!-- Preview table -->
       <div style="max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;margin-bottom:16px;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;">
           <thead>
@@ -1511,15 +1518,14 @@
               <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Company</th>
               <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Priority</th>
               <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Status</th>
-              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">✓</th>
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Valid</th>
             </tr>
           </thead>
           <tbody id="importPreviewTable"></tbody>
         </table>
       </div>
-
       <div class="btn-row">
-        <button class="btn btn-primary" id="btnImportNow" onclick="importLeadsNow()">📥 Import All Valid Rows</button>
+        <button class="btn btn-primary" id="btnImportNow" onclick="importLeadsNow()">Import Valid Rows</button>
         <button class="btn btn-ghost" onclick="closeImportModal()">Cancel</button>
       </div>
     </div>
@@ -1530,10 +1536,11 @@
       <div style="font-size:18px;font-weight:700;margin-bottom:8px;" id="importResultTitle">Import Complete!</div>
       <div style="font-size:14px;color:var(--muted);margin-bottom:20px;" id="importResultSub">—</div>
       <div class="btn-row" style="justify-content:center;">
-        <button class="btn btn-teal" onclick="closeImportModal();loadLeads();">✅ View Leads</button>
-        <button class="btn btn-ghost" onclick="resetImport()">📥 Import More</button>
+        <button class="btn btn-teal" onclick="closeImportModal();loadLeads();">View Leads</button>
+        <button class="btn btn-ghost" onclick="resetImport()">Import More</button>
       </div>
     </div>
+
   </div>
 </div>
 
