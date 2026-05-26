@@ -1388,89 +1388,7 @@
       <button class="modal-close" onclick="closeLeadModal()">×</button>
     </div>
 
-    <!-- PRIORITY BANNER -->
-    <div id="priorityBanner" style="display:none;margin-bottom:14px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
-
-    <!-- BASIC INFO -->
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;"> Basic Information</div>
-    <div class="form-grid" style="margin-bottom:16px;">
-      <input type="hidden" id="lead_id">
-      <div class="field">
-        <label>Lead Name <span style="color:var(--orange);">*</span></label>
-        <input type="text" id="lead_name" placeholder="Full name">
-      </div>
-      <div class="field">
-        <label>Phone <span style="color:var(--orange);">*</span></label>
-        <input type="tel" id="lead_phone" placeholder="+91 98765 00000">
-      </div>
-      <div class="field">
-        <label>Email <span style="color:var(--orange);">*</span></label>
-        <input type="email" id="lead_email" placeholder="email@example.com">
-      </div>
-      <div class="field">
-        <label>Source</label>
-        <select id="lead_source">
-          <option value="">Select source</option>
-          <option value="cold_call">Cold Call</option>
-          <option value="referral">Referral</option>
-          <option value="walk_in">Walk In</option>
-          <option value="field_visit">Field Visit</option>
-          <option value="online">Online</option>
-          <option value="social_media">Social Media</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Status</label>
-        <select id="lead_status">
-          <option value="new">New</option>
-          <option value="prospect">Prospect</option>
-          <option value="contacted">Contacted</option>
-          <option value="follow_up">Follow Up</option>
-          <option value="converted">Converted</option>
-          <option value="lost">Lost</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Priority <span style="color:var(--orange);">*</span></label>
-        <select id="lead_priority" onchange="handlePriorityChange()">
-          <option value="cold"> Cold — Occasional follow up</option>
-          <option value="warm"> Warm — Weekly follow up</option>
-          <option value="hot"> Hot — Daily follow up needed</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Product Interested In</label>
-        <input type="text" id="lead_product" placeholder="e.g. Term Insurance">
-      </div>
-      <div class="field">
-        <label>Assigned To</label>
-        <select id="lead_assigned">
-          <option value="">Select salesperson</option>
-          <option value="u002">Rahul Sharma</option>
-          <option value="u003">Ayush Choudhary</option>
-          <option value="INT014">Yash Patel</option>
-          <option value="INT000">Zoya Raikwar</option>
-          <option value="INT001">Shivani Asati</option>
-          <option value="INT002">Vidhi</option>
-          <option value="INT003">Anvi Malik</option>
-          <option value="INT004">Anmol</option>
-          <option value="INT005">Bhaskar</option>
-          <option value="INT010">Anirudh Agrawal</option>
-          <option value="INT012">Tushar Goswami</option>
-          <option value="INT013">Harsh</option>
-        </select>
-      </div>
-      <div class="field span2">
-        <label>Address</label>
-        <input type="text" id="lead_address" placeholder="Full address">
-      </div>
-      <div class="field span2">
-        <label>Notes</label>
-        <textarea id="lead_notes" placeholder="Additional notes..." style="min-height:60px;"></textarea>
-      </div>
-    </div>
-<!-- IMPORT LEADS MODAL -->
+    <!-- IMPORT LEADS MODAL -->
 <div class="modal-overlay" id="importModal">
   <div class="modal" style="width:580px;">
     <div class="modal-title">
@@ -1609,6 +1527,90 @@
     <div style="text-align:center;margin-top:10px;"><button class="btn btn-ghost" onclick="closePhotoModal()">Close</button></div>
   </div>
 </div>
+
+    <!-- PRIORITY BANNER -->
+    <div id="priorityBanner" style="display:none;margin-bottom:14px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
+
+    <!-- BASIC INFO -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;"> Basic Information</div>
+    <div class="form-grid" style="margin-bottom:16px;">
+      <input type="hidden" id="lead_id">
+      <div class="field">
+        <label>Lead Name <span style="color:var(--orange);">*</span></label>
+        <input type="text" id="lead_name" placeholder="Full name">
+      </div>
+      <div class="field">
+        <label>Phone <span style="color:var(--orange);">*</span></label>
+        <input type="tel" id="lead_phone" placeholder="+91 98765 00000">
+      </div>
+      <div class="field">
+        <label>Email <span style="color:var(--orange);">*</span></label>
+        <input type="email" id="lead_email" placeholder="email@example.com">
+      </div>
+      <div class="field">
+        <label>Source</label>
+        <select id="lead_source">
+          <option value="">Select source</option>
+          <option value="cold_call">Cold Call</option>
+          <option value="referral">Referral</option>
+          <option value="walk_in">Walk In</option>
+          <option value="field_visit">Field Visit</option>
+          <option value="online">Online</option>
+          <option value="social_media">Social Media</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="lead_status">
+          <option value="new">New</option>
+          <option value="prospect">Prospect</option>
+          <option value="contacted">Contacted</option>
+          <option value="follow_up">Follow Up</option>
+          <option value="converted">Converted</option>
+          <option value="lost">Lost</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Priority <span style="color:var(--orange);">*</span></label>
+        <select id="lead_priority" onchange="handlePriorityChange()">
+          <option value="cold"> Cold — Occasional follow up</option>
+          <option value="warm"> Warm — Weekly follow up</option>
+          <option value="hot"> Hot — Daily follow up needed</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Product Interested In</label>
+        <input type="text" id="lead_product" placeholder="e.g. Term Insurance">
+      </div>
+      <div class="field">
+        <label>Assigned To</label>
+        <select id="lead_assigned">
+          <option value="">Select salesperson</option>
+          <option value="u002">Rahul Sharma</option>
+          <option value="u003">Ayush Choudhary</option>
+          <option value="INT014">Yash Patel</option>
+          <option value="INT000">Zoya Raikwar</option>
+          <option value="INT001">Shivani Asati</option>
+          <option value="INT002">Vidhi</option>
+          <option value="INT003">Anvi Malik</option>
+          <option value="INT004">Anmol</option>
+          <option value="INT005">Bhaskar</option>
+          <option value="INT010">Anirudh Agrawal</option>
+          <option value="INT012">Tushar Goswami</option>
+          <option value="INT013">Harsh</option>
+        </select>
+      </div>
+      <div class="field span2">
+        <label>Address</label>
+        <input type="text" id="lead_address" placeholder="Full address">
+      </div>
+      <div class="field span2">
+        <label>Notes</label>
+        <textarea id="lead_notes" placeholder="Additional notes..." style="min-height:60px;"></textarea>
+      </div>
+    </div>
+
 
 <div id="toast"></div>
 
