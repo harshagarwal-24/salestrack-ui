@@ -744,7 +744,7 @@
             </div>
             <div style="display:flex;gap:8px;">
               <button class="btn btn-teal btn-sm" onclick="exportLeadsExcel()"> Export</button>
-              <button class="btn btn-ghost btn-sm" onclick="closeLeadModal();openImportModal()"> Import Excel</button>
+              <button class="btn btn-ghost btn-sm" onclick="openImportModal()">Import Excel</button>
               <button class="btn btn-primary btn-sm" onclick="openAddLead()">+ Add Lead</button>
             </div>
           </div>
@@ -2779,9 +2779,13 @@ async function deleteLead(id){
 let importedRows = [];
 
 function openImportModal(){
+  // Close lead modal
   document.getElementById("leadModal").classList.remove("open");
-  resetImport();
-  document.getElementById("importModal").classList.add("open");
+  // Small delay then open import
+  setTimeout(()=>{
+    resetImport();
+    document.getElementById("importModal").classList.add("open");
+  }, 50);
 }
 
 function closeImportModal(){
@@ -3203,7 +3207,7 @@ function downloadCSV(rows, filename){
   const csv = rows.map(r => 
     r.map(c => `"${(c||"").toString().replace(/"/g,'""')}"`).join(",")
   ).join("\n");
-  const blob = new Blob(["\uFEFF" + csv], {type:"text/csv;charset=utf-8;"});
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
