@@ -158,6 +158,19 @@
     .empty-state{text-align:center;padding:40px;color:var(--muted);font-size:14px;}
     .photo-thumb{width:38px;height:38px;border-radius:6px;object-fit:cover;cursor:pointer;border:1px solid var(--border);}
 
+    .modal-overlay.open {
+      display: flex;
+      z-index: 500;
+    }
+
+    #importModal.open {
+      z-index: 600 !important;
+    }
+
+    #leadModal.open {
+      z-index: 500 !important;
+    }
+
     /* MOBILE */
     @media (max-width:768px){
       .hamburger{display:flex !important;}
