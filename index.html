@@ -2956,17 +2956,6 @@ async function importLeadsNow(){
   finally { btn.disabled=false; btn.textContent=`📥 Import Valid Rows`; }
 }
 
-  // Show result
-  document.getElementById("importStep2").style.display = "none";
-  document.getElementById("importStep3").style.display = "block";
-  document.getElementById("importResultIcon").textContent = failed === 0 ? "✅" : "⚠️";
-  document.getElementById("importResultTitle").textContent = failed === 0 ? "Import Complete!" : "Import Finished with Errors";
-  document.getElementById("importResultSub").textContent = `${success} leads imported successfully${failed > 0 ? `, ${failed} failed` : ""}`;
-
-  btn.disabled = false;
-  toast(`✅ ${success} leads imported!`, "success");
-}
-
 // ── REMINDERS ─────────────────────────────────────────────────────────────────
 async function loadReminders(){
   try{
