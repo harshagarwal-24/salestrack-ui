@@ -744,6 +744,7 @@
             </div>
             <div style="display:flex;gap:8px;">
               <button class="btn btn-teal btn-sm" onclick="exportLeadsExcel()"> Export</button>
+              <button class="btn btn-ghost btn-sm" onclick="openImportModal()"> Import Excel</button>
               <button class="btn btn-primary btn-sm" onclick="openAddLead()">+ Add Lead</button>
             </div>
           </div>
@@ -1456,6 +1457,85 @@
         <textarea id="lead_notes" placeholder="Additional notes..." style="min-height:60px;"></textarea>
       </div>
     </div>
+    <!-- IMPORT LEADS MODAL -->
+<div class="modal-overlay" id="importModal">
+  <div class="modal" style="width:580px;">
+    <div class="modal-title">
+      <span>📥 Import Leads from Excel / CSV</span>
+      <button class="modal-close" onclick="closeImportModal()">×</button>
+    </div>
+
+    <!-- Step 1: Upload -->
+    <div id="importStep1">
+      <div style="background:var(--teal-pale);border:1.5px dashed var(--teal);border-radius:10px;padding:24px;text-align:center;margin-bottom:16px;">
+        <div style="font-size:32px;margin-bottom:8px;">📊</div>
+        <div style="font-weight:600;margin-bottom:4px;">Upload Excel or CSV file</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Supports .xlsx, .xls, .csv</div>
+        <input type="file" id="importFile" accept=".xlsx,.xls,.csv" onchange="handleImportFile(event)" style="display:none;">
+        <button class="btn btn-teal" onclick="document.getElementById('importFile').click()">📂 Choose File</button>
+      </div>
+
+      <!-- Template download -->
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:16px;">
+        <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px;">REQUIRED COLUMNS</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+          ${["name*","phone*","email*","company_name*","source","status","priority","product_interested","assigned_to","address","notes","followup_date","annual_turnover","employee_strength","sum_insured"].map(col=>`
+            <span style="font-size:11px;background:${col.includes('*')?'var(--orange-pale)':'var(--bg)'};border:1px solid ${col.includes('*')?'var(--orange)':'var(--border)'};color:${col.includes('*')?'var(--orange)':'var(--muted)'};padding:2px 8px;border-radius:10px;font-family:monospace;">${col}</span>
+          `).join("")}
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="downloadTemplate()">⬇ Download Template</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Preview -->
+    <div id="importStep2" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div>
+          <div style="font-weight:700;font-size:15px;" id="importFileInfo">—</div>
+          <div style="font-size:12px;color:var(--muted);" id="importRowCount">—</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="resetImport()">🔄 Change File</button>
+      </div>
+
+      <!-- Validation summary -->
+      <div id="importValidation" style="margin-bottom:12px;"></div>
+
+      <!-- Preview table -->
+      <div style="max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;margin-bottom:16px;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="background:var(--bg);position:sticky;top:0;">
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">#</th>
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Name</th>
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Phone</th>
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Company</th>
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Priority</th>
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Status</th>
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">✓</th>
+            </tr>
+          </thead>
+          <tbody id="importPreviewTable"></tbody>
+        </table>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnImportNow" onclick="importLeadsNow()">📥 Import All Valid Rows</button>
+        <button class="btn btn-ghost" onclick="closeImportModal()">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Result -->
+    <div id="importStep3" style="display:none;text-align:center;padding:20px 0;">
+      <div style="font-size:48px;margin-bottom:12px;" id="importResultIcon">✅</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;" id="importResultTitle">Import Complete!</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:20px;" id="importResultSub">—</div>
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn btn-teal" onclick="closeImportModal();loadLeads();">✅ View Leads</button>
+        <button class="btn btn-ghost" onclick="resetImport()">📥 Import More</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- COMPANY DETAILS -->
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted);margin-bottom:10px;"> Company Details</div>
@@ -2685,6 +2765,206 @@ async function deleteLead(id){
     toast(data.message,"success");
     loadLeads();
   } catch { toast("Failed to delete","error"); }
+}
+
+// ── LEAD IMPORT ───────────────────────────────────────────────────────────────
+let importedRows = [];
+
+function openImportModal(){
+  resetImport();
+  document.getElementById("importModal").classList.add("open");
+}
+
+function closeImportModal(){
+  document.getElementById("importModal").classList.remove("open");
+}
+
+function resetImport(){
+  importedRows = [];
+  document.getElementById("importFile").value = "";
+  document.getElementById("importStep1").style.display = "block";
+  document.getElementById("importStep2").style.display = "none";
+  document.getElementById("importStep3").style.display = "none";
+}
+
+function downloadTemplate(){
+  const headers = [
+    "name","phone","email","company_name","source","status","priority",
+    "product_interested","assigned_to","address","notes",
+    "followup_date","annual_turnover","employee_strength","sum_insured"
+  ];
+  const sample = [
+    "Ramesh Kumar","9876543210","ramesh@example.com","ABC Pvt Ltd",
+    "cold_call","new","warm","Health Insurance","Rahul Sharma",
+    "Sector 14 Faridabad","Follow up next week","2026-06-01",
+    "5 Crore","50-100","10 Lakh per person"
+  ];
+  const rows = [headers, sample];
+  downloadCSV(rows, "leads_import_template.csv");
+  toast("✅ Template downloaded!","success");
+}
+
+async function handleImportFile(event){
+  const file = event.target.files[0];
+  if(!file) return;
+
+  const ext = file.name.split(".").pop().toLowerCase();
+  
+  try {
+    let rows = [];
+
+    if(ext === "csv"){
+      // Parse CSV
+      const text = await file.text();
+      const lines = text.split("\n").filter(l => l.trim());
+      const headers = lines[0].split(",").map(h => h.replace(/"/g,"").trim().toLowerCase());
+      rows = lines.slice(1).map(line => {
+        const vals = line.match(/(".*?"|[^,]+)(?=\s*,|\s*$)/g)||line.split(",");
+        const obj = {};
+        headers.forEach((h,i) => { obj[h] = (vals[i]||"").replace(/^"|"$/g,"").trim(); });
+        return obj;
+      }).filter(r => r.name || r.phone);
+
+    } else if(ext === "xlsx" || ext === "xls"){
+      // Parse XLSX using SheetJS
+      const buffer = await file.arrayBuffer();
+      const XLSX = await import("https://cdn.jsdelivr.net/npm/xlsx@0.18.5/xlsx.mjs");
+      const wb = XLSX.read(buffer, {type:"array"});
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const data = XLSX.utils.sheet_to_json(ws, {defval:""});
+      rows = data.map(r => {
+        const obj = {};
+        Object.keys(r).forEach(k => { obj[k.toLowerCase().trim().replace(/ /g,"_")] = String(r[k]).trim(); });
+        return obj;
+      }).filter(r => r.name || r.phone);
+    } else {
+      return toast("Please upload .xlsx, .xls, or .csv file","error");
+    }
+
+    importedRows = rows;
+    showImportPreview(file.name, rows);
+
+  } catch(err) {
+    toast("Failed to read file: " + err.message, "error");
+  }
+}
+
+function showImportPreview(fileName, rows){
+  document.getElementById("importStep1").style.display = "none";
+  document.getElementById("importStep2").style.display = "block";
+  document.getElementById("importFileInfo").textContent = "📄 " + fileName;
+  document.getElementById("importRowCount").textContent = `${rows.length} rows found`;
+
+  // Validate rows
+  let validCount = 0, invalidCount = 0;
+  const tbody = document.getElementById("importPreviewTable");
+
+  tbody.innerHTML = rows.map((r, i) => {
+    const missing = [];
+    if(!r.name) missing.push("name");
+    if(!r.phone) missing.push("phone");
+    if(!r.email) missing.push("email");
+    if(!r.company_name) missing.push("company_name");
+    const isValid = missing.length === 0;
+    if(isValid) validCount++; else invalidCount++;
+
+    const priorityColor = {hot:"#dc2626",warm:"#d97706",cold:"#2563eb"}[r.priority?.toLowerCase()]||"var(--muted)";
+
+    return `<tr style="background:${isValid?"":"#fff5f5"}">
+      <td style="padding:6px 8px;color:var(--muted);">${i+1}</td>
+      <td style="padding:6px 8px;font-weight:600;">${r.name||"—"}</td>
+      <td style="padding:6px 8px;">${r.phone||"—"}</td>
+      <td style="padding:6px 8px;">${r.company_name||"—"}</td>
+      <td style="padding:6px 8px;color:${priorityColor};font-weight:600;">${r.priority||"cold"}</td>
+      <td style="padding:6px 8px;">${r.status||"new"}</td>
+      <td style="padding:6px 8px;">${isValid
+        ? `<span style="color:#166534;font-weight:700;">✅</span>`
+        : `<span style="color:#dc2626;font-size:11px;" title="Missing: ${missing.join(', ')}">❌ ${missing.join(", ")}</span>`
+      }</td>
+    </tr>`;
+  }).join("");
+
+  // Validation summary
+  document.getElementById("importValidation").innerHTML = `
+    <div style="display:flex;gap:10px;margin-bottom:4px;">
+      <div style="background:#dcfce7;border:1px solid #bbf7d0;border-radius:8px;padding:8px 14px;flex:1;text-align:center;">
+        <div style="font-size:18px;font-weight:700;color:#166534;">${validCount}</div>
+        <div style="font-size:11px;color:#166534;">✅ Valid rows</div>
+      </div>
+      <div style="background:${invalidCount>0?"#fee2e2":"var(--bg)"};border:1px solid ${invalidCount>0?"#fecaca":"var(--border)"};border-radius:8px;padding:8px 14px;flex:1;text-align:center;">
+        <div style="font-size:18px;font-weight:700;color:${invalidCount>0?"#dc2626":"var(--muted)"};">${invalidCount}</div>
+        <div style="font-size:11px;color:${invalidCount>0?"#dc2626":"var(--muted)"};">❌ Invalid (will be skipped)</div>
+      </div>
+    </div>
+    ${invalidCount>0?`<div style="font-size:11px;color:var(--muted);margin-top:4px;">⚠️ Invalid rows are missing required fields (name, phone, email, company_name)</div>`:""}
+  `;
+
+  document.getElementById("btnImportNow").textContent = `📥 Import ${validCount} Valid Rows`;
+  if(validCount === 0) document.getElementById("btnImportNow").disabled = true;
+}
+
+async function importLeadsNow(){
+  const btn = document.getElementById("btnImportNow");
+  const validRows = importedRows.filter(r => r.name && r.phone && r.email && r.company_name);
+  if(!validRows.length) return toast("No valid rows to import","error");
+
+  btn.disabled = true;
+  btn.textContent = "Importing…";
+
+  try{
+    const leads = validRows.map(r => {
+      const assignedUser = [
+        {id:"u002",name:"Rahul Sharma"},{id:"u003",name:"Ayush Choudhary"},
+        {id:"INT014",name:"Yash Patel"},{id:"INT000",name:"Zoya Raikwar"},
+        {id:"INT001",name:"Shivani Asati"},{id:"INT002",name:"Vidhi"},
+        {id:"INT003",name:"Anvi Malik"},{id:"INT004",name:"Anmol"},
+        {id:"INT005",name:"Bhaskar"},{id:"INT010",name:"Anirudh Agrawal"},
+        {id:"INT012",name:"Tushar Goswami"},{id:"INT013",name:"Harsh"}
+      ].find(u => u.name.toLowerCase() === (r.assigned_to||"").toLowerCase());
+
+      return {
+        name: r.name, phone: r.phone,
+        email: r.email, company_name: r.company_name,
+        source: r.source||"other", status: r.status||"new",
+        priority: r.priority||"cold",
+        product_interested: r.product_interested||r.product||"",
+        assigned_to: assignedUser?.name||r.assigned_to||"",
+        assigned_to_id: assignedUser?.id||"",
+        address: r.address||"", notes: r.notes||"",
+        followup_date: r.followup_date||null,
+        annual_turnover: r.annual_turnover||"",
+        employee_strength: r.employee_strength||"",
+        sum_insured: r.sum_insured||""
+      };
+    });
+
+    const res = await fetch(`${API}/leads/bulk`,{
+      method:"POST", headers:authHeaders(),
+      body: JSON.stringify({ leads })
+    });
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+
+    document.getElementById("importStep2").style.display = "none";
+    document.getElementById("importStep3").style.display = "block";
+    document.getElementById("importResultIcon").textContent = data.failed === 0 ? "✅" : "⚠️";
+    document.getElementById("importResultTitle").textContent = data.failed === 0 ? "Import Complete!" : "Import Finished with Errors";
+    document.getElementById("importResultSub").textContent = `${data.success} leads imported${data.failed > 0 ? `, ${data.failed} skipped` : " successfully"}`;
+    toast(data.message,"success");
+
+  } catch { toast("Cannot connect to server","error"); }
+  finally { btn.disabled=false; btn.textContent=`📥 Import Valid Rows`; }
+}
+
+  // Show result
+  document.getElementById("importStep2").style.display = "none";
+  document.getElementById("importStep3").style.display = "block";
+  document.getElementById("importResultIcon").textContent = failed === 0 ? "✅" : "⚠️";
+  document.getElementById("importResultTitle").textContent = failed === 0 ? "Import Complete!" : "Import Finished with Errors";
+  document.getElementById("importResultSub").textContent = `${success} leads imported successfully${failed > 0 ? `, ${failed} failed` : ""}`;
+
+  btn.disabled = false;
+  toast(`✅ ${success} leads imported!`, "success");
 }
 
 // ── REMINDERS ─────────────────────────────────────────────────────────────────
