@@ -2778,13 +2778,15 @@ async function deleteLead(id){
 let importedRows = [];
 
 function openImportModal(){
-  closeLeadModal();
+  document.getElementById("leadModal").classList.remove("open");
+  document.getElementById("leadModal").style.display = "none";
   resetImport();
   document.getElementById("importModal").classList.add("open");
 }
 
 function closeImportModal(){
   document.getElementById("importModal").classList.remove("open");
+  document.getElementById("leadModal").style.display = "";
 }
 
 function resetImport(){
