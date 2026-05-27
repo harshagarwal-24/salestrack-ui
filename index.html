@@ -1755,13 +1755,19 @@ function setupRoleUI(role){
     loadAdmin();
   } else if(role==="operations"){
     sidebar.innerHTML=`
+      <div class="sidebar-section">Attendance</div>
+      <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon"></span> Check In</button>
+      <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon"></span> Check Out</button>
+      <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard();closeSidebar()"><span class="nav-icon"></span> My Dashboard</button>
+      <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon"></span> WFH Request</button>
       <div class="sidebar-section">Overview</div>
-      <button class="nav-btn active" onclick="goTo('opsPage',this);loadOps();closeSidebar()"><span class="nav-icon"></span> Dashboard</button>
+      <button class="nav-btn" onclick="goTo('opsPage',this);loadOps();closeSidebar()"><span class="nav-icon"></span> Ops Dashboard</button>
       <button class="nav-btn" onclick="goTo('monthlyPage',this);loadMonthly();closeSidebar()"><span class="nav-icon"></span> Monthly Report</button>
       <div class="sidebar-section">Sales</div>
       <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon"></span> Leads</button>`;
     document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    document.getElementById("opsPage").classList.add("active");
+    document.getElementById("checkInPage").classList.add("active");
+    autoFill();
     loadOps();
    } else if(role === "crm") {
   sidebar.innerHTML = `
