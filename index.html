@@ -1547,7 +1547,7 @@
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
           <span style="font-size:11px;background:var(--orange-pale);border:1px solid var(--orange);color:var(--orange);padding:2px 8px;border-radius:10px;font-family:monospace;">name*</span>
           <span style="font-size:11px;background:var(--orange-pale);border:1px solid var(--orange);color:var(--orange);padding:2px 8px;border-radius:10px;font-family:monospace;">phone*</span>
-          <span style="font-size:11px;background:var(--orange-pale);border:1px solid var(--orange);color:var(--orange);padding:2px 8px;border-radius:10px;font-family:monospace;">email*</span>
+          <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">email</span>
           <span style="font-size:11px;background:var(--orange-pale);border:1px solid var(--orange);color:var(--orange);padding:2px 8px;border-radius:10px;font-family:monospace;">company_name*</span>
           <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">source</span>
           <span style="font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:10px;font-family:monospace;">status</span>
@@ -2915,7 +2915,6 @@ function showImportPreview(fileName, rows){
     const missing = [];
     if(!r.name) missing.push("name");
     if(!r.phone) missing.push("phone");
-    if(!r.email) missing.push("email");
     if(!r.company_name) missing.push("company_name");
     const isValid = missing.length === 0;
     if(isValid) validCount++; else invalidCount++;
