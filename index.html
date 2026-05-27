@@ -264,7 +264,7 @@
                 <span id="ciLocationText">Detecting your location...</span>
               </div>
             </div>
-            <div class="field"><label>Sales Target Today (₹)</label><input type="number" id="ci_target" placeholder="e.g. 50000" min="0"></div>
+            <div class="field" id="ci_target_field"><label>Sales Target Today (₹)</label><input type="number" id="ci_target" placeholder="e.g. 50000" min="0"></div>
             <div class="field span2">
               <div class="cam-label">📸 Live Check-In Photo <span class="cam-required">REQUIRED</span></div>
               <div class="camera-box" id="ciCamBox">
@@ -311,8 +311,8 @@
             <div class="field"><label>Date</label><input type="date" id="co_date" readonly style="pointer-events:none;opacity:0.6;"></div>
             <div class="field"><label>Check-Out Time</label><input type="time" id="co_checkout" readonly style="pointer-events:none;opacity:0.6;"></div>
             <div class="field"><label>Sales Achieved (₹)</label><input type="number" id="co_achieved" placeholder="e.g. 42000" min="0"></div>
-            <div class="field"><label>Orders / Deals Closed</label><input type="number" id="co_orders" placeholder="e.g. 3" min="0" oninput="toggleDealType()"></div>
-            <div class="field"><label>KM Travelled</label><input type="number" id="co_km" placeholder="e.g. 45" min="0"></div>
+            <div class="field" id="co_orders_field"><label>Orders / Deals Closed</label><input type="number" id="co_orders" placeholder="e.g. 3" min="0" oninput="toggleDealType()"></div>
+            <div class="field" id="co_km_field"><label>KM Travelled</label><input type="number" id="co_km" placeholder="e.g. 45" min="0"></div>
             <div class="field span2" id="dealTypeSection" style="display:none;">
               <div class="field-section-card">
                 <div class="card-title" style="margin-bottom:10px;"> Deal Breakdown</div>
@@ -496,7 +496,7 @@
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Date</th><th>Status</th><th>In</th><th>Out</th><th>📸 In</th><th>📸 Out</th><th>Target (₹)</th><th>Achieved (₹)</th></tr></thead>
+              <thead><tr><th>Date</th><th>Status</th><th>In</th><th>Out</th><th>📸 In</th><th>📸 Out</th><th id="th_target">Target (₹)</th><th id="th_achieved">Achieved (₹)</th></tr></thead>
               <tbody id="myTable"><tr><td colspan="8" class="empty-state">Loading...</td></tr></tbody>
             </table>
           </div>
@@ -1845,6 +1845,9 @@ async function autoFill(){
   document.getElementById("ci_name").value=currentUser.name||"";
   document.getElementById("ci_date").value=today;
   document.getElementById("ci_checkin").value=now;
+  if(currentUser.role==="operations"){
+  document.getElementById("ci_target_field").style.display="none";
+}
   captureLocation("ci");
 
   // Check WFH approval for sales users only
@@ -1900,6 +1903,11 @@ function autoFillCO(){
   document.getElementById("co_user_id").style.pointerEvents = "none";
   document.getElementById("co_date").value=today;
   document.getElementById("co_checkout").value=now;
+  if(currentUser.role==="operations"){
+  document.getElementById("co_orders_field").style.display="none";
+  document.getElementById("co_km_field").style.display="none";
+  document.getElementById("dealTypeSection").style.display="none";
+}
   captureLocation("co");
 }
 function autoFillFV(){
@@ -2271,6 +2279,14 @@ async function loadDashboard(){
     document.getElementById("myOrders").textContent=myAttData.reduce((s,d)=>s+(d.orders_taken||0),0);
     document.getElementById("myB2B").textContent="₹"+myAttData.reduce((s,d)=>s+(d.b2b_sales||0),0).toLocaleString("en-IN");
     document.getElementById("myRetail").textContent="₹"+myAttData.reduce((s,d)=>s+(d.retail_sales||0),0).toLocaleString("en-IN");
+    if(currentUser.role==="operations"){
+      document.getElementById("myOrders").closest(".stat-card").style.display="none";
+      document.getElementById("myB2B").closest(".stat-card").style.display="none";
+      document.getElementById("myRetail").closest(".stat-card").style.display="none";
+      document.getElementById("mySales").closest(".stat-card").style.display="none";
+      document.getElementById("th_target").style.display="none";
+      document.getElementById("th_achieved").style.display="none";
+    }
     const tbody=document.getElementById("myTable");
     if(!myAttData.length){tbody.innerHTML=`<tr><td colspan="8" class="empty-state">No records yet</td></tr>`;return;}
     tbody.innerHTML=myAttData.map(d=>`<tr>
