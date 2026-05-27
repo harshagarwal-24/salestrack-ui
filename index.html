@@ -1664,7 +1664,10 @@ function capturePhoto(prefix){
   const canvas=document.getElementById(`${prefix}CamCanvas`);
   const photo=document.getElementById(`${prefix}CamPhoto`);
   canvas.width=video.videoWidth; canvas.height=video.videoHeight;
-  canvas.getContext("2d").drawImage(video,0,0);
+  const ctx=canvas.getContext("2d");
+  ctx.translate(canvas.width,0);
+  ctx.scale(-1,1);
+  ctx.drawImage(video,0,0);
   const dataUrl=canvas.toDataURL("image/jpeg",0.85);
   document.getElementById(`${prefix}PhotoData`).value=dataUrl;
   photo.src=dataUrl; photo.style.display="block";
