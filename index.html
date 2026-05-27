@@ -1403,7 +1403,7 @@
         <input type="tel" id="lead_phone" placeholder="+91 98765 00000">
       </div>
       <div class="field">
-        <label>Email <span style="color:var(--orange);">*</span></label>
+        <label>Email</label>
         <input type="email" id="lead_email" placeholder="email@example.com">
       </div>
       <div class="field">
@@ -2765,7 +2765,6 @@ async function saveLead(){
 
   if(!name) return toast("Lead name is required","error");
   if(!phone) return toast("Phone is required","error");
-  if(!email) return toast("Email is required","error");
   if(!company_name) return toast("Company name is required","error");
 
   const id = document.getElementById("lead_id").value;
