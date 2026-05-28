@@ -1383,13 +1383,13 @@
     <div><div class="page-title">Accounts Dashboard</div><div class="page-sub">Financial overview</div></div>
   </div>
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Premium</div><div class="stat-value" id="accTotalPremium">—</div></div>
-    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Total Received</div><div class="stat-value" id="accTotalPaid">—</div></div>
-    <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-label">Pending Payments</div><div class="stat-value" id="accTotalBalance">—</div></div>
-    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-label">Today Collections</div><div class="stat-value" id="accTodayCollections">—</div></div>
-    <div class="stat-card"><div class="stat-icon">📄</div><div class="stat-label">Total Records</div><div class="stat-value" id="accTotalRecords">—</div></div>
-    <div class="stat-card"><div class="stat-icon">🧾</div><div class="stat-label">Pending Invoices</div><div class="stat-value" id="accPendingInvoices">—</div></div>
-    <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-label">Commission Pending</div><div class="stat-value" id="accCommissionPending">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Premium</div><div class="stat-value" id="accTotalPremium">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Received</div><div class="stat-value" id="accTotalPaid">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Pending Payments</div><div class="stat-value" id="accTotalBalance">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Today Collections</div><div class="stat-value" id="accTodayCollections">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Records</div><div class="stat-value" id="accTotalRecords">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Pending Invoices</div><div class="stat-value" id="accPendingInvoices">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Commission Pending</div><div class="stat-value" id="accCommissionPending">—</div></div>
   </div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -1458,9 +1458,9 @@
     <div><div class="page-title">Commission Tracking</div><div class="page-sub">Track agent commissions</div></div>
   </div>
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-label">Total Commission</div><div class="stat-value" id="commTotal">—</div></div>
-    <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-label">Pending</div><div class="stat-value" id="commPending">—</div></div>
-    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-label">Paid Out</div><div class="stat-value" id="commPaid">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Commission</div><div class="stat-value" id="commTotal">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Pending</div><div class="stat-value" id="commPending">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Paid Out</div><div class="stat-value" id="commPaid">—</div></div>
   </div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -1813,11 +1813,11 @@
         <label>Payment Mode</label>
         <select id="pay_mode">
           <option value="">Select mode</option>
-          <option value="cash">💵 Cash</option>
-          <option value="upi">📱 UPI</option>
-          <option value="bank_transfer">🏦 Bank Transfer</option>
-          <option value="cheque">📄 Cheque</option>
-          <option value="card">💳 Card</option>
+          <option value="cash"> Cash</option>
+          <option value="upi"> UPI</option>
+          <option value="bank_transfer"> Bank Transfer</option>
+          <option value="cheque"> Cheque</option>
+          <option value="card"> Card</option>
           <option value="other">Other</option>
         </select>
       </div>
@@ -1828,24 +1828,24 @@
       <div class="field">
         <label>Payment Status</label>
         <select id="pay_status">
-          <option value="unpaid">❌ Unpaid</option>
-          <option value="partial_paid">🟡 Partial Paid</option>
-          <option value="paid">✅ Paid</option>
+          <option value="unpaid"> Unpaid</option>
+          <option value="partial_paid"> Partial Paid</option>
+          <option value="paid"> Paid</option>
         </select>
       </div>
       <div class="field">
         <label>Invoice Status</label>
         <select id="pay_invoice_status">
-          <option value="invoice_pending">🧾 Invoice Pending</option>
-          <option value="invoice_generated">📄 Invoice Generated</option>
-          <option value="verified">✅ Verified</option>
+          <option value="invoice_pending"> Invoice Pending</option>
+          <option value="invoice_generated"> Invoice Generated</option>
+          <option value="verified"> Verified</option>
         </select>
       </div>
       <div class="field">
         <label>Commission Status</label>
         <select id="pay_comm_status">
-          <option value="pending">⏳ Pending</option>
-          <option value="paid">✅ Paid</option>
+          <option value="pending"> Pending</option>
+          <option value="paid"> Paid</option>
         </select>
       </div>
       <div class="field">
