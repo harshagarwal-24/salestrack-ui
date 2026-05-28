@@ -1375,154 +1375,160 @@
     </div>
   </div>
 </div>
-
-  <!-- ACCOUNTS DASHBOARD -->
+<!-- ACCOUNTS DASHBOARD -->
 <div class="page" id="accountsDashPage">
   <div class="page-header">
     <div class="page-header-icon">💰</div>
-    <div><div class="page-title">Accounts Dashboard</div><div class="page-sub">Financial overview</div></div>
+    <div><div class="page-title">Accounts Dashboard</div><div class="page-sub">Monthly summary overview</div></div>
+  </div>
+  <div class="filter-bar">
+    <input type="month" id="acc_dash_month" onchange="loadAccountsDash()">
   </div>
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Premium</div><div class="stat-value" id="accTotalPremium">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Received</div><div class="stat-value" id="accTotalPaid">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Pending Payments</div><div class="stat-value" id="accTotalBalance">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Today Collections</div><div class="stat-value" id="accTodayCollections">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Records</div><div class="stat-value" id="accTotalRecords">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Pending Invoices</div><div class="stat-value" id="accPendingInvoices">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Commission Pending</div><div class="stat-value" id="accCommissionPending">—</div></div>
+    <div class="stat-card">
+      <div class="stat-icon">🧾</div>
+      <div class="stat-label">Invoices Generated</div>
+      <div class="stat-value" id="dashInvoiceCount">—</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;" id="dashInvoiceAmount"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📞</div>
+      <div class="stat-label">Insurance Follow-ups</div>
+      <div class="stat-value" id="dashInsuranceCount">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏢</div>
+      <div class="stat-label">Vendor Payments</div>
+      <div class="stat-value" id="dashVendorCount">—</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;" id="dashVendorAmount"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📒</div>
+      <div class="stat-label">Expenses in Tally</div>
+      <div class="stat-value" id="dashExpensesCount">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📊</div>
+      <div class="stat-label">GST / TDS Updates</div>
+      <div class="stat-value" id="dashGstCount">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🔁</div>
+      <div class="stat-label">UTR Updates</div>
+      <div class="stat-value" id="dashUtrCount">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏦</div>
+      <div class="stat-label">Bank Recon</div>
+      <div class="stat-value" id="dashBankRecon">—</div>
+    </div>
   </div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <div class="card-title" style="margin-bottom:0;">Recent Payments</div>
-      <button class="btn btn-teal btn-sm" onclick="goTo('paymentsPage',null);loadPayments();">View All</button>
+      <div class="card-title" style="margin-bottom:0;">Recent Activity Log</div>
+      <button class="btn btn-teal btn-sm" onclick="goTo('accLogPage',null);loadAccLog();">View All</button>
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Customer</th><th>Policy No.</th><th>Insurance Co.</th><th>Premium</th><th>Paid</th><th>Balance</th><th>Status</th><th>Invoice</th></tr></thead>
-        <tbody id="accRecentTable"><tr><td colspan="8" class="empty-state">Loading...</td></tr></tbody>
+        <thead><tr><th>Date</th><th>Task</th><th>Count</th><th>Amount</th><th>Notes</th><th>Logged By</th></tr></thead>
+        <tbody id="accDashRecentTable"><tr><td colspan="6" class="empty-state">Loading...</td></tr></tbody>
       </table>
     </div>
   </div>
 </div>
 
-<!-- PAYMENT TRACKING PAGE -->
-<div class="page" id="paymentsPage">
+<!-- ACCOUNTS DAILY LOG PAGE -->
+<div class="page" id="accLogPage">
   <div class="page-header">
-    <div class="page-header-icon">💳</div>
-    <div><div class="page-title">Payment Tracking</div><div class="page-sub">Manage all customer payments</div></div>
+    <div class="page-header-icon">📋</div>
+    <div><div class="page-title">Daily Accounts Log</div><div class="page-sub">Log your daily accounts tasks</div></div>
   </div>
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <div class="filter-bar" style="margin-bottom:0;">
-        <input type="text" id="pay_search" placeholder="Search customer / policy..." oninput="filterPayments()" style="min-width:200px;">
-        <select id="pay_status_filter" onchange="filterPayments()">
-          <option value="">All Status</option>
-          <option value="paid">Paid</option>
-          <option value="unpaid">Unpaid</option>
-          <option value="partial_paid">Partial Paid</option>
-        </select>
-        <select id="pay_invoice_filter" onchange="filterPayments()">
-          <option value="">All Invoices</option>
-          <option value="invoice_pending">Invoice Pending</option>
-          <option value="invoice_generated">Invoice Generated</option>
-          <option value="verified">Verified</option>
-        </select>
-        <input type="month" id="pay_month_filter" onchange="filterPayments()">
-      </div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn btn-teal btn-sm" onclick="exportPayments()">⬇ Export</button>
-        <button class="btn btn-primary btn-sm" onclick="openAddPayment()">+ Add Record</button>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-title">All Payment Records</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr>
-          <th>Customer</th><th>Policy No.</th><th>Insurance Co.</th>
-          <th>Premium (₹)</th><th>Paid (₹)</th><th>Balance (₹)</th>
-          <th>Mode</th><th>Payment Status</th><th>Invoice Status</th>
-          <th>Payment Date</th><th>Receipt</th><th>Remarks</th><th>Actions</th>
-        </tr></thead>
-        <tbody id="paymentsTable"><tr><td colspan="13" class="empty-state">Loading...</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-</div>
 
-<!-- COMMISSION TRACKING PAGE -->
-<div class="page" id="commissionsPage">
-  <div class="page-header">
-    <div class="page-header-icon">📊</div>
-    <div><div class="page-title">Commission Tracking</div><div class="page-sub">Track agent commissions</div></div>
-  </div>
-  <div class="stats-grid">
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Commission</div><div class="stat-value" id="commTotal">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Pending</div><div class="stat-value" id="commPending">—</div></div>
-    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Paid Out</div><div class="stat-value" id="commPaid">—</div></div>
-  </div>
+  <!-- LOG FORM -->
   <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <div class="card-title" style="margin-bottom:0;">Commission Records</div>
-      <button class="btn btn-teal btn-sm" onclick="exportCommissions()">⬇ Export</button>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr>
-          <th>Customer</th><th>Policy No.</th><th>Insurance Co.</th>
-          <th>Assigned To</th><th>Premium (₹)</th>
-          <th>Commission (₹)</th><th>Commission Status</th><th>Payment Date</th><th>Actions</th>
-        </tr></thead>
-        <tbody id="commissionsTable"><tr><td colspan="9" class="empty-state">Loading...</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- REFUND REQUESTS PAGE -->
-<div class="page" id="refundsPage">
-  <div class="page-header">
-    <div class="page-header-icon">↩️</div>
-    <div><div class="page-title">Refund Requests</div><div class="page-sub">Manage customer refund requests</div></div>
-  </div>
-  <div class="card">
-    <div class="card-title">New Refund Request</div>
+    <div class="card-title" id="accLogFormTitle">Log Task</div>
     <div class="form-grid">
-      <div class="field"><label>Customer Name <span class="cam-required">REQUIRED</span></label>
-        <input type="text" id="ref_customer" placeholder="Customer name"></div>
-      <div class="field"><label>Policy Number</label>
-        <input type="text" id="ref_policy" placeholder="Policy number"></div>
-      <div class="field"><label>Insurance Company</label>
-        <input type="text" id="ref_company" placeholder="Insurance company"></div>
-      <div class="field"><label>Refund Amount (₹)</label>
-        <input type="number" id="ref_amount" placeholder="e.g. 5000" min="0"></div>
-      <div class="field span2"><label>Reason</label>
-        <textarea id="ref_reason" placeholder="Reason for refund..."></textarea></div>
+      <input type="hidden" id="acc_edit_id">
+      <div class="field">
+        <label>Date <span class="cam-required">REQUIRED</span></label>
+        <input type="date" id="acc_date">
+      </div>
+      <div class="field">
+        <label>Task Type <span class="cam-required">REQUIRED</span></label>
+        <select id="acc_task_type" onchange="handleAccTaskType()">
+          <option value="">Select task</option>
+          <option value="invoice">🧾 Invoice Generated</option>
+          <option value="insurance_followup">📞 Insurance Payment Follow-up</option>
+          <option value="vendor_payment">🏢 Vendor Payment</option>
+          <option value="expenses_tally">📒 Expenses Update in Tally</option>
+          <option value="gst_tds">📊 GST / TDS Update</option>
+          <option value="utr_update">🔁 UTR Update</option>
+          <option value="bank_recon">🏦 Bank Reconciliation</option>
+        </select>
+      </div>
+
+      <!-- count field — hidden for bank_recon -->
+      <div class="field" id="acc_count_field">
+        <label id="acc_count_label">Count</label>
+        <input type="number" id="acc_count" placeholder="e.g. 5" min="0">
+      </div>
+
+      <!-- amount field — shown for invoice and vendor_payment -->
+      <div class="field" id="acc_amount_field" style="display:none;">
+        <label id="acc_amount_label">Amount (₹)</label>
+        <input type="number" id="acc_amount" placeholder="e.g. 50000" min="0">
+      </div>
+
+      <!-- bank recon field — only shown for bank_recon -->
+      <div class="field" id="acc_recon_field" style="display:none;">
+        <label>Bank Reconciliation Done?</label>
+        <select id="acc_bank_recon">
+          <option value="true">✅ Yes — Done</option>
+          <option value="false">❌ No — Pending</option>
+        </select>
+      </div>
+
+      <div class="field span2">
+        <label>Notes / Details</label>
+        <textarea id="acc_notes" placeholder="Any additional details..."></textarea>
+      </div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="submitRefund()">↩️ Submit Refund Request</button>
+      <button class="btn btn-teal" id="btnSaveAccLog" onclick="saveAccLog()">📋 Log Task</button>
+      <button class="btn btn-ghost" id="btnCancelAccLog" style="display:none;" onclick="cancelAccLog()">✕ Cancel</button>
     </div>
   </div>
+
+  <!-- FILTERS + TABLE -->
   <div class="card">
-    <div class="card-title">All Refund Requests</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+      <div class="card-title" style="margin-bottom:0;">Task Log</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input type="month" id="acc_filter_month" onchange="loadAccLog()">
+        <select id="acc_filter_type" onchange="loadAccLog()" style="width:auto;">
+          <option value="">All Tasks</option>
+          <option value="invoice">🧾 Invoice</option>
+          <option value="insurance_followup">📞 Insurance Follow-up</option>
+          <option value="vendor_payment">🏢 Vendor Payment</option>
+          <option value="expenses_tally">📒 Expenses Tally</option>
+          <option value="gst_tds">📊 GST/TDS</option>
+          <option value="utr_update">🔁 UTR Update</option>
+          <option value="bank_recon">🏦 Bank Recon</option>
+        </select>
+        <button class="btn btn-teal btn-sm" onclick="exportAccLog()">⬇ Export</button>
+      </div>
+    </div>
     <div class="table-wrap">
       <table>
         <thead><tr>
-          <th>Customer</th><th>Policy No.</th><th>Insurance Co.</th>
-          <th>Amount (₹)</th><th>Reason</th><th>Status</th>
-          <th>Admin Note</th><th>Requested By</th><th>Date</th>
-          <th id="refActionHeader">Actions</th>
+          <th>Date</th><th>Task</th><th>Count</th><th>Amount (₹)</th>
+          <th>Bank Recon</th><th>Notes</th><th>Logged By</th><th>Actions</th>
         </tr></thead>
-        <tbody id="refundsTable"><tr><td colspan="10" class="empty-state">Loading...</td></tr></tbody>
+        <tbody id="accLogTable"><tr><td colspan="8" class="empty-state">No tasks logged yet</td></tr></tbody>
       </table>
     </div>
   </div>
 </div>    
-
-</main>
-</div>
-</div>      
 
 <!-- LEAD MODAL -->
 <div class="modal-overlay" id="leadModal">
@@ -1755,117 +1761,6 @@
   </div>
 </div>
 
-    <!-- PAYMENT MODAL -->
-<div class="modal-overlay" id="paymentModal">
-  <div class="modal" style="width:660px;">
-    <div class="modal-title">
-      <span id="paymentModalTitle">Add Payment Record</span>
-      <button class="modal-close" onclick="closePaymentModal()">×</button>
-    </div>
-    <div class="form-grid">
-      <input type="hidden" id="pay_edit_id">
-      <div class="field">
-        <label>Customer Name <span style="color:var(--orange);">*</span></label>
-        <input type="text" id="pay_customer" placeholder="Full name">
-      </div>
-      <div class="field">
-        <label>Policy Number</label>
-        <input type="text" id="pay_policy" placeholder="Policy number">
-      </div>
-      <div class="field">
-        <label>Insurance Company</label>
-        <input type="text" id="pay_insurer" placeholder="e.g. LIC, HDFC Ergo">
-      </div>
-      <div class="field">
-        <label>Assigned To (Agent)</label>
-        <select id="pay_assigned">
-          <option value="">Select agent</option>
-          <option value="u002">Rahul Sharma</option>
-          <option value="u003">Ayush Choudhary</option>
-          <option value="INT014">Yash Patel</option>
-          <option value="INT000">Zoya Raikwar</option>
-          <option value="INT001">Shivani Asati</option>
-          <option value="INT002">Vidhi</option>
-          <option value="INT003">Anvi Malik</option>
-          <option value="INT004">Anmol</option>
-          <option value="INT005">Bhaskar</option>
-          <option value="INT010">Anirudh Agrawal</option>
-          <option value="INT012">Tushar Goswami</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Premium Amount (₹)</label>
-        <input type="number" id="pay_premium" placeholder="Total premium" min="0" oninput="calcBalance()">
-      </div>
-      <div class="field">
-        <label>Paid Amount (₹)</label>
-        <input type="number" id="pay_paid" placeholder="Amount received" min="0" oninput="calcBalance()">
-      </div>
-      <div class="field">
-        <label>Balance Amount (₹)</label>
-        <input type="number" id="pay_balance" placeholder="Auto calculated" readonly style="opacity:0.7;background:var(--bg);">
-      </div>
-      <div class="field">
-        <label>Commission Amount (₹)</label>
-        <input type="number" id="pay_commission" placeholder="e.g. 2500" min="0">
-      </div>
-      <div class="field">
-        <label>Payment Mode</label>
-        <select id="pay_mode">
-          <option value="">Select mode</option>
-          <option value="cash"> Cash</option>
-          <option value="upi"> UPI</option>
-          <option value="bank_transfer"> Bank Transfer</option>
-          <option value="cheque"> Cheque</option>
-          <option value="card"> Card</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Payment Date</label>
-        <input type="date" id="pay_date">
-      </div>
-      <div class="field">
-        <label>Payment Status</label>
-        <select id="pay_status">
-          <option value="unpaid"> Unpaid</option>
-          <option value="partial_paid"> Partial Paid</option>
-          <option value="paid"> Paid</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Invoice Status</label>
-        <select id="pay_invoice_status">
-          <option value="invoice_pending"> Invoice Pending</option>
-          <option value="invoice_generated"> Invoice Generated</option>
-          <option value="verified"> Verified</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Commission Status</label>
-        <select id="pay_comm_status">
-          <option value="pending"> Pending</option>
-          <option value="paid"> Paid</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Receipt Upload</label>
-        <input type="file" id="pay_receipt_file" accept=".pdf,.jpg,.jpeg,.png"
-          style="background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:9px 11px;width:100%;">
-      </div>
-      <div class="field span2">
-        <label>Remarks</label>
-        <textarea id="pay_remarks" placeholder="Any additional notes..."></textarea>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-primary" id="savePaymentBtn" onclick="savePayment()">💾 Save Record</button>
-      <button class="btn btn-ghost" onclick="closePaymentModal()">Cancel</button>
-    </div>
-  </div>
-</div>
-
-
 <div id="toast"></div>
 
 <script>
@@ -2003,9 +1898,7 @@ function setupRoleUI(role){
       <button class="nav-btn" onclick="goTo('techEquipmentPage',this);loadTechEquipment();closeSidebar()"><span class="nav-icon"></span> Equipment</button>
       <div class="sidebar-section">Accounts</div>
       <button class="nav-btn" onclick="goTo('accountsDashPage',this);loadAccountsDash();closeSidebar()"><span class="nav-icon">💰</span> Accounts Dashboard</button>
-      <button class="nav-btn" onclick="goTo('paymentsPage',this);loadPayments();closeSidebar()"><span class="nav-icon">💳</span> Payment Tracking</button>
-      <button class="nav-btn" onclick="goTo('commissionsPage',this);loadCommissions();closeSidebar()"><span class="nav-icon">📊</span> Commission Tracking</button>
-      <button class="nav-btn" onclick="goTo('refundsPage',this);loadRefunds();closeSidebar()"><span class="nav-icon">↩️</span> Refund Requests</button>
+      <button class="nav-btn" onclick="goTo('accLogPage',this);initAccLog();closeSidebar()"><span class="nav-icon">📋</span> Daily Log</button>
       <div class="sidebar-section">Sales</div>
       <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon"></span> Leads</button>
       <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon"></span> Reminders</button>`;
@@ -2050,17 +1943,12 @@ function setupRoleUI(role){
     <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon"></span> Check In</button>
     <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon"></span> Check Out</button>
     <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard();closeSidebar()"><span class="nav-icon"></span> My Dashboard</button>
-    <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon"></span> WFH Request</button>
     <div class="sidebar-section">Accounts</div>
     <button class="nav-btn" onclick="goTo('accountsDashPage',this);loadAccountsDash();closeSidebar()"><span class="nav-icon">💰</span> Dashboard</button>
-    <button class="nav-btn" onclick="goTo('paymentsPage',this);loadPayments();closeSidebar()"><span class="nav-icon">💳</span> Payment Tracking</button>
-    <button class="nav-btn" onclick="goTo('commissionsPage',this);loadCommissions();closeSidebar()"><span class="nav-icon">📊</span> Commission Tracking</button>
-    <button class="nav-btn" onclick="goTo('refundsPage',this);loadRefunds();closeSidebar()"><span class="nav-icon">↩️</span> Refund Requests</button>
-    <div class="sidebar-section">Sales</div>
-    <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>`;
+    <button class="nav-btn" onclick="goTo('accLogPage',this);initAccLog();closeSidebar()"><span class="nav-icon">📋</span> Daily Log</button>`;
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById("checkInPage").classList.add("active");
-  autoFill();  
+  autoFill(); 
   } else if(role === "tech") {
   sidebar.innerHTML = `
     <div class="sidebar-section">Attendance</div>
@@ -4347,376 +4235,232 @@ function exportCRMActivities(){
   downloadCSV(rows,`crm_activities_${document.getElementById("crm_filter_date")?.value||"all"}.csv`);
   toast("✅ Exported!","success");
 }
- // ── ACCOUNTS ──────────────────────────────────────────────────────────────────
-let allPayments = [], filteredPayments = [];
+// ── ACCOUNTS ──────────────────────────────────────────────────────────────────
+let accLogData = [];
 
-function calcBalance(){
-  const premium = Number(document.getElementById("pay_premium").value)||0;
-  const paid = Number(document.getElementById("pay_paid").value)||0;
-  document.getElementById("pay_balance").value = Math.max(0, premium - paid);
-}
+const accTaskLabels = {
+  invoice: "🧾 Invoice Generated",
+  insurance_followup: "📞 Insurance Follow-up",
+  vendor_payment: "🏢 Vendor Payment",
+  expenses_tally: "📒 Expenses Tally",
+  gst_tds: "📊 GST/TDS Update",
+  utr_update: "🔁 UTR Update",
+  bank_recon: "🏦 Bank Recon"
+};
 
-function payStatusBadge(s){
-  const m = {
-    paid:`<span class="badge badge-wfh">✅ Paid</span>`,
-    unpaid:`<span class="badge badge-absent">❌ Unpaid</span>`,
-    partial_paid:`<span class="badge badge-contacted">🟡 Partial Paid</span>`
-  };
-  return m[s] || `<span class="badge badge-half">${s||"—"}</span>`;
-}
+function handleAccTaskType(){
+  const type = document.getElementById("acc_task_type").value;
+  const countField = document.getElementById("acc_count_field");
+  const amountField = document.getElementById("acc_amount_field");
+  const reconField = document.getElementById("acc_recon_field");
+  const countLabel = document.getElementById("acc_count_label");
 
-function invoiceStatusBadge(s){
-  const m = {
-    invoice_pending:`<span class="badge badge-half">🧾 Pending</span>`,
-    invoice_generated:`<span class="badge badge-office">📄 Generated</span>`,
-    verified:`<span class="badge badge-wfh">✅ Verified</span>`
-  };
-  return m[s] || `<span class="badge badge-half">${s||"—"}</span>`;
-}
+  // reset
+  countField.style.display = "block";
+  amountField.style.display = "none";
+  reconField.style.display = "none";
 
-function commStatusBadge(s){
-  return s === "paid"
-    ? `<span class="badge badge-wfh">✅ Paid</span>`
-    : `<span class="badge badge-contacted">⏳ Pending</span>`;
-}
-
-async function loadAccountsDash(){
-  try{
-    const [summaryRes, paymentsRes] = await Promise.all([
-      fetch(`${API}/payments/summary`, {headers: authHeaders()}),
-      fetch(`${API}/payments`, {headers: authHeaders()})
-    ]);
-    const summary = await summaryRes.json();
-    const payments = await paymentsRes.json();
-    document.getElementById("accTotalPremium").textContent = "₹"+(summary.totalPremium||0).toLocaleString("en-IN");
-    document.getElementById("accTotalPaid").textContent = "₹"+(summary.totalPaid||0).toLocaleString("en-IN");
-    document.getElementById("accTotalBalance").textContent = "₹"+(summary.totalBalance||0).toLocaleString("en-IN");
-    document.getElementById("accTodayCollections").textContent = "₹"+(summary.todayCollections||0).toLocaleString("en-IN");
-    document.getElementById("accTotalRecords").textContent = summary.totalRecords||0;
-    document.getElementById("accPendingInvoices").textContent = summary.pendingInvoices||0;
-    document.getElementById("accCommissionPending").textContent = "₹"+(summary.commissionPending||0).toLocaleString("en-IN");
-    const recent = payments.slice(0, 10);
-    const tbody = document.getElementById("accRecentTable");
-    if(!recent.length){ tbody.innerHTML=`<tr><td colspan="8" class="empty-state">No records yet</td></tr>`; return; }
-    tbody.innerHTML = recent.map(p=>`<tr>
-      <td style="font-weight:600;">${p.customer_name}</td>
-      <td style="font-size:12px;">${p.policy_number||"—"}</td>
-      <td style="font-size:12px;">${p.insurance_company||"—"}</td>
-      <td>₹${Number(p.premium_amount||0).toLocaleString("en-IN")}</td>
-      <td style="color:#166534;font-weight:600;">₹${Number(p.paid_amount||0).toLocaleString("en-IN")}</td>
-      <td style="color:#e53e3e;font-weight:600;">₹${Number(p.balance_amount||0).toLocaleString("en-IN")}</td>
-      <td>${payStatusBadge(p.payment_status)}</td>
-      <td>${invoiceStatusBadge(p.invoice_status)}</td>
-    </tr>`).join("");
-  } catch { toast("Failed to load dashboard","error"); }
-}
-
-async function loadPayments(){
-  try{
-    const res = await fetch(`${API}/payments`, {headers: authHeaders()});
-    allPayments = await res.json();
-    filterPayments();
-  } catch { toast("Failed to load payments","error"); }
-}
-
-function filterPayments(){
-  const search = (document.getElementById("pay_search")?.value||"").toLowerCase();
-  const status = document.getElementById("pay_status_filter")?.value||"";
-  const invoice = document.getElementById("pay_invoice_filter")?.value||"";
-  const month = document.getElementById("pay_month_filter")?.value||"";
-  filteredPayments = allPayments.filter(p =>
-    (!search || (p.customer_name&&p.customer_name.toLowerCase().includes(search)) || (p.policy_number&&p.policy_number.toLowerCase().includes(search))) &&
-    (!status || p.payment_status === status) &&
-    (!invoice || p.invoice_status === invoice) &&
-    (!month || (p.payment_date && p.payment_date.startsWith(month)))
-  );
-  renderPaymentsTable(filteredPayments);
-}
-
-function renderPaymentsTable(data){
-  const isAdmin = currentUser?.role === "admin";
-  const tbody = document.getElementById("paymentsTable");
-  if(!data.length){ tbody.innerHTML=`<tr><td colspan="13" class="empty-state">No records found</td></tr>`; return; }
-  tbody.innerHTML = data.map(p=>`<tr>
-    <td style="font-weight:600;">${p.customer_name}</td>
-    <td style="font-size:12px;font-family:monospace;">${p.policy_number||"—"}</td>
-    <td style="font-size:12px;">${p.insurance_company||"—"}</td>
-    <td style="font-weight:600;">₹${Number(p.premium_amount||0).toLocaleString("en-IN")}</td>
-    <td style="color:#166534;font-weight:600;">₹${Number(p.paid_amount||0).toLocaleString("en-IN")}</td>
-    <td style="color:${Number(p.balance_amount||0)>0?"#e53e3e":"#166534"};font-weight:600;">₹${Number(p.balance_amount||0).toLocaleString("en-IN")}</td>
-    <td style="font-size:12px;">${p.payment_mode||"—"}</td>
-    <td>${payStatusBadge(p.payment_status)}</td>
-    <td>${invoiceStatusBadge(p.invoice_status)}</td>
-    <td style="font-size:12px;color:var(--muted);">${p.payment_date?p.payment_date.split("T")[0]:"—"}</td>
-    <td>${p.receipt_url?`<a href="${p.receipt_url}" target="_blank" class="btn btn-ghost btn-sm">📎</a>`:"—"}</td>
-    <td style="font-size:12px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${p.remarks||""}">${p.remarks||"—"}</td>
-    <td><div style="display:flex;gap:4px;">
-      <button class="btn btn-ghost btn-sm" onclick="openEditPayment(${p.id})">✏️</button>
-      <button class="btn btn-teal btn-sm" onclick="quickMarkPaid(${p.id})">✅</button>
-      ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="deletePayment(${p.id})">🗑️</button>`:""}
-    </div></td>
-  </tr>`).join("");
-}
-
-function openAddPayment(){
-  document.getElementById("paymentModalTitle").textContent = "Add Payment Record";
-  document.getElementById("pay_edit_id").value = "";
-  ["pay_customer","pay_policy","pay_insurer","pay_remarks"].forEach(id=>document.getElementById(id).value="");
-  ["pay_premium","pay_paid","pay_balance","pay_commission"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("pay_mode").value = "";
-  document.getElementById("pay_date").value = new Date().toISOString().split("T")[0];
-  document.getElementById("pay_status").value = "unpaid";
-  document.getElementById("pay_invoice_status").value = "invoice_pending";
-  document.getElementById("pay_comm_status").value = "pending";
-  document.getElementById("pay_assigned").value = "";
-  document.getElementById("paymentModal").classList.add("open");
-}
-
-function openEditPayment(id){
-  const p = allPayments.find(x=>x.id===id);
-  if(!p) return;
-  document.getElementById("paymentModalTitle").textContent = "Edit Payment Record";
-  document.getElementById("pay_edit_id").value = p.id;
-  document.getElementById("pay_customer").value = p.customer_name||"";
-  document.getElementById("pay_policy").value = p.policy_number||"";
-  document.getElementById("pay_insurer").value = p.insurance_company||"";
-  document.getElementById("pay_premium").value = p.premium_amount||"";
-  document.getElementById("pay_paid").value = p.paid_amount||"";
-  document.getElementById("pay_balance").value = p.balance_amount||"";
-  document.getElementById("pay_commission").value = p.commission_amount||"";
-  document.getElementById("pay_mode").value = p.payment_mode||"";
-  document.getElementById("pay_date").value = p.payment_date?p.payment_date.split("T")[0]:"";
-  document.getElementById("pay_status").value = p.payment_status||"unpaid";
-  document.getElementById("pay_invoice_status").value = p.invoice_status||"invoice_pending";
-  document.getElementById("pay_comm_status").value = p.commission_status||"pending";
-  document.getElementById("pay_assigned").value = p.assigned_to_id||"";
-  document.getElementById("pay_remarks").value = p.remarks||"";
-  document.getElementById("paymentModal").classList.add("open");
-}
-
-function closePaymentModal(){
-  document.getElementById("paymentModal").classList.remove("open");
-}
-
-async function savePayment(){
-  const btn = document.getElementById("savePaymentBtn");
-  const editId = document.getElementById("pay_edit_id").value;
-  const customer = document.getElementById("pay_customer").value.trim();
-  if(!customer) return toast("Customer name is required","error");
-
-  let receipt_url = editId ? allPayments.find(p=>p.id==editId)?.receipt_url||"" : "";
-  const fileInput = document.getElementById("pay_receipt_file");
-  if(fileInput.files.length > 0){
-    btn.disabled=true; btn.textContent="Uploading receipt…";
-    try{
-      const file = fileInput.files[0];
-      const fileName = `receipt_${Date.now()}_${file.name}`;
-      const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/checkin-photos/${fileName}`,{
-        method:"POST",
-        headers:{"Authorization":`Bearer ${SUPABASE_ANON_KEY}`,"Content-Type":file.type,"x-upsert":"true"},
-        body: file
-      });
-      if(uploadRes.ok) receipt_url = `${SUPABASE_URL}/storage/v1/object/public/checkin-photos/${fileName}`;
-    } catch { toast("Receipt upload failed, saving without it","error"); }
+  if(type === "bank_recon"){
+    countField.style.display = "none";
+    reconField.style.display = "block";
+  } else if(type === "invoice"){
+    countLabel.textContent = "Number of Invoices";
+    amountField.style.display = "block";
+    document.getElementById("acc_amount_label").textContent = "Total Invoice Amount (₹)";
+  } else if(type === "vendor_payment"){
+    countLabel.textContent = "Number of Payments";
+    amountField.style.display = "block";
+    document.getElementById("acc_amount_label").textContent = "Total Payment Amount (₹)";
+  } else if(type === "insurance_followup"){
+    countLabel.textContent = "Number of Follow-ups Done";
+  } else if(type === "expenses_tally"){
+    countLabel.textContent = "Number of Entries Updated";
+  } else if(type === "gst_tds"){
+    countLabel.textContent = "Number of Updates Filed";
+  } else if(type === "utr_update"){
+    countLabel.textContent = "Number of UTRs Updated";
   }
+}
 
-  const assignedSelect = document.getElementById("pay_assigned");
+function cancelAccLog(){
+  document.getElementById("acc_edit_id").value = "";
+  document.getElementById("acc_task_type").value = "";
+  document.getElementById("acc_count").value = "";
+  document.getElementById("acc_amount").value = "";
+  document.getElementById("acc_notes").value = "";
+  document.getElementById("acc_bank_recon").value = "true";
+  document.getElementById("acc_count_field").style.display = "block";
+  document.getElementById("acc_amount_field").style.display = "none";
+  document.getElementById("acc_recon_field").style.display = "none";
+  document.getElementById("accLogFormTitle").textContent = "Log Task";
+  document.getElementById("btnSaveAccLog").textContent = "📋 Log Task";
+  document.getElementById("btnCancelAccLog").style.display = "none";
+}
+
+function editAccLog(id){
+  const task = accLogData.find(t => t.id === id);
+  if(!task) return;
+  document.getElementById("accLogFormTitle").scrollIntoView({behavior:"smooth"});
+  document.getElementById("acc_edit_id").value = task.id;
+  document.getElementById("acc_task_type").value = task.task_type;
+  document.getElementById("acc_count").value = task.count||"";
+  document.getElementById("acc_amount").value = task.amount||"";
+  document.getElementById("acc_notes").value = task.notes||"";
+  document.getElementById("acc_bank_recon").value = task.bank_recon_done?"true":"false";
+  handleAccTaskType();
+  document.getElementById("accLogFormTitle").textContent = "✏️ Edit Task";
+  document.getElementById("btnSaveAccLog").textContent = "💾 Save Changes";
+  document.getElementById("btnCancelAccLog").style.display = "inline-flex";
+  toast("Editing task","info");
+}
+
+async function saveAccLog(){
+  const btn = document.getElementById("btnSaveAccLog");
+  const editId = document.getElementById("acc_edit_id").value;
+  const task_type = document.getElementById("acc_task_type").value;
+  const date = document.getElementById("acc_date").value;
+  if(!task_type) return toast("Please select a task type","error");
+  if(!date) return toast("Date is required","error");
+
   const payload = {
-    customer_name: customer,
-    policy_number: document.getElementById("pay_policy").value.trim(),
-    insurance_company: document.getElementById("pay_insurer").value.trim(),
-    premium_amount: Number(document.getElementById("pay_premium").value)||0,
-    paid_amount: Number(document.getElementById("pay_paid").value)||0,
-    payment_mode: document.getElementById("pay_mode").value,
-    payment_status: document.getElementById("pay_status").value,
-    invoice_status: document.getElementById("pay_invoice_status").value,
-    payment_date: document.getElementById("pay_date").value||null,
-    receipt_url,
-    remarks: document.getElementById("pay_remarks").value.trim(),
-    commission_amount: Number(document.getElementById("pay_commission").value)||0,
-    commission_status: document.getElementById("pay_comm_status").value,
-    assigned_to: assignedSelect.value ? assignedSelect.options[assignedSelect.selectedIndex].text : "",
-    assigned_to_id: assignedSelect.value
+    task_type, date,
+    count: Number(document.getElementById("acc_count").value)||0,
+    amount: Number(document.getElementById("acc_amount").value)||null,
+    notes: document.getElementById("acc_notes").value.trim(),
+    status: "done",
+    bank_recon_done: document.getElementById("acc_bank_recon").value === "true",
+    user_id: currentUser.id,
+    user_name: currentUser.name
   };
 
-  btn.disabled=true; btn.textContent="Saving…";
+  btn.disabled = true; btn.textContent = "Saving…";
   try{
-    const url = editId ? `${API}/payments/${editId}` : `${API}/payments`;
+    const url = editId ? `${API}/accounts-tasks/${editId}` : `${API}/accounts-tasks`;
     const res = await fetch(url,{method:editId?"PUT":"POST",headers:authHeaders(),body:JSON.stringify(payload)});
     const data = await res.json();
     if(!res.ok) return toast(data.error||"Error","error");
     toast(data.message,"success");
-    closePaymentModal();
-    loadPayments();
+    cancelAccLog();
+    loadAccLog();
     loadAccountsDash();
   } catch { toast("Cannot connect to server","error"); }
-  finally{ btn.disabled=false; btn.textContent="💾 Save Record"; }
+  finally{ btn.disabled=false; btn.textContent = editId?"💾 Save Changes":"📋 Log Task"; }
 }
 
-async function quickMarkPaid(id){
-  const p = allPayments.find(x=>x.id===id);
-  if(!p) return;
-  if(!confirm(`Mark payment as PAID for ${p.customer_name}?`)) return;
+async function deleteAccLog(id){
+  if(!confirm("Delete this task log?")) return;
   try{
-    const payload = {...p, payment_status:"paid", paid_amount:p.premium_amount, invoice_status:"verified"};
-    const res = await fetch(`${API}/payments/${id}`,{method:"PUT",headers:authHeaders(),body:JSON.stringify(payload)});
-    const data = await res.json();
-    if(!res.ok) return toast(data.error||"Error","error");
-    toast("✅ Marked as Paid!","success");
-    loadPayments();
-    loadAccountsDash();
-  } catch { toast("Failed to update","error"); }
-}
-
-async function deletePayment(id){
-  if(!confirm("Delete this payment record?")) return;
-  try{
-    const res = await fetch(`${API}/payments/${id}`,{method:"DELETE",headers:authHeaders()});
+    const res = await fetch(`${API}/accounts-tasks/${id}`,{method:"DELETE",headers:authHeaders()});
     const data = await res.json();
     if(!res.ok) return toast(data.error||"Error","error");
     toast(data.message,"success");
-    loadPayments();
+    loadAccLog();
     loadAccountsDash();
-  } catch { toast("Failed to delete","error"); }
-}
-
-function exportPayments(){
-  const data = filteredPayments.length ? filteredPayments : allPayments;
-  if(!data.length) return toast("No data to export","error");
-  const headers=["Customer","Policy No.","Insurance Co.","Assigned To","Premium (₹)","Paid (₹)","Balance (₹)","Mode","Payment Status","Invoice Status","Commission (₹)","Commission Status","Payment Date","Remarks"];
-  const rows=[headers,...data.map(p=>[
-    p.customer_name||"",p.policy_number||"",p.insurance_company||"",
-    p.assigned_to||"",p.premium_amount||0,p.paid_amount||0,p.balance_amount||0,
-    p.payment_mode||"",p.payment_status||"",p.invoice_status||"",
-    p.commission_amount||0,p.commission_status||"",
-    p.payment_date?p.payment_date.split("T")[0]:"",p.remarks||""
-  ])];
-  downloadCSV(rows,`payments_${new Date().toISOString().split("T")[0]}.csv`);
-  toast("✅ Payments exported!","success");
-}
-
-async function loadCommissions(){
-  try{
-    const res = await fetch(`${API}/payments`, {headers: authHeaders()});
-    const data = await res.json();
-    const total = data.reduce((s,p)=>s+(Number(p.commission_amount)||0),0);
-    const pending = data.filter(p=>p.commission_status==="pending").reduce((s,p)=>s+(Number(p.commission_amount)||0),0);
-    const paid = data.filter(p=>p.commission_status==="paid").reduce((s,p)=>s+(Number(p.commission_amount)||0),0);
-    document.getElementById("commTotal").textContent = "₹"+total.toLocaleString("en-IN");
-    document.getElementById("commPending").textContent = "₹"+pending.toLocaleString("en-IN");
-    document.getElementById("commPaid").textContent = "₹"+paid.toLocaleString("en-IN");
-    const tbody = document.getElementById("commissionsTable");
-    if(!data.length){ tbody.innerHTML=`<tr><td colspan="9" class="empty-state">No records</td></tr>`; return; }
-    tbody.innerHTML = data.map(p=>`<tr>
-      <td style="font-weight:600;">${p.customer_name}</td>
-      <td style="font-size:12px;">${p.policy_number||"—"}</td>
-      <td style="font-size:12px;">${p.insurance_company||"—"}</td>
-      <td style="font-size:12px;">${p.assigned_to||"—"}</td>
-      <td>₹${Number(p.premium_amount||0).toLocaleString("en-IN")}</td>
-      <td style="font-weight:600;color:var(--teal);">₹${Number(p.commission_amount||0).toLocaleString("en-IN")}</td>
-      <td>${commStatusBadge(p.commission_status)}</td>
-      <td style="font-size:12px;color:var(--muted);">${p.payment_date?p.payment_date.split("T")[0]:"—"}</td>
-      <td>${p.commission_status!=="paid"
-        ?`<button class="btn btn-teal btn-sm" onclick="markCommissionPaid(${p.id})">✅ Mark Paid</button>`
-        :`<span style="font-size:12px;color:var(--muted);">Done</span>`}
-      </td>
-    </tr>`).join("");
-  } catch { toast("Failed to load commissions","error"); }
-}
-
-async function markCommissionPaid(id){
-  const p = allPayments.find(x=>x.id===id) || (await (await fetch(`${API}/payments`,{headers:authHeaders()})).json()).find(x=>x.id===id);
-  if(!p) return;
-  if(!confirm("Mark commission as paid?")) return;
-  try{
-    const payload = {...p, commission_status:"paid"};
-    const res = await fetch(`${API}/payments/${id}`,{method:"PUT",headers:authHeaders(),body:JSON.stringify(payload)});
-    const data = await res.json();
-    if(!res.ok) return toast(data.error||"Error","error");
-    toast("✅ Commission marked as paid!","success");
-    loadCommissions();
-  } catch { toast("Failed to update","error"); }
-}
-
-function exportCommissions(){
-  const data = allPayments;
-  if(!data.length) return toast("No data to export","error");
-  const headers=["Customer","Policy No.","Insurance Co.","Assigned To","Premium (₹)","Commission (₹)","Commission Status","Payment Date"];
-  const rows=[headers,...data.map(p=>[
-    p.customer_name||"",p.policy_number||"",p.insurance_company||"",
-    p.assigned_to||"",p.premium_amount||0,p.commission_amount||0,
-    p.commission_status||"",p.payment_date?p.payment_date.split("T")[0]:""
-  ])];
-  downloadCSV(rows,`commissions_${new Date().toISOString().split("T")[0]}.csv`);
-  toast("✅ Commissions exported!","success");
-}
-
-async function loadRefunds(){
-  try{
-    const res = await fetch(`${API}/refund-requests`,{headers:authHeaders()});
-    const data = await res.json();
-    const isAdmin = currentUser?.role === "admin";
-    const tbody = document.getElementById("refundsTable");
-    if(!data.length){ tbody.innerHTML=`<tr><td colspan="10" class="empty-state">No refund requests</td></tr>`; return; }
-    const statusBadge = s => ({
-      pending:`<span class="badge badge-contacted">⏳ Pending</span>`,
-      approved:`<span class="badge badge-wfh">✅ Approved</span>`,
-      rejected:`<span class="badge badge-absent">❌ Rejected</span>`
-    }[s]||`<span class="badge badge-half">${s}</span>`);
-    tbody.innerHTML = data.map(r=>`<tr>
-      <td style="font-weight:600;">${r.customer_name}</td>
-      <td style="font-size:12px;">${r.policy_number||"—"}</td>
-      <td style="font-size:12px;">${r.insurance_company||"—"}</td>
-      <td style="font-weight:600;">₹${Number(r.refund_amount||0).toLocaleString("en-IN")}</td>
-      <td style="font-size:12px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${r.reason||""}">${r.reason||"—"}</td>
-      <td>${statusBadge(r.status)}</td>
-      <td style="font-size:12px;color:var(--muted);">${r.admin_note||"—"}</td>
-      <td style="font-size:12px;">${r.requested_by||"—"}</td>
-      <td style="font-size:12px;color:var(--muted);">${new Date(r.created_at).toLocaleDateString("en-IN")}</td>
-      <td>${r.status==="pending"&&isAdmin
-        ?`<div style="display:flex;gap:4px;">
-            <button class="btn btn-teal btn-sm" onclick="processRefund(${r.id},'approved')">✅</button>
-            <button class="btn btn-danger btn-sm" onclick="processRefund(${r.id},'rejected')">❌</button>
-          </div>`
-        :`<span style="font-size:12px;color:var(--muted);">—</span>`}
-      </td>
-    </tr>`).join("");
-  } catch { toast("Failed to load refunds","error"); }
-}
-
-async function submitRefund(){
-  const customer = document.getElementById("ref_customer").value.trim();
-  if(!customer) return toast("Customer name is required","error");
-  const payload = {
-    customer_name: customer,
-    policy_number: document.getElementById("ref_policy").value.trim(),
-    insurance_company: document.getElementById("ref_company").value.trim(),
-    refund_amount: Number(document.getElementById("ref_amount").value)||0,
-    reason: document.getElementById("ref_reason").value.trim()
-  };
-  try{
-    const res = await fetch(`${API}/refund-requests`,{method:"POST",headers:authHeaders(),body:JSON.stringify(payload)});
-    const data = await res.json();
-    if(!res.ok) return toast(data.error||"Error","error");
-    toast(data.message,"success");
-    ["ref_customer","ref_policy","ref_company","ref_amount","ref_reason"].forEach(id=>document.getElementById(id).value="");
-    loadRefunds();
   } catch { toast("Cannot connect to server","error"); }
 }
 
-async function processRefund(id, status){
-  const note = prompt(`Add a note for this refund (${status}):`)||"";
+async function loadAccLog(){
   try{
-    const res = await fetch(`${API}/refund-requests/${id}`,{
-      method:"PUT", headers:authHeaders(),
-      body:JSON.stringify({status, admin_note:note})
-    });
-    const data = await res.json();
-    if(!res.ok) return toast(data.error||"Error","error");
-    toast(`✅ Refund ${status}!`,"success");
-    loadRefunds();
-  } catch { toast("Failed to update","error"); }
-} 
+    const monthEl = document.getElementById("acc_filter_month");
+    const typeEl = document.getElementById("acc_filter_type");
+    if(!monthEl.value){
+      const now = new Date();
+      monthEl.value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+    }
+    let url = `${API}/accounts-tasks?month=${monthEl.value}`;
+    if(typeEl?.value) url += `&task_type=${typeEl.value}`;
+    const res = await fetch(url,{headers:authHeaders()});
+    accLogData = await res.json();
+    renderAccLogTable(accLogData);
+  } catch { toast("Failed to load log","error"); }
+}
+
+function renderAccLogTable(data){
+  const isAdmin = currentUser?.role === "admin";
+  const tbody = document.getElementById("accLogTable");
+  if(!data.length){
+    tbody.innerHTML=`<tr><td colspan="8" class="empty-state">No tasks logged yet</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.map(t=>`<tr>
+    <td style="font-size:12px;">${t.date?t.date.split("T")[0]:"—"}</td>
+    <td style="font-weight:600;">${accTaskLabels[t.task_type]||t.task_type}</td>
+    <td style="text-align:center;font-weight:700;color:var(--teal);">${t.task_type==="bank_recon"?"—":t.count||0}</td>
+    <td>${t.amount?`₹${Number(t.amount).toLocaleString("en-IN")}`:"—"}</td>
+    <td>${t.task_type==="bank_recon"
+      ? (t.bank_recon_done
+          ? `<span class="badge badge-wfh">✅ Done</span>`
+          : `<span class="badge badge-absent">❌ Pending</span>`)
+      : "—"
+    }</td>
+    <td style="font-size:12px;color:var(--muted);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${t.notes||""}">${t.notes||"—"}</td>
+    <td style="font-size:12px;">${t.user_name||"—"}</td>
+    <td><div style="display:flex;gap:5px;">
+      <button class="btn btn-ghost btn-sm" onclick="editAccLog(${t.id})">✏️</button>
+      ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteAccLog(${t.id})">🗑️</button>`:""}
+    </div></td>
+  </tr>`).join("");
+}
+
+async function loadAccountsDash(){
+  try{
+    const monthEl = document.getElementById("acc_dash_month");
+    if(!monthEl.value){
+      const now = new Date();
+      monthEl.value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+    }
+    const [summaryRes, recentRes] = await Promise.all([
+      fetch(`${API}/accounts-tasks/summary?month=${monthEl.value}`,{headers:authHeaders()}),
+      fetch(`${API}/accounts-tasks?month=${monthEl.value}`,{headers:authHeaders()})
+    ]);
+    const s = await summaryRes.json();
+    const recent = await recentRes.json();
+
+    document.getElementById("dashInvoiceCount").textContent = s.invoice?.count||0;
+    document.getElementById("dashInvoiceAmount").textContent = s.invoice?.amount ? `₹${Number(s.invoice.amount).toLocaleString("en-IN")}` : "";
+    document.getElementById("dashInsuranceCount").textContent = s.insurance_followup?.count||0;
+    document.getElementById("dashVendorCount").textContent = s.vendor_payment?.count||0;
+    document.getElementById("dashVendorAmount").textContent = s.vendor_payment?.amount ? `₹${Number(s.vendor_payment.amount).toLocaleString("en-IN")}` : "";
+    document.getElementById("dashExpensesCount").textContent = s.expenses_tally?.count||0;
+    document.getElementById("dashGstCount").textContent = s.gst_tds?.count||0;
+    document.getElementById("dashUtrCount").textContent = s.utr_update?.count||0;
+    document.getElementById("dashBankRecon").textContent = s.bank_recon?.done > 0 ? "✅ Done" : "❌ Pending";
+
+    const tbody = document.getElementById("accDashRecentTable");
+    if(!recent.length){tbody.innerHTML=`<tr><td colspan="6" class="empty-state">No tasks logged this month</td></tr>`;return;}
+    tbody.innerHTML = recent.slice(0,10).map(t=>`<tr>
+      <td style="font-size:12px;">${t.date?t.date.split("T")[0]:"—"}</td>
+      <td style="font-weight:600;">${accTaskLabels[t.task_type]||t.task_type}</td>
+      <td style="text-align:center;">${t.task_type==="bank_recon"?"—":t.count||0}</td>
+      <td>${t.amount?`₹${Number(t.amount).toLocaleString("en-IN")}`:"—"}</td>
+      <td style="font-size:12px;color:var(--muted);">${t.notes||"—"}</td>
+      <td style="font-size:12px;">${t.user_name||"—"}</td>
+    </tr>`).join("");
+  } catch { toast("Failed to load dashboard","error"); }
+}
+
+function exportAccLog(){
+  if(!accLogData.length) return toast("No data to export","error");
+  const headers=["Date","Task","Count","Amount (₹)","Bank Recon Done","Notes","Logged By"];
+  const rows=[headers,...accLogData.map(t=>[
+    t.date?t.date.split("T")[0]:"",
+    accTaskLabels[t.task_type]||t.task_type,
+    t.task_type==="bank_recon"?"":t.count||0,
+    t.amount||"",
+    t.task_type==="bank_recon"?(t.bank_recon_done?"Yes":"No"):"",
+    t.notes||"",
+    t.user_name||""
+  ])];
+  downloadCSV(rows,`accounts_log_${document.getElementById("acc_filter_month")?.value||"all"}.csv`);
+  toast("✅ Exported!","success");
+}
+function initAccLog(){
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("acc_date").value = today;
+  const now = new Date();
+  document.getElementById("acc_filter_month").value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+  loadAccLog();
+}  
 </script>
 </body>
 </html>
