@@ -496,7 +496,7 @@
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>Date</th><th>Status</th><th>In</th><th>Out</th><th id="th_photo_in">📸 In</th><th id="th_photo_out">📸 Out</th><th id="th_target">Target (₹)</th><th id="th_achieved">Achieved (₹)</th></tr></thead>
+              <thead><tr><th>Date</th><th>Status</th><th>In</th><th>Out</th><th>📸 In</th><th>📸 Out</th><th id="th_target">Target (₹)</th><th id="th_achieved">Achieved (₹)</th></tr></thead>
               <tbody id="myTable"><tr><td colspan="8" class="empty-state">Loading...</td></tr></tbody>
             </table>
           </div>
@@ -2557,20 +2557,16 @@ async function loadDashboard(){
       document.getElementById("mySales").closest(".stat-card").style.display="none";
       document.getElementById("th_target").style.display="none";
       document.getElementById("th_achieved").style.display="none";
-      document.getElementById("th_photo_in").style.display="none";
-      document.getElementById("th_photo_out").style.display="none";
     }
     const tbody=document.getElementById("myTable");
     if(!myAttData.length){tbody.innerHTML=`<tr><td colspan="8" class="empty-state">No records yet</td></tr>`;return;}
-    const hideSalesColumns = currentUser.role==="operations" || currentUser.role==="accounts";
     tbody.innerHTML=myAttData.map(d=>`<tr>
      <td>${d.date ? d.date.split("T")[0] : "—"}</td><td>${statusBadge(d.status)}</td>
      <td>${d.check_in||"—"}</td><td>${d.check_out||"—"}</td>
-     ${!hideSalesColumns?`
      <td>${d.checkin_photo?`<img src="${d.checkin_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkin_photo}')">` :"—"}</td>
      <td>${d.checkout_photo?`<img src="${d.checkout_photo}" class="photo-thumb" onclick="viewPhoto('${d.checkout_photo}')">` :"—"}</td>
      <td>${d.sales_target!=null?"₹"+d.sales_target.toLocaleString("en-IN"):"—"}</td>
-     <td>${d.sales_achieved!=null?"₹"+d.sales_achieved.toLocaleString("en-IN"):"—"}</td>`:""}
+     <td>${d.sales_achieved!=null?"₹"+d.sales_achieved.toLocaleString("en-IN"):"—"}</td>
     </tr>`).join("");
   }catch{toast("Failed to load data","error");}
 }
