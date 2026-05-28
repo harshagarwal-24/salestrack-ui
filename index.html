@@ -1392,33 +1392,33 @@
       <div style="font-size:12px;color:var(--muted);margin-top:4px;" id="dashInvoiceAmount"></div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">📞</div>
+      <div class="stat-icon"></div>
       <div class="stat-label">Insurance Follow-ups</div>
       <div class="stat-value" id="dashInsuranceCount">—</div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">🏢</div>
+      <div class="stat-icon"></div>
       <div class="stat-label">Vendor Payments</div>
       <div class="stat-value" id="dashVendorCount">—</div>
       <div style="font-size:12px;color:var(--muted);margin-top:4px;" id="dashVendorAmount"></div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">📒</div>
+      <div class="stat-icon"></div>
       <div class="stat-label">Expenses in Tally</div>
       <div class="stat-value" id="dashExpensesCount">—</div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">📊</div>
+      <div class="stat-icon"></div>
       <div class="stat-label">GST / TDS Updates</div>
       <div class="stat-value" id="dashGstCount">—</div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">🔁</div>
+      <div class="stat-icon"></div>
       <div class="stat-label">UTR Updates</div>
       <div class="stat-value" id="dashUtrCount">—</div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">🏦</div>
+      <div class="stat-icon"></div>
       <div class="stat-label">Bank Recon</div>
       <div class="stat-value" id="dashBankRecon">—</div>
     </div>
@@ -1457,13 +1457,13 @@
         <label>Task Type <span class="cam-required">REQUIRED</span></label>
         <select id="acc_task_type" onchange="handleAccTaskType()">
           <option value="">Select task</option>
-          <option value="invoice">🧾 Invoice Generated</option>
-          <option value="insurance_followup">📞 Insurance Payment Follow-up</option>
-          <option value="vendor_payment">🏢 Vendor Payment</option>
-          <option value="expenses_tally">📒 Expenses Update in Tally</option>
-          <option value="gst_tds">📊 GST / TDS Update</option>
-          <option value="utr_update">🔁 UTR Update</option>
-          <option value="bank_recon">🏦 Bank Reconciliation</option>
+          <option value="invoice"> Invoice Generated</option>
+          <option value="insurance_followup"> Insurance Payment Follow-up</option>
+          <option value="vendor_payment"> Vendor Payment</option>
+          <option value="expenses_tally"> Expenses Update in Tally</option>
+          <option value="gst_tds"> GST / TDS Update</option>
+          <option value="utr_update"> UTR Update</option>
+          <option value="bank_recon"> Bank Reconciliation</option>
         </select>
       </div>
 
@@ -1483,8 +1483,8 @@
       <div class="field" id="acc_recon_field" style="display:none;">
         <label>Bank Reconciliation Done?</label>
         <select id="acc_bank_recon">
-          <option value="true">✅ Yes — Done</option>
-          <option value="false">❌ No — Pending</option>
+          <option value="true"> Yes — Done</option>
+          <option value="false"> No — Pending</option>
         </select>
       </div>
 
@@ -1507,13 +1507,13 @@
         <input type="month" id="acc_filter_month" onchange="loadAccLog()">
         <select id="acc_filter_type" onchange="loadAccLog()" style="width:auto;">
           <option value="">All Tasks</option>
-          <option value="invoice">🧾 Invoice</option>
-          <option value="insurance_followup">📞 Insurance Follow-up</option>
-          <option value="vendor_payment">🏢 Vendor Payment</option>
-          <option value="expenses_tally">📒 Expenses Tally</option>
-          <option value="gst_tds">📊 GST/TDS</option>
-          <option value="utr_update">🔁 UTR Update</option>
-          <option value="bank_recon">🏦 Bank Recon</option>
+          <option value="invoice"> Invoice</option>
+          <option value="insurance_followup"> Insurance Follow-up</option>
+          <option value="vendor_payment"> Vendor Payment</option>
+          <option value="expenses_tally"> Expenses Tally</option>
+          <option value="gst_tds"> GST/TDS</option>
+          <option value="utr_update"> UTR Update</option>
+          <option value="bank_recon"> Bank Recon</option>
         </select>
         <button class="btn btn-teal btn-sm" onclick="exportAccLog()">⬇ Export</button>
       </div>
