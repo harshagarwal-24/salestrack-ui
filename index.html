@@ -2041,16 +2041,21 @@ function setupRoleUI(role){
   autoFill(); 
   } else if(role === "accounts") {
   sidebar.innerHTML = `
+    <div class="sidebar-section">Attendance</div>
+    <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon"></span> Check In</button>
+    <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon"></span> Check Out</button>
+    <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard();closeSidebar()"><span class="nav-icon"></span> My Dashboard</button>
+    <button class="nav-btn" onclick="goTo('wfhPage',this);loadWFHPage();closeSidebar()"><span class="nav-icon"></span> WFH Request</button>
     <div class="sidebar-section">Accounts</div>
-    <button class="nav-btn active" onclick="goTo('accountsDashPage',this);loadAccountsDash();closeSidebar()"><span class="nav-icon">💰</span> Dashboard</button>
+    <button class="nav-btn" onclick="goTo('accountsDashPage',this);loadAccountsDash();closeSidebar()"><span class="nav-icon">💰</span> Dashboard</button>
     <button class="nav-btn" onclick="goTo('paymentsPage',this);loadPayments();closeSidebar()"><span class="nav-icon">💳</span> Payment Tracking</button>
     <button class="nav-btn" onclick="goTo('commissionsPage',this);loadCommissions();closeSidebar()"><span class="nav-icon">📊</span> Commission Tracking</button>
     <button class="nav-btn" onclick="goTo('refundsPage',this);loadRefunds();closeSidebar()"><span class="nav-icon">↩️</span> Refund Requests</button>
     <div class="sidebar-section">Sales</div>
     <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon">🎯</span> Leads</button>`;
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.getElementById("accountsDashPage").classList.add("active");
-  loadAccountsDash();  
+  document.getElementById("checkInPage").classList.add("active");
+  autoFill();  
   } else if(role === "tech") {
   sidebar.innerHTML = `
     <div class="sidebar-section">Attendance</div>
@@ -2111,7 +2116,7 @@ async function autoFill(){
   document.getElementById("ci_name").value=currentUser.name||"";
   document.getElementById("ci_date").value=today;
   document.getElementById("ci_checkin").value=now;
-  if(currentUser.role==="operations"){
+  if(currentUser.role==="operations") || currentUser.role==="accounts"){
   document.getElementById("ci_target_field").style.display="none";
 }
   captureLocation("ci");
@@ -2169,7 +2174,7 @@ function autoFillCO(){
   document.getElementById("co_user_id").style.pointerEvents = "none";
   document.getElementById("co_date").value=today;
   document.getElementById("co_checkout").value=now;
-  if(currentUser.role==="operations"){
+  if(currentUser.role==="operations") || currentUser.role==="accounts"){
   document.getElementById("co_orders_field").style.display="none";
   document.getElementById("co_km_field").style.display="none";
   document.getElementById("dealTypeSection").style.display="none";
@@ -2545,7 +2550,7 @@ async function loadDashboard(){
     document.getElementById("myOrders").textContent=myAttData.reduce((s,d)=>s+(d.orders_taken||0),0);
     document.getElementById("myB2B").textContent="₹"+myAttData.reduce((s,d)=>s+(d.b2b_sales||0),0).toLocaleString("en-IN");
     document.getElementById("myRetail").textContent="₹"+myAttData.reduce((s,d)=>s+(d.retail_sales||0),0).toLocaleString("en-IN");
-    if(currentUser.role==="operations"){
+    if(currentUser.role==="operations")|| currentUser.role==="accounts"{
       document.getElementById("myOrders").closest(".stat-card").style.display="none";
       document.getElementById("myB2B").closest(".stat-card").style.display="none";
       document.getElementById("myRetail").closest(".stat-card").style.display="none";
