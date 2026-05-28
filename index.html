@@ -3599,7 +3599,7 @@ function renderUserTable(data, title) {
   const tbody = document.getElementById("urTable");
   if(!data.length){tbody.innerHTML=`<tr><td colspan="8" class="empty-state">No records</td></tr>`;return;}
   tbody.innerHTML = data.map(d=>`<tr>
-    <td>${d.date ? d.date.split("T")[0] : "—"}</td>td>${statusBadge(d.status)}</td>
+    <td>${d.date ? d.date.split("T")[0] : "—"}</td><td>${statusBadge(d.status)}</td>
     <td>${d.check_in||"—"}</td><td>${d.check_out||"—"}</td>
     <td>${d.sales_target!=null?"₹"+d.sales_target.toLocaleString("en-IN"):"—"}</td>
     <td>${d.sales_achieved!=null?"₹"+d.sales_achieved.toLocaleString("en-IN"):"—"}</td>
