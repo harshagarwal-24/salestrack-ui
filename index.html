@@ -1386,7 +1386,7 @@
   </div>
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="stat-icon">🧾</div>
+      <div class="stat-icon"></div>
       <div class="stat-label">Invoices Generated</div>
       <div class="stat-value" id="dashInvoiceCount">—</div>
       <div style="font-size:12px;color:var(--muted);margin-top:4px;" id="dashInvoiceAmount"></div>
@@ -1494,7 +1494,7 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-teal" id="btnSaveAccLog" onclick="saveAccLog()">📋 Log Task</button>
+      <button class="btn btn-teal" id="btnSaveAccLog" onclick="saveAccLog()"> Log Task</button>
       <button class="btn btn-ghost" id="btnCancelAccLog" style="display:none;" onclick="cancelAccLog()">✕ Cancel</button>
     </div>
   </div>
@@ -4239,13 +4239,13 @@ function exportCRMActivities(){
 let accLogData = [];
 
 const accTaskLabels = {
-  invoice: "🧾 Invoice Generated",
-  insurance_followup: "📞 Insurance Follow-up",
-  vendor_payment: "🏢 Vendor Payment",
-  expenses_tally: "📒 Expenses Tally",
-  gst_tds: "📊 GST/TDS Update",
-  utr_update: "🔁 UTR Update",
-  bank_recon: "🏦 Bank Recon"
+  invoice: " Invoice Generated",
+  insurance_followup: " Insurance Follow-up",
+  vendor_payment: " Vendor Payment",
+  expenses_tally: " Expenses Tally",
+  gst_tds: " GST/TDS Update",
+  utr_update: " UTR Update",
+  bank_recon: " Bank Recon"
 };
 
 function handleAccTaskType(){
