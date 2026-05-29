@@ -1528,7 +1528,190 @@
       </table>
     </div>
   </div>
-</div>    
+</div>   
+
+<!-- SALES REGISTER PAGE -->
+<div class="page" id="salesRegisterPage">
+  <div class="page-header">
+    <div class="page-header-icon">📒</div>
+    <div><div class="page-title">Sales Register</div><div class="page-sub">M/S Aadeeshwara Insurance Brokers Pvt. Ltd.</div></div>
+  </div>
+
+  <!-- SUMMARY STATS -->
+  <div class="filter-bar">
+    <input type="month" id="sr_dash_month" onchange="loadSalesRegister()">
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Invoices</div><div class="stat-value" id="srTotalInvoices">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Taxable Value</div><div class="stat-value" id="srTaxableValue">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total Invoice Amt</div><div class="stat-value" id="srTotalInvoiceAmt">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total GST</div><div class="stat-value" id="srTotalGST">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Total TDS</div><div class="stat-value" id="srTotalTDS">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Net Receivable</div><div class="stat-value" id="srNetReceivable">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Received</div><div class="stat-value" id="srReceived">—</div></div>
+    <div class="stat-card"><div class="stat-icon"></div><div class="stat-label">Balance Due</div><div class="stat-value" id="srBalanceDue">—</div></div>
+  </div>
+
+  <!-- STATUS BADGES -->
+  <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+    <div style="background:#dcfce7;border:1px solid #bbf7d0;border-radius:8px;padding:10px 18px;font-size:13px;">
+      ✅ <strong id="srPaidCount">—</strong> Paid
+    </div>
+    <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:10px 18px;font-size:13px;">
+      ⏳ <strong id="srPendingCount">—</strong> Pending
+    </div>
+    <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:8px;padding:10px 18px;font-size:13px;">
+      🟡 <strong id="srPartialCount">—</strong> Partial
+    </div>
+  </div>
+
+  <!-- ADD / EDIT FORM -->
+  <div class="card" id="srFormCard">
+    <div class="card-title" id="srFormTitle">Add Invoice Entry</div>
+    <div class="form-grid">
+      <input type="hidden" id="sr_edit_id">
+      <div class="field">
+        <label>Customer / Insurance Company <span class="cam-required">REQUIRED</span></label>
+        <input type="text" id="sr_customer" placeholder="e.g. ICICI Lombard General Insurance">
+      </div>
+      <div class="field">
+        <label>Invoice No <span class="cam-required">REQUIRED</span></label>
+        <input type="text" id="sr_invoice_no" placeholder="e.g. AIB/001/2025-26">
+      </div>
+      <div class="field">
+        <label>Invoice Date</label>
+        <input type="date" id="sr_invoice_date">
+      </div>
+      <div class="field">
+        <label>Billing Period</label>
+        <input type="text" id="sr_billing_period" placeholder="e.g. March'2025">
+      </div>
+      <div class="field">
+        <label>GSTIN</label>
+        <input type="text" id="sr_gstin" placeholder="e.g. 07AACCO4128Q1Z2">
+      </div>
+      <div class="field">
+        <label>POS (Place of Supply)</label>
+        <input type="text" id="sr_pos" placeholder="e.g. DL-07">
+      </div>
+      <div class="field">
+        <label>SAC Code</label>
+        <input type="text" id="sr_sac" placeholder="e.g. 997161">
+      </div>
+      <div class="field">
+        <label>Legal Entity</label>
+        <input type="text" id="sr_legal_entity" value="AIB">
+      </div>
+
+      <!-- TAX FIELDS -->
+      <div class="field span2" style="background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:14px;">
+        <div class="card-title" style="margin-bottom:12px;">Tax Breakdown</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Taxable Value (₹)</label>
+            <input type="number" id="sr_taxable_value" placeholder="0" min="0" oninput="calcSRTotals()">
+          </div>
+          <div class="field">
+            <label>IGST (₹)</label>
+            <input type="number" id="sr_igst" placeholder="0" min="0" oninput="calcSRTotals()">
+          </div>
+          <div class="field">
+            <label>CGST (₹)</label>
+            <input type="number" id="sr_cgst" placeholder="0" min="0" oninput="calcSRTotals()">
+          </div>
+          <div class="field">
+            <label>SGST (₹)</label>
+            <input type="number" id="sr_sgst" placeholder="0" min="0" oninput="calcSRTotals()">
+          </div>
+          <div class="field">
+            <label>Total GST (₹) <span style="color:var(--teal);font-size:10px;">AUTO</span></label>
+            <input type="number" id="sr_total_gst" placeholder="0" readonly style="opacity:0.7;background:var(--bg);">
+          </div>
+          <div class="field">
+            <label>Total Invoice Amount (₹) <span style="color:var(--teal);font-size:10px;">AUTO</span></label>
+            <input type="number" id="sr_total_invoice_amount" placeholder="0" readonly style="opacity:0.7;background:var(--bg);">
+          </div>
+          <div class="field">
+            <label>TDS @ 10% (₹) <span style="color:var(--teal);font-size:10px;">AUTO</span></label>
+            <input type="number" id="sr_tds" placeholder="0" readonly style="opacity:0.7;background:var(--bg);">
+          </div>
+          <div class="field">
+            <label>Net Receivable (₹) <span style="color:var(--teal);font-size:10px;">AUTO</span></label>
+            <input type="number" id="sr_net_receivable" placeholder="0" readonly style="opacity:0.7;background:var(--bg);">
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYMENT TRACKING -->
+      <div class="field span2" style="background:var(--teal-pale);border:1.5px solid rgba(43,173,155,0.2);border-radius:10px;padding:14px;">
+        <div class="card-title" style="margin-bottom:12px;">Payment Tracking</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Payment Status</label>
+            <select id="sr_payment_status">
+              <option value="pending"> Pending</option>
+              <option value="partial"> Partial Received</option>
+              <option value="paid"> Fully Paid</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Payment Received Date</label>
+            <input type="date" id="sr_payment_received_date">
+          </div>
+          <div class="field">
+            <label>Amount Received (₹)</label>
+            <input type="number" id="sr_payment_received_amount" placeholder="0" min="0" oninput="calcSRBalance()">
+          </div>
+          <div class="field">
+            <label>Balance Due (₹) <span style="color:var(--teal);font-size:10px;">AUTO</span></label>
+            <input type="number" id="sr_balance_due" placeholder="0" readonly style="opacity:0.7;background:var(--bg);">
+          </div>
+        </div>
+      </div>
+
+      <div class="field span2">
+        <label>Remarks</label>
+        <textarea id="sr_remarks" placeholder="Any notes or remarks..."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btnSaveSR" onclick="saveSalesRegister()">💾 Save Entry</button>
+      <button class="btn btn-ghost" id="btnCancelSR" style="display:none;" onclick="cancelSREdit()">✕ Cancel</button>
+    </div>
+  </div>
+
+  <!-- FILTERS + TABLE -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+      <div class="card-title" style="margin-bottom:0;">Invoice Register</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <input type="text" id="sr_search" placeholder="Search customer..." oninput="filterSalesRegister()" style="min-width:180px;">
+        <select id="sr_status_filter" onchange="filterSalesRegister()" style="width:auto;">
+          <option value="">All Status</option>
+          <option value="paid"> Paid</option>
+          <option value="pending"> Pending</option>
+          <option value="partial"> Partial</option>
+        </select>
+        <button class="btn btn-teal btn-sm" onclick="exportSalesRegister()">⬇ Export</button>
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('srImportModal').classList.add('open')">📥 Import Excel</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Sl.</th><th>Customer / Insurance Co.</th><th>Invoice No</th>
+          <th>Invoice Date</th><th>Billing Period</th><th>Taxable Val (₹)</th>
+          <th>IGST</th><th>CGST</th><th>SGST</th>
+          <th>Total Invoice (₹)</th><th>Total GST (₹)</th>
+          <th>TDS (₹)</th><th>Net Receivable (₹)</th>
+          <th>Received (₹)</th><th>Balance (₹)</th>
+          <th>Payment Status</th><th>Remarks</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="srTable"><tr><td colspan="18" class="empty-state">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>      
 
 <!-- LEAD MODAL -->
 <div class="modal-overlay" id="leadModal">
@@ -1760,8 +1943,30 @@
 
   </div>
 </div>
+<!-- SALES REGISTER IMPORT MODAL -->
+<div class="modal-overlay" id="srImportModal">
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-title">
+      <span>Import from Excel</span>
+      <button class="modal-close" onclick="document.getElementById('srImportModal').classList.remove('open')">×</button>
+    </div>
+    <div style="background:var(--teal-pale);border:1.5px dashed var(--teal);border-radius:10px;padding:20px;text-align:center;margin-bottom:14px;">
+      <div style="font-size:28px;margin-bottom:8px;">📊</div>
+      <div style="font-weight:600;margin-bottom:4px;">Upload Sales Register Excel</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Supports .xlsx, .xls, .csv</div>
+      <input type="file" id="srImportFile" accept=".xlsx,.xls,.csv" onchange="handleSRImport(event)" style="display:none;">
+      <button class="btn btn-teal" onclick="document.getElementById('srImportFile').click()">Choose File</button>
+    </div>
+    <div id="srImportResult" style="display:none;text-align:center;padding:12px;">
+      <div style="font-size:32px;" id="srImportIcon">✅</div>
+      <div style="font-weight:700;margin:8px 0;" id="srImportTitle">—</div>
+      <div style="font-size:13px;color:var(--muted);" id="srImportSub">—</div>
+    </div>
+  </div>
+</div>      
 
 <div id="toast"></div>
+</main>      
 
 <script>
 const API = "https://sales-tracker-q8ij.onrender.com";
@@ -1899,6 +2104,7 @@ function setupRoleUI(role){
       <div class="sidebar-section">Accounts</div>
       <button class="nav-btn" onclick="goTo('accountsDashPage',this);loadAccountsDash();closeSidebar()"><span class="nav-icon"></span> Accounts Dashboard</button>
       <button class="nav-btn" onclick="goTo('accLogPage',this);initAccLog();closeSidebar()"><span class="nav-icon"></span> Daily Log</button>
+      <button class="nav-btn" onclick="goTo('salesRegisterPage',this);loadSalesRegister();closeSidebar()"><span class="nav-icon"></span> Sales Register</button>
       <div class="sidebar-section">Sales</div>
       <button class="nav-btn" onclick="goTo('leadsPage',this);loadLeads();closeSidebar()"><span class="nav-icon"></span> Leads</button>
       <button class="nav-btn" onclick="goTo('remindersPage',this);loadReminders();closeSidebar()"><span class="nav-icon"></span> Reminders</button>`;
@@ -1943,7 +2149,8 @@ function setupRoleUI(role){
     <button class="nav-btn" onclick="goTo('dashboardPage',this);loadDashboard();closeSidebar()"><span class="nav-icon"></span> My Dashboard</button>
     <div class="sidebar-section">Accounts</div>
     <button class="nav-btn" onclick="goTo('accountsDashPage',this);loadAccountsDash();closeSidebar()"><span class="nav-icon"></span> Dashboard</button>
-    <button class="nav-btn" onclick="goTo('accLogPage',this);initAccLog();closeSidebar()"><span class="nav-icon"></span> Daily Log</button>`;
+    <button class="nav-btn" onclick="goTo('accLogPage',this);initAccLog();closeSidebar()"><span class="nav-icon"></span> Daily Log</button>
+    <button class="nav-btn" onclick="goTo('salesRegisterPage',this);loadSalesRegister();closeSidebar()"><span class="nav-icon"></span> Sales Register</button>
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById("checkInPage").classList.add("active");
   autoFill(); 
@@ -4457,6 +4664,316 @@ function initAccLog(){
   const now = new Date();
   document.getElementById("acc_filter_month").value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
   loadAccLog();
+}
+// ── SALES REGISTER ────────────────────────────────────────────────────────────
+let srData = [], srFiltered = [];
+
+function calcSRTotals(){
+  const taxable = Number(document.getElementById("sr_taxable_value").value)||0;
+  const igst = Number(document.getElementById("sr_igst").value)||0;
+  const cgst = Number(document.getElementById("sr_cgst").value)||0;
+  const sgst = Number(document.getElementById("sr_sgst").value)||0;
+  const totalGST = igst + cgst + sgst;
+  const totalInvoice = taxable + totalGST;
+  const tds = parseFloat((taxable * 0.1).toFixed(2));
+  const netReceivable = parseFloat((totalInvoice - tds).toFixed(2));
+  document.getElementById("sr_total_gst").value = totalGST.toFixed(2);
+  document.getElementById("sr_total_invoice_amount").value = totalInvoice.toFixed(2);
+  document.getElementById("sr_tds").value = tds;
+  document.getElementById("sr_net_receivable").value = netReceivable;
+  document.getElementById("sr_balance_due").value = netReceivable - (Number(document.getElementById("sr_payment_received_amount").value)||0);
+}
+
+function calcSRBalance(){
+  const net = Number(document.getElementById("sr_net_receivable").value)||0;
+  const received = Number(document.getElementById("sr_payment_received_amount").value)||0;
+  document.getElementById("sr_balance_due").value = Math.max(0, net - received).toFixed(2);
+}
+
+function srPayStatusBadge(s){
+  const m = {
+    paid: `<span class="badge badge-wfh">✅ Paid</span>`,
+    pending: `<span class="badge badge-contacted">⏳ Pending</span>`,
+    partial: `<span class="badge badge-office">🟡 Partial</span>`
+  };
+  return m[s] || `<span class="badge badge-half">${s||"—"}</span>`;
+}
+
+function cancelSREdit(){
+  document.getElementById("sr_edit_id").value = "";
+  ["sr_customer","sr_invoice_no","sr_billing_period","sr_gstin",
+   "sr_pos","sr_sac","sr_remarks","sr_payment_received_date"].forEach(id => document.getElementById(id).value="");
+  ["sr_taxable_value","sr_igst","sr_cgst","sr_sgst",
+   "sr_total_gst","sr_total_invoice_amount","sr_tds",
+   "sr_net_receivable","sr_payment_received_amount","sr_balance_due"].forEach(id => document.getElementById(id).value="");
+  document.getElementById("sr_legal_entity").value = "AIB";
+  document.getElementById("sr_invoice_date").value = "";
+  document.getElementById("sr_payment_status").value = "pending";
+  document.getElementById("srFormTitle").textContent = "Add Invoice Entry";
+  document.getElementById("btnSaveSR").textContent = "💾 Save Entry";
+  document.getElementById("btnCancelSR").style.display = "none";
+}
+
+function editSalesRegister(id){
+  const r = srData.find(x => x.id === id);
+  if(!r) return;
+  document.getElementById("srFormCard").scrollIntoView({behavior:"smooth"});
+  document.getElementById("sr_edit_id").value = r.id;
+  document.getElementById("sr_customer").value = r.customer_name||"";
+  document.getElementById("sr_invoice_no").value = r.invoice_no||"";
+  document.getElementById("sr_invoice_date").value = r.invoice_date?r.invoice_date.split("T")[0]:"";
+  document.getElementById("sr_billing_period").value = r.billing_period||"";
+  document.getElementById("sr_gstin").value = r.gstin||"";
+  document.getElementById("sr_pos").value = r.pos||"";
+  document.getElementById("sr_sac").value = r.sac||"";
+  document.getElementById("sr_legal_entity").value = r.legal_entity||"AIB";
+  document.getElementById("sr_taxable_value").value = r.taxable_value||"";
+  document.getElementById("sr_igst").value = r.igst||"";
+  document.getElementById("sr_cgst").value = r.cgst||"";
+  document.getElementById("sr_sgst").value = r.sgst||"";
+  document.getElementById("sr_total_gst").value = r.total_gst||"";
+  document.getElementById("sr_total_invoice_amount").value = r.total_invoice_amount||"";
+  document.getElementById("sr_tds").value = r.tds||"";
+  document.getElementById("sr_net_receivable").value = r.net_receivable||"";
+  document.getElementById("sr_payment_status").value = r.payment_status||"pending";
+  document.getElementById("sr_payment_received_date").value = r.payment_received_date?r.payment_received_date.split("T")[0]:"";
+  document.getElementById("sr_payment_received_amount").value = r.payment_received_amount||"";
+  document.getElementById("sr_balance_due").value = r.balance_due||"";
+  document.getElementById("sr_remarks").value = r.remarks||"";
+  document.getElementById("srFormTitle").textContent = "✏️ Edit Invoice Entry";
+  document.getElementById("btnSaveSR").textContent = "💾 Save Changes";
+  document.getElementById("btnCancelSR").style.display = "inline-flex";
+  toast("Editing entry","info");
+}
+
+async function saveSalesRegister(){
+  const btn = document.getElementById("btnSaveSR");
+  const editId = document.getElementById("sr_edit_id").value;
+  const customer = document.getElementById("sr_customer").value.trim();
+  const invoice_no = document.getElementById("sr_invoice_no").value.trim();
+  if(!customer) return toast("Customer name is required","error");
+  if(!invoice_no) return toast("Invoice number is required","error");
+
+  const payload = {
+    customer_name: customer,
+    invoice_no,
+    legal_entity: document.getElementById("sr_legal_entity").value.trim()||"AIB",
+    gstin: document.getElementById("sr_gstin").value.trim(),
+    invoice_date: document.getElementById("sr_invoice_date").value||null,
+    pos: document.getElementById("sr_pos").value.trim(),
+    sac: document.getElementById("sr_sac").value.trim(),
+    billing_period: document.getElementById("sr_billing_period").value.trim(),
+    taxable_value: Number(document.getElementById("sr_taxable_value").value)||0,
+    igst: Number(document.getElementById("sr_igst").value)||0,
+    cgst: Number(document.getElementById("sr_cgst").value)||0,
+    sgst: Number(document.getElementById("sr_sgst").value)||0,
+    total_gst: Number(document.getElementById("sr_total_gst").value)||0,
+    total_invoice_amount: Number(document.getElementById("sr_total_invoice_amount").value)||0,
+    tds: Number(document.getElementById("sr_tds").value)||0,
+    net_receivable: Number(document.getElementById("sr_net_receivable").value)||0,
+    payment_status: document.getElementById("sr_payment_status").value,
+    payment_received_date: document.getElementById("sr_payment_received_date").value||null,
+    payment_received_amount: Number(document.getElementById("sr_payment_received_amount").value)||0,
+    balance_due: Number(document.getElementById("sr_balance_due").value)||0,
+    remarks: document.getElementById("sr_remarks").value.trim()
+  };
+
+  btn.disabled = true; btn.textContent = "Saving…";
+  try{
+    const url = editId ? `${API}/sales-register/${editId}` : `${API}/sales-register`;
+    const res = await fetch(url,{method:editId?"PUT":"POST",headers:authHeaders(),body:JSON.stringify(payload)});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(data.message,"success");
+    cancelSREdit();
+    loadSalesRegister();
+  } catch { toast("Cannot connect to server","error"); }
+  finally{ btn.disabled=false; btn.textContent = editId?"💾 Save Changes":"💾 Save Entry"; }
+}
+
+async function deleteSalesRegister(id){
+  if(!confirm("Delete this invoice entry?")) return;
+  try{
+    const res = await fetch(`${API}/sales-register/${id}`,{method:"DELETE",headers:authHeaders()});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast(data.message,"success");
+    loadSalesRegister();
+  } catch { toast("Failed to delete","error"); }
+}
+
+async function loadSalesRegister(){
+  try{
+    const monthEl = document.getElementById("sr_dash_month");
+    if(!monthEl?.value){
+      const now = new Date();
+      if(monthEl) monthEl.value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+    }
+    const month = monthEl?.value||"";
+    const [summaryRes, dataRes] = await Promise.all([
+      fetch(`${API}/sales-register/summary${month?`?month=${month}`:""}`,{headers:authHeaders()}),
+      fetch(`${API}/sales-register${month?`?month=${month}`:""}`,{headers:authHeaders()})
+    ]);
+    const summary = await summaryRes.json();
+    srData = await dataRes.json();
+
+    // Update stat cards
+    document.getElementById("srTotalInvoices").textContent = summary.totalInvoices||0;
+    document.getElementById("srTaxableValue").textContent = "₹"+(summary.totalTaxableValue||0).toLocaleString("en-IN");
+    document.getElementById("srTotalInvoiceAmt").textContent = "₹"+(summary.totalInvoiceAmount||0).toLocaleString("en-IN");
+    document.getElementById("srTotalGST").textContent = "₹"+(summary.totalGST||0).toLocaleString("en-IN");
+    document.getElementById("srTotalTDS").textContent = "₹"+(summary.totalTDS||0).toLocaleString("en-IN");
+    document.getElementById("srNetReceivable").textContent = "₹"+(summary.totalNetReceivable||0).toLocaleString("en-IN");
+    document.getElementById("srReceived").textContent = "₹"+(summary.totalReceived||0).toLocaleString("en-IN");
+    document.getElementById("srBalanceDue").textContent = "₹"+(summary.totalBalanceDue||0).toLocaleString("en-IN");
+    document.getElementById("srPaidCount").textContent = summary.paid||0;
+    document.getElementById("srPendingCount").textContent = summary.pending||0;
+    document.getElementById("srPartialCount").textContent = summary.partial||0;
+
+    srFiltered = [...srData];
+    filterSalesRegister();
+  } catch { toast("Failed to load sales register","error"); }
+}
+
+function filterSalesRegister(){
+  const search = (document.getElementById("sr_search")?.value||"").toLowerCase();
+  const status = document.getElementById("sr_status_filter")?.value||"";
+  srFiltered = srData.filter(r =>
+    (!search || r.customer_name?.toLowerCase().includes(search) || r.invoice_no?.toLowerCase().includes(search)) &&
+    (!status || r.payment_status === status)
+  );
+  renderSRTable(srFiltered);
+}
+
+function renderSRTable(data){
+  const isAdmin = currentUser?.role === "admin";
+  const tbody = document.getElementById("srTable");
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="18" class="empty-state">No entries found</td></tr>`; return; }
+  let sl = 1;
+  tbody.innerHTML = data.map(r=>`<tr>
+    <td style="font-size:12px;color:var(--muted);">${sl++}</td>
+    <td style="font-weight:600;min-width:180px;">${r.customer_name}</td>
+    <td style="font-family:monospace;font-size:12px;">${r.invoice_no||"—"}</td>
+    <td style="font-size:12px;">${r.invoice_date?r.invoice_date.split("T")[0]:"—"}</td>
+    <td style="font-size:12px;color:var(--muted);">${r.billing_period||"—"}</td>
+    <td style="text-align:right;">₹${Number(r.taxable_value||0).toLocaleString("en-IN")}</td>
+    <td style="text-align:right;font-size:12px;">${Number(r.igst||0).toLocaleString("en-IN")}</td>
+    <td style="text-align:right;font-size:12px;">${Number(r.cgst||0).toLocaleString("en-IN")}</td>
+    <td style="text-align:right;font-size:12px;">${Number(r.sgst||0).toLocaleString("en-IN")}</td>
+    <td style="text-align:right;font-weight:600;">₹${Number(r.total_invoice_amount||0).toLocaleString("en-IN")}</td>
+    <td style="text-align:right;font-size:12px;">₹${Number(r.total_gst||0).toLocaleString("en-IN")}</td>
+    <td style="text-align:right;font-size:12px;color:#e53e3e;">₹${Number(r.tds||0).toLocaleString("en-IN")}</td>
+    <td style="text-align:right;font-weight:600;color:var(--teal);">₹${Number(r.net_receivable||0).toLocaleString("en-IN")}</td>
+    <td style="text-align:right;color:#166534;font-weight:600;">₹${Number(r.payment_received_amount||0).toLocaleString("en-IN")}</td>
+    <td style="text-align:right;color:${Number(r.balance_due||0)>0?"#e53e3e":"#166534"};font-weight:600;">₹${Number(r.balance_due||0).toLocaleString("en-IN")}</td>
+    <td>${srPayStatusBadge(r.payment_status)}</td>
+    <td style="font-size:12px;color:var(--muted);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${r.remarks||""}">${r.remarks||"—"}</td>
+    <td><div style="display:flex;gap:4px;">
+      <button class="btn btn-ghost btn-sm" onclick="editSalesRegister(${r.id})">✏️</button>
+      <button class="btn btn-teal btn-sm" onclick="quickMarkSRPaid(${r.id})">✅</button>
+      ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="deleteSalesRegister(${r.id})">🗑️</button>`:""}
+    </div></td>
+  </tr>`).join("");
+}
+
+async function quickMarkSRPaid(id){
+  const r = srData.find(x=>x.id===id);
+  if(!r) return;
+  if(!confirm(`Mark payment as FULLY PAID for ${r.customer_name}?`)) return;
+  try{
+    const payload = {
+      ...r,
+      payment_status:"paid",
+      payment_received_amount: r.net_receivable,
+      balance_due: 0,
+      payment_received_date: new Date().toISOString().split("T")[0]
+    };
+    const res = await fetch(`${API}/sales-register/${id}`,{method:"PUT",headers:authHeaders(),body:JSON.stringify(payload)});
+    const data = await res.json();
+    if(!res.ok) return toast(data.error||"Error","error");
+    toast("✅ Marked as Fully Paid!","success");
+    loadSalesRegister();
+  } catch { toast("Failed to update","error"); }
+}
+
+function exportSalesRegister(){
+  const data = srFiltered.length ? srFiltered : srData;
+  if(!data.length) return toast("No data to export","error");
+  const headers=[
+    "Sl.No","Legal Entity","Customer/Insurance Co","GSTIN","Invoice No",
+    "Invoice Date","POS","SAC","Taxable Value","IGST","CGST","SGST",
+    "Total Invoice Amount","Total GST","TDS","Net Receivable",
+    "Billing Period","Payment Status","Payment Received Date",
+    "Amount Received","Balance Due","Remarks"
+  ];
+  let sl=1;
+  const rows=[headers,...data.map(r=>[
+    sl++, r.legal_entity||"AIB", r.customer_name||"", r.gstin||"",
+    r.invoice_no||"", r.invoice_date?r.invoice_date.split("T")[0]:"",
+    r.pos||"", r.sac||"",
+    r.taxable_value||0, r.igst||0, r.cgst||0, r.sgst||0,
+    r.total_invoice_amount||0, r.total_gst||0, r.tds||0, r.net_receivable||0,
+    r.billing_period||"", r.payment_status||"",
+    r.payment_received_date?r.payment_received_date.split("T")[0]:"",
+    r.payment_received_amount||0, r.balance_due||0, r.remarks||""
+  ])];
+  downloadCSV(rows,`sales_register_${document.getElementById("sr_dash_month")?.value||"all"}.csv`);
+  toast("✅ Sales Register exported!","success");
+}
+
+async function handleSRImport(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const result = document.getElementById("srImportResult");
+  result.style.display = "block";
+  document.getElementById("srImportIcon").textContent = "⏳";
+  document.getElementById("srImportTitle").textContent = "Reading file...";
+  document.getElementById("srImportSub").textContent = "";
+  try{
+    const buffer = await file.arrayBuffer();
+    const XLSX = await import("https://cdn.jsdelivr.net/npm/xlsx@0.18.5/xlsx.mjs");
+    const wb = XLSX.read(buffer,{type:"array"});
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const rawData = XLSX.utils.sheet_to_json(ws,{defval:"",range:10});
+    const entries = rawData.filter(r => r["Customer name"] || r["customer name"]).map(r => ({
+      customer_name: String(r["Customer name"]||r["customer name"]||"").trim(),
+      gstin: String(r["GSTIN/UIN of Recipient"]||"").trim(),
+      invoice_no: String(r["Invoice No"]||"").trim(),
+      invoice_date: r["Invoice Date"]?new Date(r["Invoice Date"]).toISOString().split("T")[0]:null,
+      pos: String(r["POS"]||"").trim(),
+      sac: String(r["SAC"]||"").trim(),
+      taxable_value: Number(r["Taxable Value"])||0,
+      igst: Number(r["IGST"])||0,
+      cgst: Number(r["CGST"])||0,
+      sgst: Number(r["SGST"])||0,
+      total_invoice_amount: Number(r["Total Invoice Amount"])||0,
+      total_gst: Number(r["Total GST"])||0,
+      tds: Number(r["TDS"])||0,
+      net_receivable: Number(r["Net Receivable"])||0,
+      billing_period: String(r["Billing Period"]||"").trim(),
+      legal_entity: "AIB",
+      payment_status: "pending",
+      balance_due: Number(r["Net Receivable"])||0
+    })).filter(e => e.customer_name && e.invoice_no);
+
+    let success=0, failed=0;
+    for(const entry of entries){
+      try{
+        const res = await fetch(`${API}/sales-register`,{method:"POST",headers:authHeaders(),body:JSON.stringify(entry)});
+        if(res.ok) success++; else failed++;
+      } catch { failed++; }
+    }
+    document.getElementById("srImportIcon").textContent = failed===0?"✅":"⚠️";
+    document.getElementById("srImportTitle").textContent = `${success} entries imported`;
+    document.getElementById("srImportSub").textContent = failed>0?`${failed} skipped`:"All entries imported successfully";
+    toast(`✅ Imported ${success} entries`,"success");
+    loadSalesRegister();
+  } catch(err){
+    document.getElementById("srImportIcon").textContent = "❌";
+    document.getElementById("srImportTitle").textContent = "Import failed";
+    document.getElementById("srImportSub").textContent = err.message;
+    toast("Import failed: "+err.message,"error");
+  }
 }  
 </script>
 </body>
