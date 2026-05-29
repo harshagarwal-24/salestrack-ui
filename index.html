@@ -2015,7 +2015,7 @@ async function autoFill(){
   captureLocation("ci");
 
   // Check WFH approval for sales users only
-  if(currentUser.role === "sales" || currentUser.role === "crm" || currentUser.role === "tech"){
+  if(currentUser.role === "sales"){
     await checkWFHApproval(currentUser.id, today);
   } else {
     // Admin can always select WFH
