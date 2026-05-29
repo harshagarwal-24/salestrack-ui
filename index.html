@@ -2127,7 +2127,7 @@ function setupRoleUI(role){
     autoFill();
     loadOps();
    } else if(role === "crm") {
-  sidebar.innerHTML = `
+  sidebar.innerHTML =`
     <div class="sidebar-section">Attendance</div>
     <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon"></span> Check In</button>
     <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon"></span> Check Out</button>
@@ -2142,7 +2142,7 @@ function setupRoleUI(role){
   document.getElementById("checkInPage").classList.add("active");
   autoFill(); 
   } else if(role === "accounts") {
-  sidebar.innerHTML = `
+  sidebar.innerHTML =`
     <div class="sidebar-section">Attendance</div>
     <button class="nav-btn active" onclick="goTo('checkInPage',this);closeSidebar()"><span class="nav-icon"></span> Check In</button>
     <button class="nav-btn" onclick="goTo('checkOutPage',this);autoFillCO();closeSidebar()"><span class="nav-icon"></span> Check Out</button>
