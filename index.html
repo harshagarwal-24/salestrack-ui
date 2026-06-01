@@ -3261,19 +3261,26 @@ async function handleImportFile(event){
       return toast("Please upload .xlsx, .xls, or .csv file","error");
     }
 
-    importedRows = rows;
-    showImportPreview(file.name, rows);
+    const ALLOWED_STATUSES = ["prospect", "follow_up", "converted", "contacted"];
+    const filtered = rows.filter(r => {
+      const s = (r.status||"").toLowerCase().trim();
+      return ALLOWED_STATUSES.includes(s);
+    });
+    importedRows = filtered;
+    showImportPreview(file.name, filtered, rows.length);
 
   } catch(err) {
     toast("Failed to read file: " + err.message, "error");
   }
 }
 
-function showImportPreview(fileName, rows){
+function showImportPreview(fileName, rows, totalParsed){
   document.getElementById("importStep1").style.display = "none";
   document.getElementById("importStep2").style.display = "block";
   document.getElementById("importFileInfo").textContent = "📄 " + fileName;
-  document.getElementById("importRowCount").textContent = `${rows.length} rows found`;
+  const skippedByStatus = (totalParsed||rows.length) - rows.length;
+  document.getElementById("importRowCount").textContent =
+  `${rows.length} matching rows found${skippedByStatus > 0 ? ` (${skippedByStatus} skipped — wrong status)` : ""}`;
 
   // Validate rows
   let validCount = 0, invalidCount = 0;
